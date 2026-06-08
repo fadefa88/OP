@@ -1,16 +1,30 @@
-name: Daily Manga Downloader
+name: Daily Manga Image Audit
 
 on:
   schedule:
-    - cron: '0 10 * * *'   # Ogni giorno alle 10:00 UTC (modifica se vuoi)
-  workflow_dispatch:       # Permette di avviarlo manualmente
+    # Every 24 hours at 03:00 UTC.
+    # In Italy this is 04:00 CET or 05:00 CEST.
+    - cron: "0 3 * * *"
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: daily-manga-image-audit
+  cancel-in-progress: true
 
 jobs:
-  download:
+  audit:
+    name: Audit all mapped volumes without downloading images
     runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    env:
+      BASE_URL: "https://www.miosito.com"
+      MAX_PAGES: "40"
+      IMAGE_EXTENSION: "jpg"
+      REPORT_FILE: "reports/audit-all-volumes.csv"
 
     steps:
       - name: Checkout repository
@@ -19,36 +33,81 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run downloader
-        env:
-          MANGA_URL: https://onepiecepower.com/manga8/onepiece/volumi/reader/1176
-        run: python download_manga.py
-
-      - name: Commit and push new images
+      - name: Resolve mapped chapter range
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add img/
-          if git diff --staged --quiet; then
-            echo "Nessuna nuova immagine da caricare"
+          FROM_CHAPTER="$(python - <<'PY'
+          import download_manga as manga
+          print(min(start for _, start, _ in manga.VOLUME_CHAPTER_RANGES))
+          PY
+          )"
+
+          TO_CHAPTER="$(python - <<'PY'
+          import download_manga as manga
+          print(max(end for _, _, end in manga.VOLUME_CHAPTER_RANGES))
+          PY
+          )"
+
+          echo "FROM_CHAPTER=$FROM_CHAPTER" >> "$GITHUB_ENV"
+          echo "TO_CHAPTER=$TO_CHAPTER" >> "$GITHUB_ENV"
+
+          echo "Mapped range: chapters $FROM_CHAPTER-$TO_CHAPTER"
+
+      - name: Run dry-run audit for all mapped chapters
+        run: |
+          mkdir -p reports
+
+          python download_manga.py \
+            --base-url "$BASE_URL" \
+            --from-chapter "$FROM_CHAPTER" \
+            --to-chapter "$TO_CHAPTER" \
+            --max-pages "$MAX_PAGES" \
+            --extension "$IMAGE_EXTENSION" \
+            --stop-after-missing 0 \
+            --csv "$REPORT_FILE"
+
+      - name: Print audit summary
+        if: always()
+        run: |
+          if [ -f "$REPORT_FILE" ]; then
+            python - <<'PY'
+          import csv
+          from collections import Counter
+
+          report_file = "reports/audit-all-volumes.csv"
+
+          with open(report_file, newline="", encoding="utf-8") as handle:
+              rows = list(csv.DictReader(handle))
+
+          status_counts = Counter(row["status"] for row in rows)
+          chapters = sorted({int(row["chapter"]) for row in rows})
+          volumes = sorted({int(row["volume"]) for row in rows})
+
+          print("Audit summary")
+          print("-------------")
+          print(f"Volumes checked: {volumes[0]}-{volumes[-1]} ({len(volumes)} volumes)")
+          print(f"Chapters checked: {chapters[0]}-{chapters[-1]} ({len(chapters)} chapters)")
+          print(f"URLs checked: {len(rows)}")
+          print(f"Images that would be downloadable: {status_counts.get('found', 0)}")
+          print(f"Missing: {status_counts.get('missing', 0)}")
+          print(f"Blocked: {status_counts.get('blocked', 0)}")
+          print(f"Errors: {status_counts.get('error', 0)}")
+          print(f"Non-image responses: {status_counts.get('not_image', 0)}")
+          PY
           else
-            git commit -m "Update manga images - $(date +'%Y-%m-%d %H:%M')"
-            git push
+            echo "Report file not found: $REPORT_FILE"
           fi
-      - name: Upload debug files
+
+      - name: Upload audit CSV report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: debug-files
-          path: |
-            debug/
-            img/
+          name: manga-audit-report
+          path: reports/
+          if-no-files-found: warn

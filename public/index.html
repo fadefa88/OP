@@ -14,24 +14,23 @@
         <span class="brand-mark">OP</span>
         <span>
           <strong>OP Reader</strong>
-          <small>GitHub + Cloudflare</small>
+          <small>Lettura ordinata per volume e capitolo</small>
         </span>
       </a>
       <nav class="top-nav" aria-label="Navigazione principale">
         <a href="#reader-picker">Reader</a>
-        <a href="#library">Volumi</a>
-        <a href="/api/health" target="_blank" rel="noreferrer">API</a>
+        <a href="#library">Archivio</a>
       </nav>
     </header>
 
     <main>
       <section class="hero compact-hero">
         <div class="hero-copy">
-          <p class="eyebrow">Manga library</p>
-          <h1>Reader veloce, ordinato per volumi e capitoli.</h1>
+          <p class="eyebrow">Archivio digitale</p>
+          <h1>Leggi i capitoli in modo pulito e immediato.</h1>
           <p>
-            La libreria è pensata per migliaia di capitoli: scegli volume e capitolo dai menu,
-            oppure riprendi dall'ultimo punto letto. Le immagini sono servite da Cloudflare.
+            Scegli il volume, apri il capitolo e riprendi la lettura dall'ultima pagina visualizzata.
+            Il reader è ottimizzato per desktop, tablet e smartphone.
           </p>
           <div class="hero-actions">
             <a id="continue-reading" class="button primary" href="#reader-picker">Continua lettura</a>
@@ -52,9 +51,9 @@
 
       <section id="reader-picker" class="section picker-section">
         <div class="section-head">
-          <p class="eyebrow">Apri reader</p>
-          <h2>Selezione rapida</h2>
-          <p>Usa i menu a tendina: prima volume, poi capitolo. La lista sotto mostra solo i capitoli del volume selezionato.</p>
+          <p class="eyebrow">Inizia a leggere</p>
+          <h2>Seleziona volume e capitolo</h2>
+          <p>Usa i menu a tendina per navigare rapidamente l'archivio. La lista mostra solo i capitoli pertinenti alla selezione corrente.</p>
         </div>
 
         <form id="reader-picker-form" class="reader-picker-card">
@@ -85,7 +84,7 @@
       <section id="library" class="section">
         <div class="section-head inline-head">
           <div>
-            <p class="eyebrow">Volumi</p>
+            <p class="eyebrow">Archivio</p>
             <h2 id="volume-title">Capitoli disponibili</h2>
           </div>
           <a id="latest-chapter" class="button ghost" href="#">Ultimo capitolo</a>
@@ -95,8 +94,8 @@
     </main>
 
     <footer class="site-footer">
-      <span>Reader ottimizzato per Cloudflare Workers Static Assets.</span>
-      <span>Import automatico da sorgenti autorizzate.</span>
+      <span>OP Reader</span>
+      <span>Archivio organizzato per volume, capitolo e pagina.</span>
     </footer>
 
     <script type="module" src="/app.js"></script>

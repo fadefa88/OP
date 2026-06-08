@@ -31,7 +31,7 @@ node scripts/prepare-local-chapter.mjs ./input/capitolo-001 --series my-series -
   process.exit(1);
 }
 
-const seriesId = slugify(getArg('series', 'demo'));
+const seriesId = slugify(getArg('series', 'op'));
 const seriesTitle = getArg('series-title', seriesId.replaceAll('-', ' '));
 const chapterId = slugify(getArg('chapter', path.basename(sourceDir)));
 const chapterTitle = getArg('title', chapterId.replaceAll('-', ' '));

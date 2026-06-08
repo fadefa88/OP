@@ -1,38 +1,56 @@
-name: Import Authorized Manga Volumes 115-116
+name: Scan New Manga Chapter Hourly
 
 on:
   schedule:
-    # Every 24 hours at 03:00 UTC.
-    # In Italy this is 04:00 CET or 05:00 CEST.
-    - cron: "0 3 * * *"
+    # Every hour. The workflow commits only if a new chapter is found.
+    - cron: "0 * * * *"
   workflow_dispatch:
     inputs:
       base_url:
         description: "Authorized image source base URL. Overrides repository variable AUTHORIZED_MANGA_BASE_URL."
         required: false
         type: string
-      max_pages:
-        description: "Maximum pages to try per chapter"
+      chapter:
+        description: "Optional chapter number to force-check manually. Empty = latest manifest chapter + 1."
         required: false
-        default: "40"
+        type: string
+      volume_candidates:
+        description: "Optional comma-separated source volume folders to try, e.g. 117,118. Empty = calculated automatically from the chapter number."
+        required: false
+        type: string
+      scan_ahead:
+        description: "How many future chapters to probe starting from latest+1."
+        required: false
+        default: "3"
+        type: string
+      max_pages:
+        description: "Maximum pages to try per chapter."
+        required: false
+        default: "45"
+        type: string
+      min_pages:
+        description: "Minimum pages required before accepting a chapter."
+        required: false
+        default: "3"
         type: string
 
 permissions:
   contents: write
 
 concurrency:
-  group: import-authorized-manga-volumes-115-116
+  group: scan-new-manga-chapter-hourly
   cancel-in-progress: true
 
 jobs:
-  import:
-    name: Import authorized volumes 115 and 116
+  scan:
+    name: Check and import next chapter
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 40
 
     env:
       AUTHORIZED_MANGA_BASE_URL: ${{ vars.AUTHORIZED_MANGA_BASE_URL }}
       I_CONFIRM_RIGHTS: ${{ vars.I_CONFIRM_RIGHTS }}
+      NEW_CHAPTER_VOLUME_CANDIDATES: ${{ vars.NEW_CHAPTER_VOLUME_CANDIDATES }}
       IMAGE_EXTENSION: "jpg"
       SERIES_ID: "op"
       SERIES_TITLE: "OP Reader"
@@ -54,17 +72,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Resolve production import settings
+      - name: Resolve scan settings
         id: settings
         shell: bash
         run: |
           set -euo pipefail
 
-          BASE_URL_INPUT="${{ github.event.inputs.base_url }}"
-          MAX_PAGES_INPUT="${{ github.event.inputs.max_pages }}"
+          BASE_URL_INPUT="${{ github.event.inputs.base_url || '' }}"
+          CHAPTER_INPUT="${{ github.event.inputs.chapter || '' }}"
+          VOLUME_CANDIDATES_INPUT="${{ github.event.inputs.volume_candidates || '' }}"
+          SCAN_AHEAD_INPUT="${{ github.event.inputs.scan_ahead || '3' }}"
+          MAX_PAGES_INPUT="${{ github.event.inputs.max_pages || '45' }}"
+          MIN_PAGES_INPUT="${{ github.event.inputs.min_pages || '3' }}"
 
           BASE_URL="${BASE_URL_INPUT:-${AUTHORIZED_MANGA_BASE_URL:-}}"
-          MAX_PAGES="${MAX_PAGES_INPUT:-40}"
+          VOLUME_CANDIDATES="${VOLUME_CANDIDATES_INPUT:-${NEW_CHAPTER_VOLUME_CANDIDATES:-}}"
 
           if [ -z "$BASE_URL" ]; then
             echo "No authorized base URL configured. Set repository variable AUTHORIZED_MANGA_BASE_URL or pass base_url manually."
@@ -80,63 +102,194 @@ jobs:
 
           echo "skip=false" >> "$GITHUB_OUTPUT"
           echo "base_url=$BASE_URL" >> "$GITHUB_OUTPUT"
-          echo "max_pages=$MAX_PAGES" >> "$GITHUB_OUTPUT"
+          echo "chapter_input=$CHAPTER_INPUT" >> "$GITHUB_OUTPUT"
+          echo "volume_candidates=$VOLUME_CANDIDATES" >> "$GITHUB_OUTPUT"
+          echo "scan_ahead=$SCAN_AHEAD_INPUT" >> "$GITHUB_OUTPUT"
+          echo "max_pages=$MAX_PAGES_INPUT" >> "$GITHUB_OUTPUT"
+          echo "min_pages=$MIN_PAGES_INPUT" >> "$GITHUB_OUTPUT"
 
-      - name: Import only volumes 115 and 116
+      - name: Compute chapters and source volumes to probe
         if: steps.settings.outputs.skip != 'true'
+        id: plan
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python - <<'PY' > /tmp/scan-plan.env
+          import json
+          import os
+          from pathlib import Path
+
+          manifest_path = Path('public/content/manifest.json')
+          data = json.loads(manifest_path.read_text(encoding='utf-8'))
+          series_id = os.environ.get('SERIES_ID', 'op')
+          series = next((item for item in data.get('series', []) if item.get('id') == series_id), None)
+          chapters = series.get('chapters', []) if series else []
+
+          FUTURE_VOLUME_BASE = 117
+          FUTURE_CHAPTER_BASE = 1186
+          FUTURE_CHAPTERS_PER_VOLUME = 10
+
+          explicit_ranges = [
+              (1, 1, 8), (2, 9, 17), (3, 18, 26), (4, 27, 35), (5, 36, 44),
+              (6, 45, 53), (7, 54, 62), (8, 63, 71), (9, 72, 81), (10, 82, 90),
+              (11, 91, 99), (12, 100, 108), (13, 109, 117), (14, 118, 126),
+              (15, 127, 136), (16, 137, 145), (17, 146, 155), (18, 156, 166),
+              (19, 167, 176), (20, 177, 186), (21, 187, 195), (22, 196, 205),
+              (23, 206, 216), (24, 217, 226), (25, 227, 236), (26, 237, 246),
+              (27, 247, 255), (28, 256, 264), (29, 265, 275), (30, 276, 285),
+              (31, 286, 295), (32, 296, 305), (33, 306, 316), (34, 317, 327),
+              (35, 328, 336), (36, 337, 346), (37, 347, 357), (38, 358, 367),
+              (39, 368, 377), (40, 378, 388), (41, 389, 399), (42, 400, 409),
+              (43, 410, 419), (44, 420, 430), (45, 431, 440), (46, 441, 449),
+              (47, 450, 459), (48, 460, 470), (49, 471, 481), (50, 482, 491),
+              (51, 492, 502), (52, 503, 512), (53, 513, 522), (54, 523, 532),
+              (55, 533, 541), (56, 542, 551), (57, 552, 562), (58, 563, 573),
+              (59, 574, 584), (60, 585, 594), (61, 595, 603), (62, 604, 614),
+              (63, 615, 626), (64, 627, 636), (65, 637, 646), (66, 647, 656),
+              (67, 657, 667), (68, 668, 678), (69, 679, 690), (70, 691, 700),
+              (71, 701, 711), (72, 712, 721), (73, 722, 731), (74, 732, 742),
+              (75, 743, 752), (76, 753, 763), (77, 764, 775), (78, 776, 785),
+              (79, 786, 795), (80, 796, 806), (81, 807, 816), (82, 817, 827),
+              (83, 828, 838), (84, 839, 848), (85, 849, 858), (86, 859, 869),
+              (87, 870, 879), (88, 880, 889), (89, 890, 900), (90, 901, 910),
+              (91, 911, 921), (92, 922, 931), (93, 932, 942), (94, 943, 953),
+              (95, 954, 964), (96, 965, 974), (97, 975, 984), (98, 985, 994),
+              (99, 995, 1004), (100, 1005, 1015), (101, 1016, 1025),
+              (102, 1026, 1035), (103, 1036, 1046), (104, 1047, 1055),
+              (105, 1056, 1065), (106, 1066, 1076), (107, 1077, 1088),
+              (108, 1089, 1100), (109, 1101, 1110), (110, 1111, 1121),
+              (111, 1122, 1133), (112, 1134, 1144), (113, 1145, 1155),
+              (114, 1156, 1165), (115, 1166, 1175), (116, 1176, 1185),
+              (117, 1186, 1195),
+          ]
+
+          def volume_for_chapter(number: int) -> int:
+              for volume, start, end in explicit_ranges:
+                  if start <= number <= end:
+                      return volume
+              if number >= FUTURE_CHAPTER_BASE:
+                  return FUTURE_VOLUME_BASE + ((number - FUTURE_CHAPTER_BASE) // FUTURE_CHAPTERS_PER_VOLUME)
+              raise ValueError(f"No volume mapping for chapter {number}")
+
+          latest_number = 0
+          latest_volume = 1
+          for chapter in chapters:
+              try:
+                  number = int(chapter.get('number') or str(chapter.get('id', '')).split('-')[-1])
+              except Exception:
+                  continue
+              if number > latest_number:
+                  latest_number = number
+                  latest_volume = volume_for_chapter(number)
+
+          forced_chapter = os.environ.get('CHAPTER_INPUT', '').strip()
+          scan_ahead = max(1, int(os.environ.get('SCAN_AHEAD', '3')))
+
+          if forced_chapter:
+              candidates = [int(forced_chapter)]
+          else:
+              candidates = list(range(latest_number + 1, latest_number + scan_ahead + 1))
+
+          volume_input = os.environ.get('VOLUME_CANDIDATES', '').strip()
+          if volume_input:
+              volumes = []
+              for item in volume_input.split(','):
+                  item = item.strip()
+                  if item:
+                      volumes.append(int(item))
+          else:
+              volumes = [volume_for_chapter(chapter) for chapter in candidates]
+
+          # Preserve order while removing duplicates.
+          deduped_volumes = []
+          for volume in volumes:
+              if volume not in deduped_volumes:
+                  deduped_volumes.append(volume)
+
+          print(f"LATEST_CHAPTER={latest_number}")
+          print(f"LATEST_VOLUME={latest_volume}")
+          print("CHAPTERS=\'" + " ".join(str(item) for item in candidates) + "\'")
+          print("VOLUMES=\'" + " ".join(str(item) for item in deduped_volumes) + "\'")
+          PY
+
+          cat /tmp/scan-plan.env
+          source /tmp/scan-plan.env
+          {
+            echo "latest_chapter=$LATEST_CHAPTER"
+            echo "latest_volume=$LATEST_VOLUME"
+            echo "chapters=$CHAPTERS"
+            echo "volumes=$VOLUMES"
+          } >> "$GITHUB_OUTPUT"
+        env:
+          CHAPTER_INPUT: ${{ steps.settings.outputs.chapter_input }}
+          SCAN_AHEAD: ${{ steps.settings.outputs.scan_ahead }}
+          VOLUME_CANDIDATES: ${{ steps.settings.outputs.volume_candidates }}
+
+      - name: Probe next chapter and import only if found
+        if: steps.settings.outputs.skip != 'true'
+        id: import
+        shell: bash
         run: |
           set -euo pipefail
           mkdir -p "$REPORT_DIR"
 
-          for VOLUME in 115 116; do
-            python download_manga.py \
-              --base-url "${{ steps.settings.outputs.base_url }}" \
-              --volume "$VOLUME" \
-              --max-pages "${{ steps.settings.outputs.max_pages }}" \
-              --extension "$IMAGE_EXTENSION" \
-              --stop-after-missing 3 \
-              --csv "$REPORT_DIR/import-volume-$VOLUME.csv" \
-              --download \
-              --i-confirm-rights \
-              --public-dir public \
-              --output-dir public/manga \
-              --manifest public/content/manifest.json \
-              --series-id "$SERIES_ID" \
-              --series-title "$SERIES_TITLE"
+          IMPORTED_CHAPTER=""
+          IMPORTED_VOLUME=""
+
+          echo "Latest chapter in manifest: ${{ steps.plan.outputs.latest_chapter }}"
+          echo "Chapters to probe: ${{ steps.plan.outputs.chapters }}"
+          echo "Calculated source volume folders to try: ${{ steps.plan.outputs.volumes }}"
+
+          for CHAPTER in ${{ steps.plan.outputs.chapters }}; do
+            for VOLUME in ${{ steps.plan.outputs.volumes }}; do
+              echo "Checking chapter $CHAPTER in source volume $VOLUME"
+
+              BEFORE_STATUS="$(git status --porcelain -- public || true)"
+
+              python download_manga.py \
+                --base-url "${{ steps.settings.outputs.base_url }}" \
+                --chapter "$CHAPTER" \
+                --volume-override "$VOLUME" \
+                --max-pages "${{ steps.settings.outputs.max_pages }}" \
+                --min-pages "${{ steps.settings.outputs.min_pages }}" \
+                --extension "$IMAGE_EXTENSION" \
+                --stop-after-missing 3 \
+                --csv "$REPORT_DIR/hourly-chapter-${CHAPTER}-volume-${VOLUME}.csv" \
+                --download \
+                --i-confirm-rights \
+                --public-dir public \
+                --output-dir public/manga \
+                --manifest public/content/manifest.json \
+                --series-id "$SERIES_ID" \
+                --series-title "$SERIES_TITLE" \
+                --series-description "Archivio capitoli aggiornato automaticamente."
+
+              AFTER_STATUS="$(git status --porcelain -- public || true)"
+
+              if [ "$BEFORE_STATUS" != "$AFTER_STATUS" ] && ! git diff --quiet -- public; then
+                IMPORTED_CHAPTER="$CHAPTER"
+                IMPORTED_VOLUME="$VOLUME"
+                echo "New chapter imported: $IMPORTED_CHAPTER from volume folder $IMPORTED_VOLUME"
+                break 2
+              fi
+
+              echo "No accepted images for chapter $CHAPTER in volume $VOLUME."
+            done
           done
 
-          # FULL IMPORT DISABLED INTENTIONALLY.
-          # When you are ready and you have storage/bandwidth/legal clearance,
-          # you can replace the two-volume loop above with this full import block:
-          #
-          # FROM_CHAPTER="$(python - <<'PY'
-          # import download_manga as manga
-          # print(min(start for _, start, _ in manga.VOLUME_CHAPTER_RANGES))
-          # PY
-          # )"
-          # TO_CHAPTER="$(python - <<'PY'
-          # import download_manga as manga
-          # print(max(end for _, _, end in manga.VOLUME_CHAPTER_RANGES))
-          # PY
-          # )"
-          # python download_manga.py \
-          #   --base-url "${{ steps.settings.outputs.base_url }}" \
-          #   --from-chapter "$FROM_CHAPTER" \
-          #   --to-chapter "$TO_CHAPTER" \
-          #   --max-pages "${{ steps.settings.outputs.max_pages }}" \
-          #   --extension "$IMAGE_EXTENSION" \
-          #   --stop-after-missing 3 \
-          #   --csv "$REPORT_DIR/import-all-volumes.csv" \
-          #   --download \
-          #   --i-confirm-rights \
-          #   --public-dir public \
-          #   --output-dir public/manga \
-          #   --manifest public/content/manifest.json \
-          #   --series-id "$SERIES_ID" \
-          #   --series-title "$SERIES_TITLE"
+          if [ -z "$IMPORTED_CHAPTER" ]; then
+            echo "imported=false" >> "$GITHUB_OUTPUT"
+            echo "No new chapter found. No commit will be created."
+            exit 0
+          fi
 
-      - name: Commit imported images and manifest
-        if: steps.settings.outputs.skip != 'true'
+          echo "imported=true" >> "$GITHUB_OUTPUT"
+          echo "chapter=$IMPORTED_CHAPTER" >> "$GITHUB_OUTPUT"
+          echo "volume=$IMPORTED_VOLUME" >> "$GITHUB_OUTPUT"
+
+      - name: Commit imported chapter
+        if: steps.import.outputs.imported == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -144,24 +297,19 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          if git diff --quiet -- public 2>/dev/null && git diff --cached --quiet; then
-            echo "No new manga images to commit."
-            exit 0
-          fi
-
           git add public/content/manifest.json public/manga || true
 
           if git diff --cached --quiet; then
-            echo "No staged changes."
+            echo "No staged changes after import. No commit."
             exit 0
           fi
 
-          git commit -m "Import authorized manga volumes 115-116"
+          git commit -m "Import manga chapter ${{ steps.import.outputs.chapter }}"
 
           BRANCH="${GITHUB_REF_NAME:-main}"
           for ATTEMPT in 1 2 3; do
             if git push origin "HEAD:$BRANCH"; then
-              echo "Push succeeded."
+              echo "Push succeeded. Cloudflare deploy workflow will run from this commit."
               exit 0
             fi
 
@@ -172,10 +320,10 @@ jobs:
           echo "Push failed after 3 attempts."
           exit 1
 
-      - name: Upload import CSV reports
+      - name: Upload scan CSV reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: manga-import-reports
+          name: hourly-manga-scan-reports
           path: reports/
           if-no-files-found: warn

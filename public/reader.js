@@ -20,8 +20,7 @@ const els = {
   pageCounter: document.querySelector('#page-counter'),
   viewToggle: document.querySelector('#view-toggle'),
   fitToggle: document.querySelector('#fit-toggle'),
-  helpToggle: document.querySelector('#reader-help-toggle'),
-  help: document.querySelector('#reader-help')
+  fullscreenToggle: document.querySelector('#fullscreen-toggle')
 };
 
 const state = {
@@ -32,12 +31,13 @@ const state = {
   pageIndex: requestedPage - 1,
   viewMode: localStorage.getItem('reader.viewMode') || 'paged',
   fitMode: localStorage.getItem('reader.fitMode') || 'width',
-  uiHidden: false
+  uiHidden: false,
+  immersiveFullscreen: false
 };
 
 async function loadManifest() {
   const response = await fetch('/api/manifest');
-  if (!response.ok) throw new Error('Manifest API error');
+  if (!response.ok) throw new Error('Archivio non disponibile');
   const payload = await response.json();
   return payload.data;
 }
@@ -249,7 +249,48 @@ function showReaderUi({ keep = false } = {}) {
     const activeTag = document.activeElement?.tagName?.toLowerCase();
     if (['input', 'select', 'textarea', 'button'].includes(activeTag)) return;
     setUiHidden(true);
-  }, 2600);
+  }, state.immersiveFullscreen ? 1400 : 2600);
+}
+
+function applyFullscreenState(active) {
+  state.immersiveFullscreen = Boolean(active);
+  document.body.classList.toggle('reader-fullscreen', state.immersiveFullscreen);
+  els.fullscreenToggle.textContent = state.immersiveFullscreen ? 'Esci schermo intero' : 'Schermo intero';
+  els.fullscreenToggle.setAttribute('aria-pressed', String(state.immersiveFullscreen));
+
+  if (state.immersiveFullscreen) {
+    setUiHidden(true);
+  } else {
+    showReaderUi({ keep: true });
+  }
+}
+
+async function toggleFullscreen() {
+  const target = document.documentElement;
+  const nativeFullscreenActive = Boolean(document.fullscreenElement);
+
+  if (state.immersiveFullscreen || nativeFullscreenActive) {
+    if (nativeFullscreenActive && document.exitFullscreen) {
+      try {
+        await document.exitFullscreen();
+      } catch (_) {
+        // Some mobile browsers reject this if the gesture context has expired.
+      }
+    }
+    applyFullscreenState(false);
+    return;
+  }
+
+  applyFullscreenState(true);
+
+  if (target.requestFullscreen) {
+    try {
+      await target.requestFullscreen({ navigationUI: 'hide' });
+    } catch (_) {
+      // iOS/Safari may not allow native fullscreen for normal pages.
+      // The CSS fullscreen mode remains active as a fallback.
+    }
+  }
 }
 
 function renderAll() {
@@ -359,9 +400,12 @@ els.fitToggle.addEventListener('click', () => {
   showReaderUi({ keep: true });
 });
 
-els.helpToggle.addEventListener('click', () => {
-  els.help.hidden = !els.help.hidden;
-  showReaderUi({ keep: true });
+els.fullscreenToggle.addEventListener('click', () => {
+  toggleFullscreen();
+});
+
+document.addEventListener('fullscreenchange', () => {
+  applyFullscreenState(Boolean(document.fullscreenElement));
 });
 
 document.addEventListener('keydown', (event) => {
@@ -382,6 +426,11 @@ document.addEventListener('keydown', (event) => {
     event.preventDefault();
     setUiHidden(!state.uiHidden);
   }
+
+  if (event.key.toLowerCase() === 'f') {
+    event.preventDefault();
+    toggleFullscreen();
+  }
 });
 
 let touchStartX = 0;
@@ -393,7 +442,7 @@ els.singleView.addEventListener('touchstart', (event) => {
   touchStartX = touch.clientX;
   touchStartY = touch.clientY;
   touchMoved = false;
-  showReaderUi();
+  if (!state.immersiveFullscreen) showReaderUi();
 }, { passive: true });
 
 els.singleView.addEventListener('touchmove', (event) => {
@@ -434,7 +483,10 @@ els.singleView.addEventListener('click', (event) => {
 });
 
 ['mousemove', 'pointermove', 'focusin'].forEach((eventName) => {
-  document.addEventListener(eventName, () => showReaderUi(), { passive: true });
+  document.addEventListener(eventName, () => {
+    if (state.immersiveFullscreen && eventName !== 'focusin') return;
+    showReaderUi();
+  }, { passive: true });
 });
 
 loadManifest()

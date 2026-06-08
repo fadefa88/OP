@@ -20,7 +20,7 @@ const state = {
 
 async function loadManifest() {
   const response = await fetch('/api/manifest');
-  if (!response.ok) throw new Error('Manifest API error');
+  if (!response.ok) throw new Error('Archivio non disponibile');
   const payload = await response.json();
   return payload.data;
 }

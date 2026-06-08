@@ -438,7 +438,9 @@ input[type="search"] {
 }
 
 .reader-body {
+  min-height: 100vh;
   min-height: 100svh;
+  min-height: 100dvh;
   background: #020617;
   overflow: hidden;
   overscroll-behavior: none;
@@ -485,7 +487,9 @@ input[type="search"] {
   inset: 0;
   display: block;
   width: 100%;
+  height: 100vh;
   height: 100svh;
+  height: 100dvh;
   max-width: none;
   margin: 0;
   overflow: hidden;
@@ -527,10 +531,13 @@ input[type="search"] {
   align-items: flex-start;
   justify-content: center;
   width: 100vw;
+  width: 100dvw;
+  height: 100vh;
   height: 100svh;
+  height: 100dvh;
   min-height: 0;
   overflow: auto;
-  padding: calc(var(--toolbar-height) + 4.6rem + env(safe-area-inset-top)) 0 calc(var(--bottom-height) + env(safe-area-inset-bottom));
+  padding: 0;
   overscroll-behavior: contain;
   touch-action: pan-y;
   user-select: none;
@@ -737,6 +744,52 @@ input[type="search"] {
   padding-bottom: 0;
 }
 
+
+.reader-fullscreen .single-page-view,
+.reader-fullscreen.reader-ui-hidden .single-page-view,
+.reader-ui-hidden .single-page-view {
+  padding: 0 !important;
+}
+
+.reader-fullscreen .reader-picker-strip,
+.reader-fullscreen.reader-ui-hidden .reader-picker-strip,
+.reader-fullscreen.reader-ui-hidden .reader-toolbar,
+.reader-fullscreen.reader-ui-hidden .bottom-page-nav,
+.reader-fullscreen.reader-ui-hidden .page-arrow {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reader-fullscreen .single-page-view {
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
+  background: #000;
+}
+
+.reader-fullscreen.fit-width .single-page-view img,
+.reader-ui-hidden.fit-width .single-page-view img {
+  width: 100vw;
+  width: 100dvw;
+  max-width: 100vw;
+  max-width: 100dvw;
+}
+
+.reader-fullscreen.fit-page .single-page-view img {
+  width: auto;
+  max-width: 100vw;
+  max-width: 100dvw;
+  max-height: 100vh;
+  max-height: 100dvh;
+}
+
+.reader-fullscreen .bottom-page-nav,
+.reader-fullscreen .reader-toolbar,
+.reader-fullscreen .page-arrow {
+  background: rgba(2, 6, 23, 0.48);
+}
+
 /* Legacy reader classes kept for compatibility with old pages if cached. */
 .reader-shell,
 .chapter-sidebar,
@@ -865,8 +918,10 @@ input[type="search"] {
   }
 
   .single-page-view {
+    height: 100vh;
     height: 100svh;
-    padding: calc(var(--toolbar-height) + 6.7rem + env(safe-area-inset-top)) 0 calc(var(--bottom-height) + env(safe-area-inset-bottom));
+    height: 100dvh;
+    padding: 0;
   }
 
   .single-page-view img {
@@ -942,3 +997,5 @@ input[type="search"] {
     min-height: 50px;
   }
 }
+
+#reader-help { display: none !important; }

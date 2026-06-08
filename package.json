@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Merged OP-main manga reader hosted on Cloudflare Workers Static Assets with optional R2 integration.",
+  "description": "Archivio manga reader con deploy automatico su Cloudflare.",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",

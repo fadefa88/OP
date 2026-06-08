@@ -13,7 +13,7 @@ Il progetto ora contiene un **manga reader moderno** con:
 - manifest JSON in `public/content/manifest.json`
 - predisposizione Cloudflare R2 per immagini pesanti
 - GitHub Actions per deploy Cloudflare
-- GitHub Action giornaliera per importare **solo i volumi 115 e 116** da una sorgente autorizzata
+- GitHub Action oraria che controlla solo il prossimo capitolo e committa/deploya solo se trova nuove immagini
 
 > Nota: usa il download reale solo con immagini che puoi legalmente copiare e pubblicare: contenuti tuoi, licenziati, public domain o comunque autorizzati. Il workflow non ha un URL hardcoded verso siti terzi.
 
@@ -108,26 +108,36 @@ Ogni push su `main` o `master` esegue:
 .github/workflows/deploy-cloudflare.yml
 ```
 
-Il deploy usa Wrangler e Cloudflare Workers Static Assets.
+Il deploy pubblica il reader su Cloudflare tramite Wrangler.
 
 ---
 
-## Import immagini: solo volumi 115 e 116
+## Import immagini: controllo orario nuovo capitolo
 
-Il workflow giornaliero è:
+Il workflow orario è:
 
 ```text
 .github/workflows/daily-download.yml
 ```
 
-È limitato a:
+Fa questo:
 
 ```text
-volume 115
-volume 116
+1. Legge il capitolo più alto presente in public/content/manifest.json.
+2. Prova latest + 1, e opzionalmente qualche capitolo successivo con scan_ahead.
+3. Prova la cartella volume corrente e volume successivo, oppure i volumi configurati da variabile.
+4. Scarica solo se trova almeno min_pages immagini valide.
+5. Crea commit solo se ci sono nuove immagini e manifest aggiornato.
+6. Cloudflare deploya solo perché quel commit fa partire deploy-cloudflare.yml.
 ```
 
-Nel file YAML trovi anche il blocco per importare tutto il catalogo, ma è **commentato**.
+Se non trova nulla, esce con:
+
+```text
+No new chapter found. No commit will be created.
+```
+
+Quindi non parte nessun deploy Cloudflare inutile.
 
 ### Variabili GitHub richieste per attivare il download reale
 
@@ -144,19 +154,32 @@ AUTHORIZED_MANGA_BASE_URL = https://tuo-dominio-autorizzato/esempio
 I_CONFIRM_RIGHTS = true
 ```
 
-Senza queste due variabili il workflow parte, ma salta il download reale.
+Variabile opzionale, utile se il nuovo capitolo viene pubblicato in una cartella volume specifica:
+
+```text
+NEW_CHAPTER_VOLUME_CANDIDATES = 116,117
+```
+
+Senza `AUTHORIZED_MANGA_BASE_URL` e `I_CONFIRM_RIGHTS=true` il workflow parte, ma salta il download reale.
 
 ### Avvio manuale
 
 Da GitHub:
 
 ```text
-Actions → Import Authorized Manga Volumes 115-116 → Run workflow
+Actions → Scan New Manga Chapter Hourly → Run workflow
 ```
 
-Puoi anche passare `base_url` manualmente nel form del workflow.
+Puoi passare manualmente:
 
----
+```text
+base_url
+chapter
+volume_candidates
+scan_ahead
+max_pages
+min_pages
+```
 
 ## Uso manuale dello script
 
@@ -257,7 +280,7 @@ Dopo aver creato il bucket, lo sblocchi e usi URL nel manifest come:
 
 ## Note operative
 
-- `daily-download.yml` committa solo se trova nuove immagini o aggiorna il manifest.
+- `daily-download.yml` committa solo se trova un nuovo capitolo con nuove immagini accettate.
 - Il push ha retry con `git pull --rebase --autostash` per ridurre i conflitti.
 - Il deploy Cloudflare parte automaticamente dopo il push generato dal workflow di import.
 - Per ora il progetto rimane semplice: niente CMS, niente database, solo JSON + file statici.
@@ -287,3 +310,8 @@ Il reader del capitolo è ora pensato principalmente come **pagina singola**:
 - menu rapidi anche nel reader: **Volume**, **Capitolo**, **Pagina**.
 
 Resta disponibile anche la modalità **Scroll verticale**, attivabile dal pulsante in alto nel reader.
+
+
+## Mappa capitoli futura
+
+Da volume 117 in poi la mappa è dinamica: volume 117 = capitoli 1186-1195, volume 118 = 1196-1205, e ogni volume successivo aggiunge 10 capitoli. Non serve aggiornare manualmente lo script per i volumi futuri.

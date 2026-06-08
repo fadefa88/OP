@@ -11,9 +11,9 @@ Default mode is audit-only. Real downloads require both:
 Use the download mode only with images you own, have licensed, that are public
 domain, or that you are otherwise legally allowed to copy and host.
 
-The GitHub workflow in this repo is intentionally limited to volumes 115 and 116
-for the initial production test. The full-catalog import block is left commented
-inside the workflow.
+The GitHub workflow in this repo checks hourly for the next chapter only.
+It commits and triggers Cloudflare deployment only when new image files are
+actually imported.
 """
 
 from __future__ import annotations
@@ -153,7 +153,15 @@ VOLUME_CHAPTER_RANGES: list[tuple[int, int, int]] = [
     (114, 1156, 1165),
     (115, 1166, 1175),
     (116, 1176, 1185),
+    (117, 1186, 1195),
 ]
+
+# From volume 117 onward the collection follows a stable 10-chapter pattern:
+# volume 117 = chapters 1186-1195, volume 118 = 1196-1205, and so on.
+# This keeps future imports working without manually extending the map.
+FUTURE_VOLUME_BASE = 117
+FUTURE_CHAPTER_BASE = 1186
+FUTURE_CHAPTERS_PER_VOLUME = 10
 
 
 @dataclass(frozen=True)
@@ -191,13 +199,30 @@ def slugify(value: str) -> str:
     return value or "manga"
 
 
+def future_volume_for_chapter(chapter: int) -> int:
+    if chapter < FUTURE_CHAPTER_BASE:
+        raise ValueError(f"Chapter {chapter} is before the dynamic future mapping base.")
+    offset = chapter - FUTURE_CHAPTER_BASE
+    return FUTURE_VOLUME_BASE + (offset // FUTURE_CHAPTERS_PER_VOLUME)
+
+
+def future_chapter_range_for_volume(volume: int) -> tuple[int, int]:
+    if volume < FUTURE_VOLUME_BASE:
+        raise ValueError(f"Volume {volume} is before the dynamic future mapping base.")
+    start = FUTURE_CHAPTER_BASE + ((volume - FUTURE_VOLUME_BASE) * FUTURE_CHAPTERS_PER_VOLUME)
+    return start, start + FUTURE_CHAPTERS_PER_VOLUME - 1
+
+
 def find_volume_for_chapter(chapter: int) -> int:
     for volume, start_chapter, end_chapter in VOLUME_CHAPTER_RANGES:
         if start_chapter <= chapter <= end_chapter:
             return volume
+
+    if chapter >= FUTURE_CHAPTER_BASE:
+        return future_volume_for_chapter(chapter)
+
     raise ValueError(
-        f"Chapter {chapter} is not present in VOLUME_CHAPTER_RANGES. "
-        "Extend the mapping or pass a known chapter."
+        f"Chapter {chapter} is not present in the known chapter-to-volume map."
     )
 
 
@@ -205,9 +230,12 @@ def chapter_range_for_volume(volume: int) -> tuple[int, int]:
     for vol, start_chapter, end_chapter in VOLUME_CHAPTER_RANGES:
         if vol == volume:
             return start_chapter, end_chapter
+
+    if volume >= FUTURE_VOLUME_BASE:
+        return future_chapter_range_for_volume(volume)
+
     raise ValueError(
-        f"Volume {volume} is not present in VOLUME_CHAPTER_RANGES. "
-        "Extend the mapping first."
+        f"Volume {volume} is not present in the known volume-to-chapter map."
     )
 
 
@@ -378,8 +406,9 @@ def process_chapter(
     output_dir: Path,
     series_id: str,
     overwrite: bool,
+    volume_override: int | None = None,
 ) -> list[CheckResult]:
-    volume = find_volume_for_chapter(chapter)
+    volume = volume_override if volume_override is not None else find_volume_for_chapter(chapter)
     results: list[CheckResult] = []
     consecutive_missing = 0
 
@@ -542,7 +571,7 @@ def update_manifest(
 
     for chapter, results in sorted(downloaded_by_chapter.items()):
         chapter_id = f"chapter-{pad_chapter(chapter)}"
-        volume = find_volume_for_chapter(chapter)
+        volume = results[0].volume
         pages = []
         for result in sorted(results, key=lambda item: item.page):
             file_path = Path(result.file_path)
@@ -621,6 +650,17 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help="Required with --download. Confirms you have the legal right to copy and host these images.",
     )
     parser.add_argument("--overwrite", action="store_true", help="Overwrite already downloaded files.")
+    parser.add_argument(
+        "--volume-override",
+        type=int,
+        help="Force the source volume folder for this chapter. Useful when probing a just-released chapter.",
+    )
+    parser.add_argument(
+        "--min-pages",
+        type=int,
+        default=1,
+        help="Minimum downloaded/existing pages required to accept a chapter. Default: 1",
+    )
     parser.add_argument("--public-dir", default="public", help="Public assets root. Default: public")
     parser.add_argument("--output-dir", default="public/manga", help="Downloaded manga image root. Default: public/manga")
     parser.add_argument("--manifest", default="public/content/manifest.json", help="Manifest JSON path.")
@@ -628,7 +668,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--series-title", default="OP Reader", help="Series title shown in the site.")
     parser.add_argument(
         "--series-description",
-        default="Capitoli importati da una sorgente autorizzata.",
+        default="Archivio capitoli aggiornato automaticamente.",
         help="Series description shown in the site.",
     )
 
@@ -640,6 +680,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         parser.error("--to-chapter requires --from-chapter")
     if args.max_pages < 1:
         parser.error("--max-pages must be >= 1")
+    if args.min_pages < 1:
+        parser.error("--min-pages must be >= 1")
     if args.download and not args.i_confirm_rights:
         parser.error("--download requires --i-confirm-rights")
 
@@ -659,13 +701,16 @@ def main(argv: list[str]) -> int:
         }
     )
 
-    all_results: list[CheckResult] = []
+    report_results: list[CheckResult] = []
+    accepted_results: list[CheckResult] = []
 
     try:
         chapters = list(iter_chapters(args))
         mode = "download" if args.download else "audit"
         print(f"Mode: {mode}")
         print(f"Chapters: {chapters[0]}-{chapters[-1]} ({len(chapters)})")
+        if args.volume_override is not None:
+            print(f"Forced source volume: {args.volume_override}")
 
         for chapter in chapters:
             results = process_chapter(
@@ -681,9 +726,26 @@ def main(argv: list[str]) -> int:
                 output_dir=Path(args.output_dir),
                 series_id=args.series_id,
                 overwrite=args.overwrite,
+                volume_override=args.volume_override,
             )
-            all_results.extend(results)
+            report_results.extend(results)
             print_chapter_summary(chapter, results)
+
+            saved_results = [r for r in results if r.status in ("downloaded", "skipped") and r.file_path]
+            if args.download and 0 < len(saved_results) < args.min_pages:
+                print(
+                    f"Chapter {chapter}: only {len(saved_results)} page(s) found; "
+                    f"minimum is {args.min_pages}. Removing partial download and not updating manifest."
+                )
+                for result in saved_results:
+                    if result.status == "downloaded":
+                        try:
+                            Path(result.file_path).unlink(missing_ok=True)
+                        except OSError as exc:
+                            print(f"Could not remove partial file {result.file_path}: {exc}", file=sys.stderr)
+                continue
+
+            accepted_results.extend(results)
 
             if args.show_urls:
                 for result in results:
@@ -692,12 +754,12 @@ def main(argv: list[str]) -> int:
                     print(f"  {result.status:10} HTTP {http!s:>3} page {result.page:02d} {result.url}{suffix}")
 
         output_path = Path(args.csv)
-        write_csv(output_path, all_results)
+        write_csv(output_path, report_results)
         print(f"\nCSV report written to: {output_path}")
 
-        total_found = sum(1 for r in all_results if r.status == "found")
-        total_downloaded = sum(1 for r in all_results if r.status == "downloaded")
-        total_skipped = sum(1 for r in all_results if r.status == "skipped")
+        total_found = sum(1 for r in report_results if r.status == "found")
+        total_downloaded = sum(1 for r in report_results if r.status == "downloaded")
+        total_skipped = sum(1 for r in report_results if r.status == "skipped")
         print(f"Total image(s) found in audit mode: {total_found}")
         print(f"Total image(s) downloaded: {total_downloaded}")
         print(f"Total existing image(s) skipped: {total_skipped}")
@@ -709,7 +771,7 @@ def main(argv: list[str]) -> int:
                 series_id=args.series_id,
                 series_title=args.series_title,
                 series_description=args.series_description,
-                all_results=all_results,
+                all_results=accepted_results,
             )
         else:
             print("No image file was downloaded or saved. Use --download --i-confirm-rights for legal imports.")

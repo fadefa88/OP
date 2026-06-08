@@ -1,0 +1,46 @@
+name: Daily Manga Downloader
+
+on:
+  schedule:
+    - cron: '0 10 * * *'   # Ogni giorno alle 10:00 UTC (modifica se vuoi)
+  workflow_dispatch:       # Permette di avviarlo manualmente
+
+permissions:
+  contents: write
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run downloader
+        env:
+          MANGA_URL: https://onepiecepower.com/manga8/onepiece/volumi/reader/1176
+        run: python download_manga.py
+
+      - name: Commit and push new images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add img/
+          if git diff --staged --quiet; then
+            echo "Nessuna nuova immagine da caricare"
+          else
+            git commit -m "Update manga images - $(date +'%Y-%m-%d %H:%M')"
+            git push
+          fi

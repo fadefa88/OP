@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 180
 
     env:
-      BASE_URL: "https://www.miosito.com"
+      BASE_URL: "https://onepiecepower.com/manga8/onepiece"
       MAX_PAGES: "40"
       IMAGE_EXTENSION: "jpg"
       REPORT_FILE: "reports/audit-all-volumes.csv"

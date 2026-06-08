@@ -1,7 +1,1011 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-08T00:00:00.000Z",
+  "generatedAt": "2026-06-08T19:40:40.508106+00:00",
   "series": [
+    {
+      "id": "op",
+      "title": "OP Reader",
+      "description": "Capitoli importati da una sorgente autorizzata.",
+      "cover": "/manga/op/chapter-1166/page-001.jpg",
+      "chapters": [
+        {
+          "id": "chapter-1166",
+          "number": 1166,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1166",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1166/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-015.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1166/page-016.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1167",
+          "number": 1167,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1167",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1167/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-015.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1167/page-016.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1168",
+          "number": 1168,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1168",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1168/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1168/page-015.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1169",
+          "number": 1169,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1169",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1169/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-015.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-016.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1169/page-017.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1170",
+          "number": 1170,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1170",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1170/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-015.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1170/page-016.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1171",
+          "number": 1171,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1171",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1171/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1171/page-013.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1172",
+          "number": 1172,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1172",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1172/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1172/page-013.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1173",
+          "number": 1173,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1173",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1173/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1173/page-014.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1174",
+          "number": 1174,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1174",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1174/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1174/page-015.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1175",
+          "number": 1175,
+          "volume": 115,
+          "title": "Volume 115 · Capitolo 1175",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1175/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1175/page-011.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1176",
+          "number": 1176,
+          "volume": 116,
+          "title": "Volume 116 · Capitolo 1176",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1176/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-015.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-016.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1176/page-017.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1177",
+          "number": 1177,
+          "volume": 116,
+          "title": "Volume 116 · Capitolo 1177",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1177/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-015.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1177/page-016.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1178",
+          "number": 1178,
+          "volume": 116,
+          "title": "Volume 116 · Capitolo 1178",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1178/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1178/page-013.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1179",
+          "number": 1179,
+          "volume": 116,
+          "title": "Volume 116 · Capitolo 1179",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1179/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1179/page-015.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1180",
+          "number": 1180,
+          "volume": 116,
+          "title": "Volume 116 · Capitolo 1180",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1180/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1180/page-015.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1181",
+          "number": 1181,
+          "volume": 116,
+          "title": "Volume 116 · Capitolo 1181",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1181/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1181/page-012.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1182",
+          "number": 1182,
+          "volume": 116,
+          "title": "Volume 116 · Capitolo 1182",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1182/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1182/page-013.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1183",
+          "number": 1183,
+          "volume": 116,
+          "title": "Volume 116 · Capitolo 1183",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1183/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-012.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-013.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-014.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-015.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1183/page-016.jpg"
+            }
+          ]
+        },
+        {
+          "id": "chapter-1184",
+          "number": 1184,
+          "volume": 116,
+          "title": "Volume 116 · Capitolo 1184",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            {
+              "src": "/manga/op/chapter-1184/page-001.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-002.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-003.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-004.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-005.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-006.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-007.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-008.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-009.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-010.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-011.jpg"
+            },
+            {
+              "src": "/manga/op/chapter-1184/page-012.jpg"
+            }
+          ]
+        }
+      ]
+    },
     {
       "id": "demo",
       "title": "Demo Manga",
@@ -14,9 +1018,21 @@
           "title": "Capitolo 001 - Demo",
           "publishedAt": "2026-06-08",
           "pages": [
-            { "src": "/manga/demo/chapter-001/page-001.svg", "width": 900, "height": 1350 },
-            { "src": "/manga/demo/chapter-001/page-002.svg", "width": 900, "height": 1350 },
-            { "src": "/manga/demo/chapter-001/page-003.svg", "width": 900, "height": 1350 }
+            {
+              "src": "/manga/demo/chapter-001/page-001.svg",
+              "width": 900,
+              "height": 1350
+            },
+            {
+              "src": "/manga/demo/chapter-001/page-002.svg",
+              "width": 900,
+              "height": 1350
+            },
+            {
+              "src": "/manga/demo/chapter-001/page-003.svg",
+              "width": 900,
+              "height": 1350
+            }
           ]
         }
       ]

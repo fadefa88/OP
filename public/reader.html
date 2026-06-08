@@ -19,6 +19,7 @@
 
       <div class="reader-actions">
         <button id="reader-help-toggle" type="button" title="Mostra comandi">Comandi</button>
+        <button id="fit-toggle" type="button" title="Cambia adattamento immagine">Fit larghezza</button>
         <button id="view-toggle" type="button" title="Cambia modalità">Pagina singola</button>
       </div>
     </header>
@@ -45,8 +46,6 @@
         <div id="single-page-view" class="single-page-view" aria-live="polite">
           <div id="reader-loading" class="reader-placeholder">Caricamento…</div>
           <img id="reader-image" alt="" draggable="false" />
-          <div class="tap-zone tap-zone-left" aria-hidden="true"></div>
-          <div class="tap-zone tap-zone-right" aria-hidden="true"></div>
         </div>
 
         <button id="next-page" class="page-arrow page-arrow-right" type="button" aria-label="Pagina successiva">›</button>
@@ -57,6 +56,7 @@
       <div id="reader-help" class="reader-help" hidden>
         <span>PC: freccia destra/sinistra per cambiare pagina.</span>
         <span>Mobile: swipe o tap sui lati dell'immagine.</span>
+        <span>Default: larghezza piena e scroll verticale sulla singola pagina.</span>
         <span>A fine capitolo vai automaticamente al capitolo successivo.</span>
       </div>
     </main>

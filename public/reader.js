@@ -19,6 +19,7 @@ const els = {
   nextChapter: document.querySelector('#next-chapter'),
   pageCounter: document.querySelector('#page-counter'),
   viewToggle: document.querySelector('#view-toggle'),
+  fitToggle: document.querySelector('#fit-toggle'),
   helpToggle: document.querySelector('#reader-help-toggle'),
   help: document.querySelector('#reader-help')
 };
@@ -29,7 +30,9 @@ const state = {
   chapter: null,
   chapterIndex: 0,
   pageIndex: requestedPage - 1,
-  viewMode: localStorage.getItem('reader.viewMode') || 'paged'
+  viewMode: localStorage.getItem('reader.viewMode') || 'paged',
+  fitMode: localStorage.getItem('reader.fitMode') || 'width',
+  uiHidden: false
 };
 
 async function loadManifest() {
@@ -185,6 +188,7 @@ function renderPage() {
   els.loading.textContent = 'Caricamento…';
   els.loading.hidden = false;
   els.image.classList.remove('is-loaded');
+  els.singleView.scrollTop = 0;
   els.image.alt = `${state.chapter.title}, pagina ${state.pageIndex + 1}`;
   els.image.src = page.src;
   els.pageSelect.value = String(state.pageIndex + 1);
@@ -221,6 +225,33 @@ function applyViewMode() {
   localStorage.setItem('reader.viewMode', state.viewMode);
 }
 
+function applyFitMode() {
+  const fitWidth = state.fitMode === 'width';
+  document.body.classList.toggle('fit-width', fitWidth);
+  document.body.classList.toggle('fit-page', !fitWidth);
+  els.fitToggle.textContent = fitWidth ? 'Fit larghezza' : 'Pagina intera';
+  els.fitToggle.setAttribute('aria-pressed', String(fitWidth));
+  localStorage.setItem('reader.fitMode', state.fitMode);
+}
+
+let uiTimer = null;
+
+function setUiHidden(hidden) {
+  state.uiHidden = hidden;
+  document.body.classList.toggle('reader-ui-hidden', hidden);
+}
+
+function showReaderUi({ keep = false } = {}) {
+  setUiHidden(false);
+  if (uiTimer) window.clearTimeout(uiTimer);
+  if (keep || state.viewMode !== 'paged') return;
+  uiTimer = window.setTimeout(() => {
+    const activeTag = document.activeElement?.tagName?.toLowerCase();
+    if (['input', 'select', 'textarea', 'button'].includes(activeTag)) return;
+    setUiHidden(true);
+  }, 2600);
+}
+
 function renderAll() {
   state.pageIndex = clampPageIndex(state.pageIndex);
   renderSelectors();
@@ -228,6 +259,8 @@ function renderAll() {
   renderPage();
   renderScrollReader();
   applyViewMode();
+  applyFitMode();
+  showReaderUi();
 }
 
 function setChapter(chapterId, page = 1) {
@@ -243,6 +276,7 @@ function setChapter(chapterId, page = 1) {
 function goToPage(index) {
   state.pageIndex = clampPageIndex(index);
   renderPage();
+  showReaderUi();
 }
 
 function goNextPage() {
@@ -280,6 +314,9 @@ function selectInitialState(manifest) {
 els.image.addEventListener('load', () => {
   els.loading.hidden = true;
   els.image.classList.add('is-loaded');
+  requestAnimationFrame(() => {
+    els.singleView.scrollTop = 0;
+  });
 });
 
 els.image.addEventListener('error', () => {
@@ -287,11 +324,14 @@ els.image.addEventListener('error', () => {
   els.loading.hidden = false;
 });
 
-els.prevPage.addEventListener('click', goPreviousPage);
-els.nextPage.addEventListener('click', goNextPage);
-
-document.querySelector('.tap-zone-left').addEventListener('click', goPreviousPage);
-document.querySelector('.tap-zone-right').addEventListener('click', goNextPage);
+els.prevPage.addEventListener('click', () => {
+  showReaderUi({ keep: true });
+  goPreviousPage();
+});
+els.nextPage.addEventListener('click', () => {
+  showReaderUi({ keep: true });
+  goNextPage();
+});
 
 els.volumeSelect.addEventListener('change', () => {
   const chapter = getChapters(state.series).find((item) => String(item.volume ?? 'speciali') === els.volumeSelect.value);
@@ -309,10 +349,19 @@ els.pageSelect.addEventListener('change', () => {
 els.viewToggle.addEventListener('click', () => {
   state.viewMode = state.viewMode === 'paged' ? 'scroll' : 'paged';
   applyViewMode();
+  showReaderUi({ keep: true });
+});
+
+els.fitToggle.addEventListener('click', () => {
+  state.fitMode = state.fitMode === 'width' ? 'page' : 'width';
+  applyFitMode();
+  els.singleView.scrollTop = 0;
+  showReaderUi({ keep: true });
 });
 
 els.helpToggle.addEventListener('click', () => {
   els.help.hidden = !els.help.hidden;
+  showReaderUi({ keep: true });
 });
 
 document.addEventListener('keydown', (event) => {
@@ -328,15 +377,28 @@ document.addEventListener('keydown', (event) => {
     event.preventDefault();
     goPreviousPage();
   }
+
+  if (event.key === ' ' || event.key.toLowerCase() === 'h') {
+    event.preventDefault();
+    setUiHidden(!state.uiHidden);
+  }
 });
 
 let touchStartX = 0;
 let touchStartY = 0;
+let touchMoved = false;
 
 els.singleView.addEventListener('touchstart', (event) => {
   const touch = event.changedTouches[0];
   touchStartX = touch.clientX;
   touchStartY = touch.clientY;
+  touchMoved = false;
+  showReaderUi();
+}, { passive: true });
+
+els.singleView.addEventListener('touchmove', (event) => {
+  const touch = event.changedTouches[0];
+  if (Math.abs(touch.clientX - touchStartX) > 8 || Math.abs(touch.clientY - touchStartY) > 8) touchMoved = true;
 }, { passive: true });
 
 els.singleView.addEventListener('touchend', (event) => {
@@ -344,10 +406,36 @@ els.singleView.addEventListener('touchend', (event) => {
   const diffX = touch.clientX - touchStartX;
   const diffY = touch.clientY - touchStartY;
 
-  if (Math.abs(diffX) < 45 || Math.abs(diffX) < Math.abs(diffY)) return;
-  if (diffX < 0) goNextPage();
-  else goPreviousPage();
+  if (Math.abs(diffX) >= 45 && Math.abs(diffX) > Math.abs(diffY)) {
+    if (diffX < 0) goNextPage();
+    else goPreviousPage();
+  }
 }, { passive: true });
+
+els.singleView.addEventListener('click', (event) => {
+  if (touchMoved) return;
+  const activeTag = event.target?.tagName?.toLowerCase();
+  if (['select', 'button', 'a'].includes(activeTag)) return;
+
+  const rect = els.singleView.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+
+  if (x < rect.width * 0.28) {
+    goPreviousPage();
+    return;
+  }
+
+  if (x > rect.width * 0.72) {
+    goNextPage();
+    return;
+  }
+
+  setUiHidden(!state.uiHidden);
+});
+
+['mousemove', 'pointermove', 'focusin'].forEach((eventName) => {
+  document.addEventListener(eventName, () => showReaderUi(), { passive: true });
+});
 
 loadManifest()
   .then((manifest) => {

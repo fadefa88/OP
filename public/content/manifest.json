@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-08T00:00:00.000Z",
+  "series": [
+    {
+      "id": "demo",
+      "title": "Demo Manga",
+      "description": "Capitolo demo con immagini SVG originali. Sostituisci questi file con immagini autorizzate o con oggetti R2.",
+      "cover": "/manga/demo/chapter-001/page-001.svg",
+      "chapters": [
+        {
+          "id": "chapter-001",
+          "number": 1,
+          "title": "Capitolo 001 - Demo",
+          "publishedAt": "2026-06-08",
+          "pages": [
+            { "src": "/manga/demo/chapter-001/page-001.svg", "width": 900, "height": 1350 },
+            { "src": "/manga/demo/chapter-001/page-002.svg", "width": 900, "height": 1350 },
+            { "src": "/manga/demo/chapter-001/page-003.svg", "width": 900, "height": 1350 }
+          ]
+        }
+      ]
+    }
+  ]
+}

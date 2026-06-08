@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "op-main-manga-reader",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-06-01",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "SITE_NAME": "OP Reader",
+    "MANIFEST_PATH": "/content/manifest.json",
+    "R2_PUBLIC_PREFIX": "manga"
+  },
+
+  // Optional R2 binding.
+  // 1) Create a bucket in Cloudflare R2, for example: manga-reader-assets
+  // 2) Uncomment this block and replace bucket_name.
+  // "r2_buckets": [
+  //   {
+  //     "binding": "MANGA_R2",
+  //     "bucket_name": "manga-reader-assets"
+  //   }
+  // ]
+}

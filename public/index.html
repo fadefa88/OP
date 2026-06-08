@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f172a" />
+    <title>OP Reader</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Vai alla home">
+        <span class="brand-mark">MR</span>
+        <span>
+          <strong>OP Reader</strong>
+          <small>GitHub + Cloudflare</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Navigazione principale">
+        <a href="#library">Library</a>
+        <a href="#how">Deploy</a>
+        <a href="/api/health" target="_blank" rel="noreferrer">API</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Statico, veloce, edge-ready</p>
+          <h1>Un manga reader moderno su GitHub e Cloudflare Workers.</h1>
+          <p>
+            Frontend statico, manifest JSON, API serverless e predisposizione R2.
+            Il workflow importa solo volumi 115 e 116 da sorgenti autorizzate configurate da te.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#library">Apri library</a>
+            <a class="button ghost" href="/api/manifest" target="_blank" rel="noreferrer">Vedi manifest API</a>
+          </div>
+        </div>
+        <div class="hero-card" aria-label="Anteprima reader">
+          <div class="mock-browser">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="mock-page">
+            <div class="mock-panel tall"></div>
+            <div class="mock-panel"></div>
+            <div class="mock-panel short"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="library" class="section">
+        <div class="section-head">
+          <p class="eyebrow">Library</p>
+          <h2>Capitoli disponibili</h2>
+          <p>Questa demo carica i capitoli da <code>/api/manifest</code>, servito dal Worker Cloudflare.</p>
+        </div>
+        <div id="series-grid" class="series-grid" aria-live="polite"></div>
+      </section>
+
+      <section id="how" class="section deploy-panel">
+        <div>
+          <p class="eyebrow">Deploy</p>
+          <h2>Flusso previsto</h2>
+        </div>
+        <ol class="steps">
+          <li>Crea un repo GitHub e carica questi file.</li>
+          <li>Installa le dipendenze con <code>npm install</code>.</li>
+          <li>Test locale: <code>npm run dev</code>.</li>
+          <li>Deploy: <code>npm run deploy</code> oppure GitHub Action.</li>
+          <li>Per immagini pesanti, spostale su Cloudflare R2 e abilita il binding.</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Built for Cloudflare Workers Static Assets.</span>
+      <span>Import automatico limitato a volumi 115/116 da sorgenti autorizzate.</span>
+    </footer>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

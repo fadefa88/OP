@@ -1,0 +1,17 @@
+{
+  "name": "op-main-manga-reader",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Merged OP-main manga reader hosted on Cloudflare Workers Static Assets with optional R2 integration.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf:login": "wrangler login",
+    "prepare:chapter": "node scripts/prepare-local-chapter.mjs",
+    "upload:r2": "node scripts/upload-r2.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

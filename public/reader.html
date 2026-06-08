@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#020617" />
+    <title>Reader - Manga Reader</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="reader-body">
+    <header class="reader-toolbar">
+      <a class="reader-back" href="/">← Library</a>
+      <div class="reader-title">
+        <strong id="reader-series">Caricamento…</strong>
+        <small id="reader-chapter"></small>
+      </div>
+      <div class="reader-controls">
+        <button id="mode-toggle" type="button" title="Cambia modalità">Verticale</button>
+        <button id="fit-toggle" type="button" title="Cambia adattamento">Fit width</button>
+      </div>
+    </header>
+
+    <main class="reader-shell">
+      <aside class="chapter-sidebar" aria-label="Indice capitoli">
+        <h2>Capitoli</h2>
+        <div id="chapter-list" class="chapter-list"></div>
+      </aside>
+      <section class="reader-stage" aria-label="Pagine manga">
+        <div id="reader-pages" class="reader-pages vertical fit-width"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-reader-nav" aria-label="Navigazione capitoli">
+      <a id="prev-chapter" class="button ghost" href="#">← Capitolo precedente</a>
+      <a id="next-chapter" class="button primary" href="#">Capitolo successivo →</a>
+    </nav>
+
+    <script type="module" src="/reader.js"></script>
+  </body>
+</html>

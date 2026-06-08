@@ -1,4 +1,4 @@
-name: Daily Manga Image Audit
+name: Import Authorized Manga Volumes 115-116
 
 on:
   schedule:
@@ -6,29 +6,43 @@ on:
     # In Italy this is 04:00 CET or 05:00 CEST.
     - cron: "0 3 * * *"
   workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Authorized image source base URL. Overrides repository variable AUTHORIZED_MANGA_BASE_URL."
+        required: false
+        type: string
+      max_pages:
+        description: "Maximum pages to try per chapter"
+        required: false
+        default: "40"
+        type: string
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
-  group: daily-manga-image-audit
+  group: import-authorized-manga-volumes-115-116
   cancel-in-progress: true
 
 jobs:
-  audit:
-    name: Audit all mapped volumes without downloading images
+  import:
+    name: Import authorized volumes 115 and 116
     runs-on: ubuntu-latest
     timeout-minutes: 180
 
     env:
-      BASE_URL: "https://onepiecepower.com/manga8/onepiece"
-      MAX_PAGES: "40"
+      AUTHORIZED_MANGA_BASE_URL: ${{ vars.AUTHORIZED_MANGA_BASE_URL }}
+      I_CONFIRM_RIGHTS: ${{ vars.I_CONFIRM_RIGHTS }}
       IMAGE_EXTENSION: "jpg"
-      REPORT_FILE: "reports/audit-all-volumes.csv"
+      SERIES_ID: "op"
+      SERIES_TITLE: "OP Reader"
+      REPORT_DIR: "reports"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -40,74 +54,128 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Resolve mapped chapter range
+      - name: Resolve production import settings
+        id: settings
+        shell: bash
         run: |
-          FROM_CHAPTER="$(python - <<'PY'
-          import download_manga as manga
-          print(min(start for _, start, _ in manga.VOLUME_CHAPTER_RANGES))
-          PY
-          )"
+          set -euo pipefail
 
-          TO_CHAPTER="$(python - <<'PY'
-          import download_manga as manga
-          print(max(end for _, _, end in manga.VOLUME_CHAPTER_RANGES))
-          PY
-          )"
+          BASE_URL_INPUT="${{ github.event.inputs.base_url }}"
+          MAX_PAGES_INPUT="${{ github.event.inputs.max_pages }}"
 
-          echo "FROM_CHAPTER=$FROM_CHAPTER" >> "$GITHUB_ENV"
-          echo "TO_CHAPTER=$TO_CHAPTER" >> "$GITHUB_ENV"
+          BASE_URL="${BASE_URL_INPUT:-${AUTHORIZED_MANGA_BASE_URL:-}}"
+          MAX_PAGES="${MAX_PAGES_INPUT:-40}"
 
-          echo "Mapped range: chapters $FROM_CHAPTER-$TO_CHAPTER"
-
-      - name: Run dry-run audit for all mapped chapters
-        run: |
-          mkdir -p reports
-
-          python download_manga.py \
-            --base-url "$BASE_URL" \
-            --from-chapter "$FROM_CHAPTER" \
-            --to-chapter "$TO_CHAPTER" \
-            --max-pages "$MAX_PAGES" \
-            --extension "$IMAGE_EXTENSION" \
-            --stop-after-missing 0 \
-            --csv "$REPORT_FILE"
-
-      - name: Print audit summary
-        if: always()
-        run: |
-          if [ -f "$REPORT_FILE" ]; then
-            python - <<'PY'
-          import csv
-          from collections import Counter
-
-          report_file = "reports/audit-all-volumes.csv"
-
-          with open(report_file, newline="", encoding="utf-8") as handle:
-              rows = list(csv.DictReader(handle))
-
-          status_counts = Counter(row["status"] for row in rows)
-          chapters = sorted({int(row["chapter"]) for row in rows})
-          volumes = sorted({int(row["volume"]) for row in rows})
-
-          print("Audit summary")
-          print("-------------")
-          print(f"Volumes checked: {volumes[0]}-{volumes[-1]} ({len(volumes)} volumes)")
-          print(f"Chapters checked: {chapters[0]}-{chapters[-1]} ({len(chapters)} chapters)")
-          print(f"URLs checked: {len(rows)}")
-          print(f"Images that would be downloadable: {status_counts.get('found', 0)}")
-          print(f"Missing: {status_counts.get('missing', 0)}")
-          print(f"Blocked: {status_counts.get('blocked', 0)}")
-          print(f"Errors: {status_counts.get('error', 0)}")
-          print(f"Non-image responses: {status_counts.get('not_image', 0)}")
-          PY
-          else
-            echo "Report file not found: $REPORT_FILE"
+          if [ -z "$BASE_URL" ]; then
+            echo "No authorized base URL configured. Set repository variable AUTHORIZED_MANGA_BASE_URL or pass base_url manually."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
-      - name: Upload audit CSV report
+          if [ "${I_CONFIRM_RIGHTS:-}" != "true" ]; then
+            echo "I_CONFIRM_RIGHTS repository variable is not true. Skipping real download."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "base_url=$BASE_URL" >> "$GITHUB_OUTPUT"
+          echo "max_pages=$MAX_PAGES" >> "$GITHUB_OUTPUT"
+
+      - name: Import only volumes 115 and 116
+        if: steps.settings.outputs.skip != 'true'
+        run: |
+          set -euo pipefail
+          mkdir -p "$REPORT_DIR"
+
+          for VOLUME in 115 116; do
+            python download_manga.py \
+              --base-url "${{ steps.settings.outputs.base_url }}" \
+              --volume "$VOLUME" \
+              --max-pages "${{ steps.settings.outputs.max_pages }}" \
+              --extension "$IMAGE_EXTENSION" \
+              --stop-after-missing 3 \
+              --csv "$REPORT_DIR/import-volume-$VOLUME.csv" \
+              --download \
+              --i-confirm-rights \
+              --public-dir public \
+              --output-dir public/manga \
+              --manifest public/content/manifest.json \
+              --series-id "$SERIES_ID" \
+              --series-title "$SERIES_TITLE"
+          done
+
+          # FULL IMPORT DISABLED INTENTIONALLY.
+          # When you are ready and you have storage/bandwidth/legal clearance,
+          # you can replace the two-volume loop above with this full import block:
+          #
+          # FROM_CHAPTER="$(python - <<'PY'
+          # import download_manga as manga
+          # print(min(start for _, start, _ in manga.VOLUME_CHAPTER_RANGES))
+          # PY
+          # )"
+          # TO_CHAPTER="$(python - <<'PY'
+          # import download_manga as manga
+          # print(max(end for _, _, end in manga.VOLUME_CHAPTER_RANGES))
+          # PY
+          # )"
+          # python download_manga.py \
+          #   --base-url "${{ steps.settings.outputs.base_url }}" \
+          #   --from-chapter "$FROM_CHAPTER" \
+          #   --to-chapter "$TO_CHAPTER" \
+          #   --max-pages "${{ steps.settings.outputs.max_pages }}" \
+          #   --extension "$IMAGE_EXTENSION" \
+          #   --stop-after-missing 3 \
+          #   --csv "$REPORT_DIR/import-all-volumes.csv" \
+          #   --download \
+          #   --i-confirm-rights \
+          #   --public-dir public \
+          #   --output-dir public/manga \
+          #   --manifest public/content/manifest.json \
+          #   --series-id "$SERIES_ID" \
+          #   --series-title "$SERIES_TITLE"
+
+      - name: Commit imported images and manifest
+        if: steps.settings.outputs.skip != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          if git diff --quiet -- public 2>/dev/null && git diff --cached --quiet; then
+            echo "No new manga images to commit."
+            exit 0
+          fi
+
+          git add public/content/manifest.json public/manga || true
+
+          if git diff --cached --quiet; then
+            echo "No staged changes."
+            exit 0
+          fi
+
+          git commit -m "Import authorized manga volumes 115-116"
+
+          BRANCH="${GITHUB_REF_NAME:-main}"
+          for ATTEMPT in 1 2 3; do
+            if git push origin "HEAD:$BRANCH"; then
+              echo "Push succeeded."
+              exit 0
+            fi
+
+            echo "Push failed, attempt $ATTEMPT. Rebasing and retrying."
+            git pull --rebase --autostash origin "$BRANCH"
+          done
+
+          echo "Push failed after 3 attempts."
+          exit 1
+
+      - name: Upload import CSV reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: manga-audit-report
+          name: manga-import-reports
           path: reports/
           if-no-files-found: warn

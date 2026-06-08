@@ -1,32 +1,41 @@
 #!/usr/bin/env python3
 """
-image_audit_dryrun.py
+download_manga.py
 
-Dry-run/audit script:
-- Builds image URLs using volume/chapter/page logic.
-- Checks whether images appear to exist.
-- Does NOT download or save images.
-- Copyright/licensing must be verified manually by the user before any real use.
+Audits or imports manga/comic page images into the Cloudflare manga reader.
 
-Example URL generated:
-https://onepiecepower.com/manga8/onepiece/volumi/volume116/1176/01.jpg
+Default mode is audit-only. Real downloads require both:
+  1. --download
+  2. --i-confirm-rights
+
+Use the download mode only with images you own, have licensed, that are public
+domain, or that you are otherwise legally allowed to copy and host.
+
+The GitHub workflow in this repo is intentionally limited to volumes 115 and 116
+for the initial production test. The full-catalog import block is left commented
+inside the workflow.
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
+import json
+import mimetypes
+import os
+import re
+import shutil
 import sys
+import tempfile
 import time
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable, Optional
 
 import requests
 
 
-# Current volume -> chapter ranges.
-# Extend this list when future official volume/chapter mappings are known.
 VOLUME_CHAPTER_RANGES: list[tuple[int, int, int]] = [
     (1, 1, 8),
     (2, 9, 17),
@@ -153,9 +162,10 @@ class CheckResult:
     volume: int
     page: int
     url: str
-    status: str  # found | missing | blocked | error | not_image
+    status: str  # found | downloaded | missing | blocked | error | not_image | skipped
     http_status: Optional[int]
     content_type: str
+    file_path: str = ""
     note: str = ""
 
 
@@ -172,6 +182,13 @@ def pad_chapter(chapter: int) -> str:
 def pad_page(page: int) -> str:
     """Image pages are formatted as 01, 02, ..., 40."""
     return f"{page:02d}"
+
+
+def slugify(value: str) -> str:
+    value = value.strip().lower()
+    value = re.sub(r"[^a-z0-9]+", "-", value)
+    value = re.sub(r"-+", "-", value).strip("-")
+    return value or "manga"
 
 
 def find_volume_for_chapter(chapter: int) -> int:
@@ -208,6 +225,14 @@ def looks_like_image(content_type: str) -> bool:
     return content_type.lower().split(";")[0].strip().startswith("image/")
 
 
+def extension_for_response(content_type: str, fallback: str) -> str:
+    clean = content_type.lower().split(";")[0].strip()
+    guessed = mimetypes.guess_extension(clean) if clean else None
+    if guessed == ".jpe":
+        guessed = ".jpg"
+    return (guessed or f".{fallback.lstrip('.')}").lower()
+
+
 def classify_response(response: requests.Response) -> tuple[str, str]:
     content_type = response.headers.get("Content-Type", "")
     status_code = response.status_code
@@ -222,8 +247,6 @@ def classify_response(response: requests.Response) -> tuple[str, str]:
         if looks_like_image(content_type):
             return "found", content_type
 
-        # Some static servers misconfigure Content-Type.
-        # Treat it as found only if the server did not obviously return HTML/text.
         lower_type = content_type.lower()
         if not lower_type or ("html" not in lower_type and "text/" not in lower_type):
             return "found", content_type
@@ -256,12 +279,9 @@ def check_image_exists(
         head = session.head(url, timeout=timeout, allow_redirects=True, headers=headers)
         if head.status_code not in (405, 501):
             status, content_type = classify_response(head)
-
-            # HEAD can lie or omit Content-Type. If it says found without type, confirm lightly.
             if status != "found" or looks_like_image(content_type):
                 return status, head.status_code, content_type, "HEAD"
 
-        # Fallback: ask for a single byte and close the stream immediately.
         get_headers = {**headers, "Range": "bytes=0-0"}
         with session.get(
             url,
@@ -275,6 +295,50 @@ def check_image_exists(
 
     except requests.RequestException as exc:
         return "error", None, "", exc.__class__.__name__
+
+
+def download_image(
+    session: requests.Session,
+    url: str,
+    output_path_without_ext: Path,
+    extension: str,
+    timeout: float,
+    overwrite: bool,
+) -> tuple[str, Optional[int], str, str, Path | None]:
+    """Download one image to a temporary file, validate response, then move atomically."""
+    headers = {
+        "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+    }
+
+    try:
+        with session.get(url, timeout=timeout, allow_redirects=True, headers=headers, stream=True) as response:
+            status, content_type = classify_response(response)
+            if status != "found":
+                return status, response.status_code, content_type, "GET", None
+
+            final_ext = extension_for_response(content_type, extension)
+            final_path = output_path_without_ext.with_suffix(final_ext)
+
+            if final_path.exists() and not overwrite:
+                return "skipped", response.status_code, content_type, "already exists", final_path
+
+            final_path.parent.mkdir(parents=True, exist_ok=True)
+
+            with tempfile.NamedTemporaryFile(delete=False, dir=str(final_path.parent), suffix=".tmp") as tmp:
+                tmp_path = Path(tmp.name)
+                for chunk in response.iter_content(chunk_size=1024 * 128):
+                    if chunk:
+                        tmp.write(chunk)
+
+            if tmp_path.stat().st_size == 0:
+                tmp_path.unlink(missing_ok=True)
+                return "error", response.status_code, content_type, "empty file", None
+
+            os.replace(tmp_path, final_path)
+            return "downloaded", response.status_code, content_type, "GET", final_path
+
+    except requests.RequestException as exc:
+        return "error", None, "", exc.__class__.__name__, None
 
 
 def iter_chapters(args: argparse.Namespace) -> Iterable[int]:
@@ -296,7 +360,12 @@ def iter_chapters(args: argparse.Namespace) -> Iterable[int]:
     raise ValueError("Specify one of: --chapter, --volume, or --from-chapter + --to-chapter")
 
 
-def audit_chapter(
+def target_page_base_path(output_dir: Path, series_id: str, chapter: int, page: int) -> Path:
+    chapter_id = f"chapter-{pad_chapter(chapter)}"
+    return output_dir / slugify(series_id) / chapter_id / f"page-{page:03d}"
+
+
+def process_chapter(
     session: requests.Session,
     base_url: str,
     chapter: int,
@@ -305,6 +374,10 @@ def audit_chapter(
     timeout: float,
     delay: float,
     stop_after_missing: int,
+    download: bool,
+    output_dir: Path,
+    series_id: str,
+    overwrite: bool,
 ) -> list[CheckResult]:
     volume = find_volume_for_chapter(chapter)
     results: list[CheckResult] = []
@@ -312,7 +385,20 @@ def audit_chapter(
 
     for page in range(1, max_pages + 1):
         url = build_image_url(base_url, volume, chapter, page, extension)
-        status, http_status, content_type, note = check_image_exists(session, url, timeout)
+
+        if download:
+            path_base = target_page_base_path(output_dir, series_id, chapter, page)
+            status, http_status, content_type, note, saved_path = download_image(
+                session=session,
+                url=url,
+                output_path_without_ext=path_base,
+                extension=extension,
+                timeout=timeout,
+                overwrite=overwrite,
+            )
+        else:
+            status, http_status, content_type, note = check_image_exists(session, url, timeout)
+            saved_path = None
 
         result = CheckResult(
             chapter=chapter,
@@ -322,6 +408,7 @@ def audit_chapter(
             status=status,
             http_status=http_status,
             content_type=content_type,
+            file_path=str(saved_path) if saved_path else "",
             note=note,
         )
         results.append(result)
@@ -347,19 +434,25 @@ def print_chapter_summary(chapter: int, results: list[CheckResult]) -> None:
 
     volume = results[0].volume
     found = sum(1 for r in results if r.status == "found")
+    downloaded = sum(1 for r in results if r.status == "downloaded")
+    skipped = sum(1 for r in results if r.status == "skipped")
     missing = sum(1 for r in results if r.status == "missing")
     blocked = sum(1 for r in results if r.status == "blocked")
     errors = sum(1 for r in results if r.status == "error")
     not_image = sum(1 for r in results if r.status == "not_image")
 
-    print(
-        f"Volume {volume} / Chapter {chapter}: "
-        f"{found} image(s) would be downloadable, "
-        f"{missing} missing, "
-        f"{blocked} blocked, "
-        f"{errors} error(s), "
-        f"{not_image} non-image response(s)."
-    )
+    if downloaded or skipped:
+        print(
+            f"Volume {volume} / Chapter {chapter}: "
+            f"{downloaded} downloaded, {skipped} already present, "
+            f"{missing} missing, {blocked} blocked, {errors} errors, {not_image} non-image."
+        )
+    else:
+        print(
+            f"Volume {volume} / Chapter {chapter}: "
+            f"{found} image(s) would be downloadable, "
+            f"{missing} missing, {blocked} blocked, {errors} errors, {not_image} non-image."
+        )
 
 
 def write_csv(path: Path, all_results: list[CheckResult]) -> None:
@@ -376,6 +469,7 @@ def write_csv(path: Path, all_results: list[CheckResult]) -> None:
                 "status",
                 "http_status",
                 "content_type",
+                "file_path",
                 "note",
             ],
         )
@@ -391,28 +485,110 @@ def write_csv(path: Path, all_results: list[CheckResult]) -> None:
                     "status": result.status,
                     "http_status": result.http_status or "",
                     "content_type": result.content_type,
+                    "file_path": result.file_path,
                     "note": result.note,
                 }
             )
 
 
+def load_manifest(path: Path) -> dict:
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return {"schemaVersion": 1, "generatedAt": None, "series": []}
+
+
+def public_url_for_file(path: Path, public_dir: Path) -> str:
+    relative = path.resolve().relative_to(public_dir.resolve())
+    return "/" + relative.as_posix()
+
+
+def update_manifest(
+    manifest_path: Path,
+    public_dir: Path,
+    series_id: str,
+    series_title: str,
+    series_description: str,
+    all_results: list[CheckResult],
+) -> None:
+    downloaded_by_chapter: dict[int, list[CheckResult]] = {}
+    for result in all_results:
+        if result.status in ("downloaded", "skipped") and result.file_path:
+            downloaded_by_chapter.setdefault(result.chapter, []).append(result)
+
+    if not downloaded_by_chapter:
+        print("No downloaded/skipped images found, manifest unchanged.")
+        return
+
+    manifest = load_manifest(manifest_path)
+    manifest.setdefault("schemaVersion", 1)
+    manifest.setdefault("series", [])
+    manifest["generatedAt"] = datetime.now(timezone.utc).isoformat()
+
+    normalized_series_id = slugify(series_id)
+    series = next((item for item in manifest["series"] if item.get("id") == normalized_series_id), None)
+    if not series:
+        series = {
+            "id": normalized_series_id,
+            "title": series_title,
+            "description": series_description,
+            "cover": "",
+            "chapters": [],
+        }
+        manifest["series"].insert(0, series)
+    else:
+        series["title"] = series_title or series.get("title", normalized_series_id)
+        series["description"] = series_description or series.get("description", "")
+        series.setdefault("chapters", [])
+
+    for chapter, results in sorted(downloaded_by_chapter.items()):
+        chapter_id = f"chapter-{pad_chapter(chapter)}"
+        volume = find_volume_for_chapter(chapter)
+        pages = []
+        for result in sorted(results, key=lambda item: item.page):
+            file_path = Path(result.file_path)
+            pages.append({"src": public_url_for_file(file_path, public_dir)})
+
+        if not pages:
+            continue
+
+        chapter_payload = {
+            "id": chapter_id,
+            "number": chapter,
+            "volume": volume,
+            "title": f"Volume {volume} · Capitolo {chapter}",
+            "publishedAt": datetime.now(timezone.utc).date().isoformat(),
+            "pages": pages,
+        }
+
+        existing_idx = next((idx for idx, item in enumerate(series["chapters"]) if item.get("id") == chapter_id), None)
+        if existing_idx is None:
+            series["chapters"].append(chapter_payload)
+        else:
+            series["chapters"][existing_idx] = chapter_payload
+
+    series["chapters"].sort(key=lambda item: item.get("number", 0))
+    if series["chapters"] and series["chapters"][0].get("pages"):
+        series["cover"] = series["chapters"][0]["pages"][0]["src"]
+
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"Manifest updated: {manifest_path}")
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description=(
-            "Audit image URLs by volume/chapter/page. "
-            "Dry-run only: it does not download or save images."
-        )
+        description="Audit or legally import image URLs by volume/chapter/page."
     )
 
     parser.add_argument(
         "--base-url",
         required=True,
-        help="Base domain, e.g. https://onepiecepower.com/manga8/onepiece",
+        help="Authorized source base URL, e.g. https://example.com/manga/source",
     )
 
     target = parser.add_mutually_exclusive_group(required=True)
-    target.add_argument("--chapter", type=int, help="Single chapter to audit, e.g. 1176")
-    target.add_argument("--volume", type=int, help="Whole volume to audit, e.g. 116")
+    target.add_argument("--chapter", type=int, help="Single chapter to process, e.g. 1176")
+    target.add_argument("--volume", type=int, help="Whole volume to process, e.g. 116")
     target.add_argument(
         "--from-chapter",
         type=int,
@@ -425,59 +601,47 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help="Last chapter of a custom chapter range. Requires --from-chapter.",
     )
 
-    parser.add_argument(
-        "--max-pages",
-        type=int,
-        default=40,
-        help="Maximum pages/images to check per chapter. Default: 40",
-    )
-    parser.add_argument(
-        "--extension",
-        default="jpg",
-        help="Image extension. Default: jpg",
-    )
-    parser.add_argument(
-        "--timeout",
-        type=float,
-        default=8.0,
-        help="HTTP timeout in seconds. Default: 8",
-    )
-    parser.add_argument(
-        "--delay",
-        type=float,
-        default=0.25,
-        help="Delay between requests in seconds. Default: 0.25",
-    )
+    parser.add_argument("--max-pages", type=int, default=40, help="Maximum pages/images per chapter. Default: 40")
+    parser.add_argument("--extension", default="jpg", help="Image extension to try. Default: jpg")
+    parser.add_argument("--timeout", type=float, default=12.0, help="HTTP timeout in seconds. Default: 12")
+    parser.add_argument("--delay", type=float, default=0.35, help="Delay between requests in seconds. Default: 0.35")
     parser.add_argument(
         "--stop-after-missing",
         type=int,
         default=3,
-        help=(
-            "Stop a chapter after this many consecutive missing pages. "
-            "Use 0 to always check all pages up to --max-pages. Default: 3"
-        ),
+        help="Stop a chapter after this many consecutive missing pages. Use 0 to check all pages. Default: 3",
     )
+    parser.add_argument("--csv", default="reports/import-report.csv", help="CSV report path.")
+    parser.add_argument("--show-urls", action="store_true", help="Print every checked URL and status.")
+
+    parser.add_argument("--download", action="store_true", help="Actually download images instead of audit-only mode.")
     parser.add_argument(
-        "--csv",
-        default="reports/audit.csv",
-        help="CSV report path. Default: reports/audit.csv",
-    )
-    parser.add_argument(
-        "--show-urls",
+        "--i-confirm-rights",
         action="store_true",
-        help="Print every checked URL and status.",
+        help="Required with --download. Confirms you have the legal right to copy and host these images.",
+    )
+    parser.add_argument("--overwrite", action="store_true", help="Overwrite already downloaded files.")
+    parser.add_argument("--public-dir", default="public", help="Public assets root. Default: public")
+    parser.add_argument("--output-dir", default="public/manga", help="Downloaded manga image root. Default: public/manga")
+    parser.add_argument("--manifest", default="public/content/manifest.json", help="Manifest JSON path.")
+    parser.add_argument("--series-id", default="op", help="Series id used in manifest and paths. Default: op")
+    parser.add_argument("--series-title", default="OP Reader", help="Series title shown in the site.")
+    parser.add_argument(
+        "--series-description",
+        default="Capitoli importati da una sorgente autorizzata.",
+        help="Series description shown in the site.",
     )
 
     args = parser.parse_args(argv)
 
     if args.from_chapter is not None and args.to_chapter is None:
         parser.error("--from-chapter requires --to-chapter")
-
     if args.to_chapter is not None and args.from_chapter is None:
         parser.error("--to-chapter requires --from-chapter")
-
     if args.max_pages < 1:
         parser.error("--max-pages must be >= 1")
+    if args.download and not args.i_confirm_rights:
+        parser.error("--download requires --i-confirm-rights")
 
     return args
 
@@ -489,8 +653,8 @@ def main(argv: list[str]) -> int:
     session.headers.update(
         {
             "User-Agent": (
-                "ImageAuditDryRun/1.0 "
-                "(dry-run; no downloads; licensing must be verified manually)"
+                "CloudflareMangaReaderImporter/1.0 "
+                "(+legal-import; contact=repo-owner)"
             )
         }
     )
@@ -499,9 +663,12 @@ def main(argv: list[str]) -> int:
 
     try:
         chapters = list(iter_chapters(args))
+        mode = "download" if args.download else "audit"
+        print(f"Mode: {mode}")
+        print(f"Chapters: {chapters[0]}-{chapters[-1]} ({len(chapters)})")
 
         for chapter in chapters:
-            results = audit_chapter(
+            results = process_chapter(
                 session=session,
                 base_url=args.base_url,
                 chapter=chapter,
@@ -510,6 +677,10 @@ def main(argv: list[str]) -> int:
                 timeout=args.timeout,
                 delay=args.delay,
                 stop_after_missing=args.stop_after_missing,
+                download=args.download,
+                output_dir=Path(args.output_dir),
+                series_id=args.series_id,
+                overwrite=args.overwrite,
             )
             all_results.extend(results)
             print_chapter_summary(chapter, results)
@@ -517,15 +688,31 @@ def main(argv: list[str]) -> int:
             if args.show_urls:
                 for result in results:
                     http = result.http_status if result.http_status is not None else "-"
-                    print(f"  {result.status:9} HTTP {http:>3} page {result.page:02d} {result.url}")
+                    suffix = f" -> {result.file_path}" if result.file_path else ""
+                    print(f"  {result.status:10} HTTP {http!s:>3} page {result.page:02d} {result.url}{suffix}")
 
         output_path = Path(args.csv)
         write_csv(output_path, all_results)
         print(f"\nCSV report written to: {output_path}")
 
         total_found = sum(1 for r in all_results if r.status == "found")
-        print(f"Total image(s) that would be downloadable: {total_found}")
-        print("No image file was downloaded or saved.")
+        total_downloaded = sum(1 for r in all_results if r.status == "downloaded")
+        total_skipped = sum(1 for r in all_results if r.status == "skipped")
+        print(f"Total image(s) found in audit mode: {total_found}")
+        print(f"Total image(s) downloaded: {total_downloaded}")
+        print(f"Total existing image(s) skipped: {total_skipped}")
+
+        if args.download:
+            update_manifest(
+                manifest_path=Path(args.manifest),
+                public_dir=Path(args.public_dir),
+                series_id=args.series_id,
+                series_title=args.series_title,
+                series_description=args.series_description,
+                all_results=all_results,
+            )
+        else:
+            print("No image file was downloaded or saved. Use --download --i-confirm-rights for legal imports.")
 
         return 0
 

@@ -261,3 +261,29 @@ Dopo aver creato il bucket, lo sblocchi e usi URL nel manifest come:
 - Il push ha retry con `git pull --rebase --autostash` per ridurre i conflitti.
 - Il deploy Cloudflare parte automaticamente dopo il push generato dal workflow di import.
 - Per ora il progetto rimane semplice: niente CMS, niente database, solo JSON + file statici.
+
+---
+
+## Reader UI aggiornata per cataloghi grandi
+
+La home non mostra più tutti i capitoli in una lista piatta. Ora usa:
+
+- menu a tendina **Serie**;
+- menu a tendina **Volume**;
+- menu a tendina **Capitolo**;
+- ricerca rapida capitolo/volume;
+- pulsante **Continua lettura** salvato in `localStorage`;
+- griglia limitata al volume selezionato.
+
+Il reader del capitolo è ora pensato principalmente come **pagina singola**:
+
+- freccia destra = pagina successiva;
+- freccia sinistra = pagina precedente;
+- da PC funzionano anche i tasti `ArrowRight` e `ArrowLeft`;
+- da mobile funzionano swipe laterale e tap sui lati dell'immagine;
+- a fine capitolo passa al capitolo successivo;
+- a inizio capitolo passa all'ultima pagina del capitolo precedente;
+- URL aggiornato con `page=`, quindi puoi condividere o ricaricare una pagina precisa;
+- menu rapidi anche nel reader: **Volume**, **Capitolo**, **Pagina**.
+
+Resta disponibile anche la modalità **Scroll verticale**, attivabile dal pulsante in alto nel reader.

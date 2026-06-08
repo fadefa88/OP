@@ -2,38 +2,69 @@
 <html lang="it">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#020617" />
-    <title>Reader - Manga Reader</title>
+    <title>Reader - OP Reader</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="reader-body">
-    <header class="reader-toolbar">
+    <header class="reader-toolbar page-reader-toolbar">
       <a class="reader-back" href="/">← Library</a>
+
       <div class="reader-title">
         <strong id="reader-series">Caricamento…</strong>
         <small id="reader-chapter"></small>
       </div>
-      <div class="reader-controls">
-        <button id="mode-toggle" type="button" title="Cambia modalità">Verticale</button>
-        <button id="fit-toggle" type="button" title="Cambia adattamento">Fit width</button>
+
+      <div class="reader-actions">
+        <button id="reader-help-toggle" type="button" title="Mostra comandi">Comandi</button>
+        <button id="view-toggle" type="button" title="Cambia modalità">Pagina singola</button>
       </div>
     </header>
 
-    <main class="reader-shell">
-      <aside class="chapter-sidebar" aria-label="Indice capitoli">
-        <h2>Capitoli</h2>
-        <div id="chapter-list" class="chapter-list"></div>
-      </aside>
-      <section class="reader-stage" aria-label="Pagine manga">
-        <div id="reader-pages" class="reader-pages vertical fit-width"></div>
+    <main class="reader-page-shell">
+      <nav class="reader-picker-strip" aria-label="Selezione capitolo e pagina">
+        <label>
+          <span>Volume</span>
+          <select id="reader-volume-select"></select>
+        </label>
+        <label>
+          <span>Capitolo</span>
+          <select id="reader-chapter-select"></select>
+        </label>
+        <label>
+          <span>Pagina</span>
+          <select id="reader-page-select"></select>
+        </label>
+      </nav>
+
+      <section class="single-reader-stage" aria-label="Pagina manga">
+        <button id="prev-page" class="page-arrow page-arrow-left" type="button" aria-label="Pagina precedente">‹</button>
+
+        <div id="single-page-view" class="single-page-view" aria-live="polite">
+          <div id="reader-loading" class="reader-placeholder">Caricamento…</div>
+          <img id="reader-image" alt="" draggable="false" />
+          <div class="tap-zone tap-zone-left" aria-hidden="true"></div>
+          <div class="tap-zone tap-zone-right" aria-hidden="true"></div>
+        </div>
+
+        <button id="next-page" class="page-arrow page-arrow-right" type="button" aria-label="Pagina successiva">›</button>
       </section>
+
+      <section id="scroll-reader" class="scroll-reader" aria-label="Reader verticale"></section>
+
+      <div id="reader-help" class="reader-help" hidden>
+        <span>PC: freccia destra/sinistra per cambiare pagina.</span>
+        <span>Mobile: swipe o tap sui lati dell'immagine.</span>
+        <span>A fine capitolo vai automaticamente al capitolo successivo.</span>
+      </div>
     </main>
 
-    <nav class="bottom-reader-nav" aria-label="Navigazione capitoli">
-      <a id="prev-chapter" class="button ghost" href="#">← Capitolo precedente</a>
-      <a id="next-chapter" class="button primary" href="#">Capitolo successivo →</a>
+    <nav class="bottom-page-nav" aria-label="Navigazione reader">
+      <a id="prev-chapter" class="button ghost" href="#">← Capitolo</a>
+      <div id="page-counter" class="page-counter">Pagina 0 / 0</div>
+      <a id="next-chapter" class="button primary" href="#">Capitolo →</a>
     </nav>
 
     <script type="module" src="/reader.js"></script>

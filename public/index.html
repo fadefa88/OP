@@ -11,72 +11,92 @@
   <body>
     <header class="site-header">
       <a class="brand" href="/" aria-label="Vai alla home">
-        <span class="brand-mark">MR</span>
+        <span class="brand-mark">OP</span>
         <span>
           <strong>OP Reader</strong>
           <small>GitHub + Cloudflare</small>
         </span>
       </a>
       <nav class="top-nav" aria-label="Navigazione principale">
-        <a href="#library">Library</a>
-        <a href="#how">Deploy</a>
+        <a href="#reader-picker">Reader</a>
+        <a href="#library">Volumi</a>
         <a href="/api/health" target="_blank" rel="noreferrer">API</a>
       </nav>
     </header>
 
     <main>
-      <section class="hero">
+      <section class="hero compact-hero">
         <div class="hero-copy">
-          <p class="eyebrow">Statico, veloce, edge-ready</p>
-          <h1>Un manga reader moderno su GitHub e Cloudflare Workers.</h1>
+          <p class="eyebrow">Manga library</p>
+          <h1>Reader veloce, ordinato per volumi e capitoli.</h1>
           <p>
-            Frontend statico, manifest JSON, API serverless e predisposizione R2.
-            Il workflow importa solo volumi 115 e 116 da sorgenti autorizzate configurate da te.
+            La libreria è pensata per migliaia di capitoli: scegli volume e capitolo dai menu,
+            oppure riprendi dall'ultimo punto letto. Le immagini sono servite da Cloudflare.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#library">Apri library</a>
-            <a class="button ghost" href="/api/manifest" target="_blank" rel="noreferrer">Vedi manifest API</a>
+            <a id="continue-reading" class="button primary" href="#reader-picker">Continua lettura</a>
+            <a class="button ghost" href="#reader-picker">Scegli capitolo</a>
           </div>
         </div>
-        <div class="hero-card" aria-label="Anteprima reader">
+        <div class="hero-card reader-preview" aria-label="Anteprima reader">
           <div class="mock-browser">
             <span></span><span></span><span></span>
           </div>
-          <div class="mock-page">
-            <div class="mock-panel tall"></div>
-            <div class="mock-panel"></div>
-            <div class="mock-panel short"></div>
+          <div class="mock-reader-screen">
+            <button type="button" aria-hidden="true">‹</button>
+            <div class="mock-page single"></div>
+            <button type="button" aria-hidden="true">›</button>
           </div>
+        </div>
+      </section>
+
+      <section id="reader-picker" class="section picker-section">
+        <div class="section-head">
+          <p class="eyebrow">Apri reader</p>
+          <h2>Selezione rapida</h2>
+          <p>Usa i menu a tendina: prima volume, poi capitolo. La lista sotto mostra solo i capitoli del volume selezionato.</p>
+        </div>
+
+        <form id="reader-picker-form" class="reader-picker-card">
+          <label>
+            <span>Serie</span>
+            <select id="series-select" name="series"></select>
+          </label>
+          <label>
+            <span>Volume</span>
+            <select id="volume-select" name="volume"></select>
+          </label>
+          <label>
+            <span>Capitolo</span>
+            <select id="chapter-select" name="chapter"></select>
+          </label>
+          <button class="button primary" type="submit">Apri capitolo</button>
+        </form>
+
+        <div class="library-tools">
+          <label class="search-box">
+            <span>Cerca capitolo</span>
+            <input id="chapter-search" type="search" placeholder="Es. 1176, volume 116…" autocomplete="off" />
+          </label>
+          <div class="library-stats" id="library-stats" aria-live="polite"></div>
         </div>
       </section>
 
       <section id="library" class="section">
-        <div class="section-head">
-          <p class="eyebrow">Library</p>
-          <h2>Capitoli disponibili</h2>
-          <p>Questa demo carica i capitoli da <code>/api/manifest</code>, servito dal Worker Cloudflare.</p>
+        <div class="section-head inline-head">
+          <div>
+            <p class="eyebrow">Volumi</p>
+            <h2 id="volume-title">Capitoli disponibili</h2>
+          </div>
+          <a id="latest-chapter" class="button ghost" href="#">Ultimo capitolo</a>
         </div>
-        <div id="series-grid" class="series-grid" aria-live="polite"></div>
-      </section>
-
-      <section id="how" class="section deploy-panel">
-        <div>
-          <p class="eyebrow">Deploy</p>
-          <h2>Flusso previsto</h2>
-        </div>
-        <ol class="steps">
-          <li>Crea un repo GitHub e carica questi file.</li>
-          <li>Installa le dipendenze con <code>npm install</code>.</li>
-          <li>Test locale: <code>npm run dev</code>.</li>
-          <li>Deploy: <code>npm run deploy</code> oppure GitHub Action.</li>
-          <li>Per immagini pesanti, spostale su Cloudflare R2 e abilita il binding.</li>
-        </ol>
+        <div id="chapter-grid" class="chapter-grid" aria-live="polite"></div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span>Built for Cloudflare Workers Static Assets.</span>
-      <span>Import automatico limitato a volumi 115/116 da sorgenti autorizzate.</span>
+      <span>Reader ottimizzato per Cloudflare Workers Static Assets.</span>
+      <span>Import automatico da sorgenti autorizzate.</span>
     </footer>
 
     <script type="module" src="/app.js"></script>

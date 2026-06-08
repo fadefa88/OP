@@ -1,12 +1,36 @@
 const params = new URLSearchParams(window.location.search);
-const seriesId = params.get('series');
-const chapterId = params.get('chapter');
-const pagesEl = document.querySelector('#reader-pages');
-const chapterListEl = document.querySelector('#chapter-list');
-const modeToggle = document.querySelector('#mode-toggle');
-const fitToggle = document.querySelector('#fit-toggle');
-let mode = localStorage.getItem('reader.mode') || 'vertical';
-let fit = localStorage.getItem('reader.fit') || 'fit-width';
+const requestedSeriesId = params.get('series');
+const requestedChapterId = params.get('chapter');
+const requestedPage = Math.max(1, Number(params.get('page') || 1));
+
+const els = {
+  seriesTitle: document.querySelector('#reader-series'),
+  chapterTitle: document.querySelector('#reader-chapter'),
+  volumeSelect: document.querySelector('#reader-volume-select'),
+  chapterSelect: document.querySelector('#reader-chapter-select'),
+  pageSelect: document.querySelector('#reader-page-select'),
+  image: document.querySelector('#reader-image'),
+  loading: document.querySelector('#reader-loading'),
+  singleView: document.querySelector('#single-page-view'),
+  scrollReader: document.querySelector('#scroll-reader'),
+  prevPage: document.querySelector('#prev-page'),
+  nextPage: document.querySelector('#next-page'),
+  prevChapter: document.querySelector('#prev-chapter'),
+  nextChapter: document.querySelector('#next-chapter'),
+  pageCounter: document.querySelector('#page-counter'),
+  viewToggle: document.querySelector('#view-toggle'),
+  helpToggle: document.querySelector('#reader-help-toggle'),
+  help: document.querySelector('#reader-help')
+};
+
+const state = {
+  manifest: null,
+  series: null,
+  chapter: null,
+  chapterIndex: 0,
+  pageIndex: requestedPage - 1,
+  viewMode: localStorage.getItem('reader.viewMode') || 'paged'
+};
 
 async function loadManifest() {
   const response = await fetch('/api/manifest');
@@ -15,83 +39,323 @@ async function loadManifest() {
   return payload.data;
 }
 
-function chapterHref(seriesId, chapterId) {
-  return `/reader.html?series=${encodeURIComponent(seriesId)}&chapter=${encodeURIComponent(chapterId)}`;
+function numberOr(value, fallback = 0) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
-function applyReaderClasses() {
-  pagesEl.classList.toggle('vertical', mode === 'vertical');
-  pagesEl.classList.toggle('horizontal', mode === 'horizontal');
-  pagesEl.classList.toggle('fit-width', fit === 'fit-width');
-  pagesEl.classList.toggle('fit-height', fit === 'fit-height');
-  modeToggle.textContent = mode === 'vertical' ? 'Verticale' : 'Orizzontale';
-  fitToggle.textContent = fit === 'fit-width' ? 'Fit width' : 'Fit height';
+function getChapters(series) {
+  return [...(series?.chapters || [])].sort((a, b) => numberOr(a.number) - numberOr(b.number));
 }
 
-function setNavLink(el, series, chapter) {
-  if (!chapter) {
-    el.setAttribute('aria-disabled', 'true');
+function getVolumes(series) {
+  const volumes = new Map();
+  getChapters(series).forEach((chapter) => {
+    const volume = chapter.volume ?? 'speciali';
+    if (!volumes.has(volume)) volumes.set(volume, []);
+    volumes.get(volume).push(chapter);
+  });
+
+  return [...volumes.entries()].sort(([a], [b]) => {
+    const na = Number(a);
+    const nb = Number(b);
+    if (Number.isFinite(na) && Number.isFinite(nb)) return na - nb;
+    return String(a).localeCompare(String(b), 'it');
+  });
+}
+
+function chapterHref(seriesId, chapterId, page = 1) {
+  const next = new URLSearchParams({ series: seriesId, chapter: chapterId, page: String(page) });
+  return `/reader.html?${next.toString()}`;
+}
+
+function updateUrl() {
+  const url = chapterHref(state.series.id, state.chapter.id, state.pageIndex + 1);
+  window.history.replaceState(null, '', url);
+}
+
+function rememberPosition() {
+  localStorage.setItem('reader.last', JSON.stringify({
+    seriesId: state.series.id,
+    chapterId: state.chapter.id,
+    page: state.pageIndex + 1,
+    at: new Date().toISOString()
+  }));
+}
+
+function setDisabledLink(el, disabled) {
+  if (disabled) {
     el.href = '#';
-    el.style.opacity = '0.45';
+    el.setAttribute('aria-disabled', 'true');
+    el.classList.add('is-disabled');
+  } else {
+    el.removeAttribute('aria-disabled');
+    el.classList.remove('is-disabled');
+  }
+}
+
+function option(label, value, selected = false) {
+  const el = document.createElement('option');
+  el.value = value;
+  el.textContent = label;
+  el.selected = selected;
+  return el;
+}
+
+function getPreviousChapter() {
+  return getChapters(state.series)[state.chapterIndex - 1] || null;
+}
+
+function getNextChapter() {
+  return getChapters(state.series)[state.chapterIndex + 1] || null;
+}
+
+function clampPageIndex(index) {
+  const total = state.chapter?.pages?.length || 1;
+  return Math.max(0, Math.min(index, total - 1));
+}
+
+function preloadAroundCurrent() {
+  const pages = state.chapter.pages || [];
+  [state.pageIndex - 1, state.pageIndex + 1].forEach((index) => {
+    const src = pages[index]?.src;
+    if (!src) return;
+    const img = new Image();
+    img.src = src;
+  });
+}
+
+function renderSelectors() {
+  const currentVolume = state.chapter.volume ?? 'speciali';
+
+  els.volumeSelect.innerHTML = '';
+  getVolumes(state.series).forEach(([volume, chapters]) => {
+    els.volumeSelect.appendChild(option(`Volume ${volume} · ${chapters.length} cap.`, String(volume), String(volume) === String(currentVolume)));
+  });
+
+  els.chapterSelect.innerHTML = '';
+  getChapters(state.series)
+    .filter((chapter) => String(chapter.volume ?? 'speciali') === String(currentVolume))
+    .forEach((chapter) => {
+      const pages = chapter.pages?.length || 0;
+      els.chapterSelect.appendChild(option(`Cap. ${chapter.number ?? chapter.id} · ${pages} pag.`, chapter.id, chapter.id === state.chapter.id));
+    });
+
+  els.pageSelect.innerHTML = '';
+  const totalPages = state.chapter.pages?.length || 0;
+  for (let index = 0; index < totalPages; index += 1) {
+    els.pageSelect.appendChild(option(`Pagina ${index + 1}`, String(index + 1), index === state.pageIndex));
+  }
+}
+
+function renderChapterNav() {
+  const previous = getPreviousChapter();
+  const next = getNextChapter();
+
+  setDisabledLink(els.prevChapter, !previous);
+  if (previous) {
+    const lastPage = previous.pages?.length || 1;
+    els.prevChapter.href = chapterHref(state.series.id, previous.id, lastPage);
+  }
+
+  setDisabledLink(els.nextChapter, !next);
+  if (next) {
+    els.nextChapter.href = chapterHref(state.series.id, next.id, 1);
+  }
+}
+
+function renderPage() {
+  const pages = state.chapter.pages || [];
+  const page = pages[state.pageIndex];
+  const totalPages = pages.length;
+
+  document.title = `${state.chapter.title} · Pagina ${state.pageIndex + 1} - ${state.series.title}`;
+  els.seriesTitle.textContent = state.series.title;
+  els.chapterTitle.textContent = `${state.chapter.title} · pagina ${state.pageIndex + 1}/${totalPages}`;
+  els.pageCounter.textContent = `Pagina ${state.pageIndex + 1} / ${totalPages}`;
+
+  if (!page) {
+    els.image.removeAttribute('src');
+    els.image.alt = '';
+    els.loading.textContent = 'Nessuna pagina disponibile.';
+    els.loading.hidden = false;
     return;
   }
-  el.removeAttribute('aria-disabled');
-  el.href = chapterHref(series.id, chapter.id);
-  el.style.opacity = '1';
+
+  els.loading.textContent = 'Caricamento…';
+  els.loading.hidden = false;
+  els.image.classList.remove('is-loaded');
+  els.image.alt = `${state.chapter.title}, pagina ${state.pageIndex + 1}`;
+  els.image.src = page.src;
+  els.pageSelect.value = String(state.pageIndex + 1);
+
+  const hasPreviousPage = state.pageIndex > 0 || Boolean(getPreviousChapter());
+  const hasNextPage = state.pageIndex < totalPages - 1 || Boolean(getNextChapter());
+  els.prevPage.disabled = !hasPreviousPage;
+  els.nextPage.disabled = !hasNextPage;
+
+  updateUrl();
+  rememberPosition();
+  preloadAroundCurrent();
 }
 
-function renderReader(manifest) {
-  const series = manifest.series.find((item) => item.id === seriesId) || manifest.series[0];
-  const chapter = series.chapters.find((item) => item.id === chapterId) || series.chapters[0];
-  const currentIndex = series.chapters.findIndex((item) => item.id === chapter.id);
-
-  document.title = `${chapter.title} - ${series.title}`;
-  document.querySelector('#reader-series').textContent = series.title;
-  document.querySelector('#reader-chapter').textContent = chapter.title;
-
-  chapterListEl.innerHTML = '';
-  series.chapters.forEach((item) => {
-    const link = document.createElement('a');
-    link.href = chapterHref(series.id, item.id);
-    link.className = item.id === chapter.id ? 'active' : '';
-    link.textContent = item.title;
-    chapterListEl.appendChild(link);
-  });
-
-  pagesEl.innerHTML = '';
-  chapter.pages.forEach((page, index) => {
+function renderScrollReader() {
+  els.scrollReader.innerHTML = '';
+  const fragment = document.createDocumentFragment();
+  (state.chapter.pages || []).forEach((page, index) => {
     const img = document.createElement('img');
     img.src = page.src;
-    img.alt = `${chapter.title}, pagina ${index + 1}`;
+    img.alt = `${state.chapter.title}, pagina ${index + 1}`;
     img.loading = index < 2 ? 'eager' : 'lazy';
     img.decoding = 'async';
-    pagesEl.appendChild(img);
+    fragment.appendChild(img);
   });
-
-  setNavLink(document.querySelector('#prev-chapter'), series, series.chapters[currentIndex - 1]);
-  setNavLink(document.querySelector('#next-chapter'), series, series.chapters[currentIndex + 1]);
-  applyReaderClasses();
+  els.scrollReader.appendChild(fragment);
 }
 
-modeToggle.addEventListener('click', () => {
-  mode = mode === 'vertical' ? 'horizontal' : 'vertical';
-  localStorage.setItem('reader.mode', mode);
-  applyReaderClasses();
+function applyViewMode() {
+  const paged = state.viewMode === 'paged';
+  document.body.classList.toggle('scroll-mode', !paged);
+  els.viewToggle.textContent = paged ? 'Pagina singola' : 'Scroll verticale';
+  els.viewToggle.setAttribute('aria-pressed', String(!paged));
+  localStorage.setItem('reader.viewMode', state.viewMode);
+}
+
+function renderAll() {
+  state.pageIndex = clampPageIndex(state.pageIndex);
+  renderSelectors();
+  renderChapterNav();
+  renderPage();
+  renderScrollReader();
+  applyViewMode();
+}
+
+function setChapter(chapterId, page = 1) {
+  const chapters = getChapters(state.series);
+  const index = chapters.findIndex((chapter) => chapter.id === chapterId);
+  if (index === -1) return;
+  state.chapter = chapters[index];
+  state.chapterIndex = index;
+  state.pageIndex = clampPageIndex(page - 1);
+  renderAll();
+}
+
+function goToPage(index) {
+  state.pageIndex = clampPageIndex(index);
+  renderPage();
+}
+
+function goNextPage() {
+  const total = state.chapter.pages?.length || 0;
+  if (state.pageIndex < total - 1) {
+    goToPage(state.pageIndex + 1);
+    return;
+  }
+
+  const next = getNextChapter();
+  if (next) setChapter(next.id, 1);
+}
+
+function goPreviousPage() {
+  if (state.pageIndex > 0) {
+    goToPage(state.pageIndex - 1);
+    return;
+  }
+
+  const previous = getPreviousChapter();
+  if (previous) setChapter(previous.id, previous.pages?.length || 1);
+}
+
+function selectInitialState(manifest) {
+  const firstSeries = manifest.series[0];
+  state.series = manifest.series.find((series) => series.id === requestedSeriesId) || firstSeries;
+
+  const chapters = getChapters(state.series);
+  state.chapterIndex = Math.max(0, chapters.findIndex((chapter) => chapter.id === requestedChapterId));
+  if (state.chapterIndex === -1) state.chapterIndex = 0;
+  state.chapter = chapters[state.chapterIndex];
+  state.pageIndex = clampPageIndex(requestedPage - 1);
+}
+
+els.image.addEventListener('load', () => {
+  els.loading.hidden = true;
+  els.image.classList.add('is-loaded');
 });
 
-fitToggle.addEventListener('click', () => {
-  fit = fit === 'fit-width' ? 'fit-height' : 'fit-width';
-  localStorage.setItem('reader.fit', fit);
-  applyReaderClasses();
+els.image.addEventListener('error', () => {
+  els.loading.textContent = 'Immagine non caricata.';
+  els.loading.hidden = false;
+});
+
+els.prevPage.addEventListener('click', goPreviousPage);
+els.nextPage.addEventListener('click', goNextPage);
+
+document.querySelector('.tap-zone-left').addEventListener('click', goPreviousPage);
+document.querySelector('.tap-zone-right').addEventListener('click', goNextPage);
+
+els.volumeSelect.addEventListener('change', () => {
+  const chapter = getChapters(state.series).find((item) => String(item.volume ?? 'speciali') === els.volumeSelect.value);
+  if (chapter) setChapter(chapter.id, 1);
+});
+
+els.chapterSelect.addEventListener('change', () => {
+  setChapter(els.chapterSelect.value, 1);
+});
+
+els.pageSelect.addEventListener('change', () => {
+  goToPage(Number(els.pageSelect.value) - 1);
+});
+
+els.viewToggle.addEventListener('click', () => {
+  state.viewMode = state.viewMode === 'paged' ? 'scroll' : 'paged';
+  applyViewMode();
+});
+
+els.helpToggle.addEventListener('click', () => {
+  els.help.hidden = !els.help.hidden;
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowRight') document.querySelector('#next-chapter')?.click();
-  if (event.key === 'ArrowLeft') document.querySelector('#prev-chapter')?.click();
+  const activeTag = document.activeElement?.tagName?.toLowerCase();
+  if (['input', 'select', 'textarea'].includes(activeTag)) return;
+
+  if (event.key === 'ArrowRight') {
+    event.preventDefault();
+    goNextPage();
+  }
+
+  if (event.key === 'ArrowLeft') {
+    event.preventDefault();
+    goPreviousPage();
+  }
 });
 
+let touchStartX = 0;
+let touchStartY = 0;
+
+els.singleView.addEventListener('touchstart', (event) => {
+  const touch = event.changedTouches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+}, { passive: true });
+
+els.singleView.addEventListener('touchend', (event) => {
+  const touch = event.changedTouches[0];
+  const diffX = touch.clientX - touchStartX;
+  const diffY = touch.clientY - touchStartY;
+
+  if (Math.abs(diffX) < 45 || Math.abs(diffX) < Math.abs(diffY)) return;
+  if (diffX < 0) goNextPage();
+  else goPreviousPage();
+}, { passive: true });
+
 loadManifest()
-  .then(renderReader)
+  .then((manifest) => {
+    state.manifest = manifest;
+    selectInitialState(manifest);
+    renderAll();
+  })
   .catch((error) => {
-    pagesEl.innerHTML = `<p class="reader-placeholder">Errore: ${error.message}</p>`;
+    els.loading.textContent = `Errore: ${error.message}`;
+    els.loading.hidden = false;
   });

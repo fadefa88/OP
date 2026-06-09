@@ -1030,3 +1030,203 @@ input[type="search"] {
 }
 
 #reader-help { display: none !important; }
+
+/* Mobile-first immersive reader v2 -------------------------------------------------
+   The fullscreen reader is intentionally not a classic "tap to show controls" UI.
+   Taps inside the page never reopen menus; only edge taps/swipes navigate. */
+.immersive-exit-handle,
+.immersive-page-chip {
+  display: none;
+}
+
+.reader-fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  width: 100dvw;
+  height: var(--reader-vh, 100dvh);
+  min-height: var(--reader-vh, 100dvh);
+  overflow: hidden !important;
+  background: #000;
+  touch-action: none;
+}
+
+.reader-fullscreen .reader-page-shell,
+.reader-fullscreen .single-reader-stage,
+.reader-fullscreen .single-page-view {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  width: 100dvw;
+  height: var(--reader-vh, 100dvh);
+  min-height: var(--reader-vh, 100dvh);
+  max-height: var(--reader-vh, 100dvh);
+  margin: 0;
+  padding: 0 !important;
+  background: #000;
+}
+
+.reader-fullscreen .single-page-view {
+  align-items: flex-start;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  touch-action: pan-y pinch-zoom;
+}
+
+.reader-fullscreen .single-page-view::-webkit-scrollbar {
+  display: none;
+}
+
+.reader-fullscreen.fit-width .single-page-view img,
+.reader-fullscreen .single-page-view img {
+  display: block;
+  width: 100vw !important;
+  width: 100dvw !important;
+  max-width: none !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 auto;
+  border-radius: 0;
+  box-shadow: none;
+  background: #000;
+  object-fit: contain;
+}
+
+.reader-fullscreen.fit-page .single-page-view {
+  align-items: center;
+  overflow: hidden;
+}
+
+.reader-fullscreen.fit-page .single-page-view img {
+  width: auto !important;
+  max-width: 100vw !important;
+  max-width: 100dvw !important;
+  max-height: var(--reader-vh, 100dvh) !important;
+}
+
+.reader-fullscreen .reader-toolbar,
+.reader-fullscreen .reader-picker-strip,
+.reader-fullscreen .bottom-page-nav,
+.reader-fullscreen .page-arrow {
+  opacity: 0 !important;
+  transform: translateY(-16px);
+  pointer-events: none !important;
+}
+
+.reader-fullscreen .bottom-page-nav {
+  transform: translateY(16px);
+}
+
+.reader-fullscreen .immersive-exit-handle {
+  position: fixed;
+  top: max(0.5rem, env(safe-area-inset-top));
+  right: max(0.5rem, env(safe-area-inset-right));
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  min-height: 38px;
+  padding: 0.48rem 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.28);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.42;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+  pointer-events: auto;
+  transition: opacity 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.reader-fullscreen .immersive-exit-handle:active,
+.reader-fullscreen .immersive-exit-handle:focus-visible,
+.reader-fullscreen .immersive-exit-handle:hover {
+  opacity: 0.96;
+  background: rgba(0, 0, 0, 0.68);
+  transform: scale(1.02);
+}
+
+.reader-fullscreen .immersive-page-chip {
+  position: fixed;
+  right: 50%;
+  bottom: max(0.55rem, env(safe-area-inset-bottom));
+  z-index: 118;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  min-height: 32px;
+  padding: 0.42rem 0.62rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.76rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.18;
+  transform: translateX(50%);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.reader-fullscreen .immersive-page-chip.is-visible {
+  opacity: 0.78;
+  background: rgba(0, 0, 0, 0.52);
+  transform: translateX(50%) translateY(-3px);
+}
+
+.reader-fullscreen .fullscreen-hint {
+  top: max(0.55rem, env(safe-area-inset-top));
+  right: 50%;
+  left: auto;
+  z-index: 119;
+  width: max-content;
+  max-width: calc(100vw - 8rem);
+  padding: 0.52rem 0.72rem;
+  background: rgba(0, 0, 0, 0.42);
+  color: rgba(255, 255, 255, 0.78);
+  border-color: rgba(255, 255, 255, 0.16);
+  font-size: 0.72rem;
+  opacity: 0;
+}
+
+.reader-fullscreen .fullscreen-hint.is-visible {
+  opacity: 0.82;
+}
+
+@media (max-width: 720px) {
+  .reader-fullscreen .fullscreen-hint {
+    display: none !important;
+  }
+
+  .reader-fullscreen .immersive-exit-handle {
+    min-width: 48px;
+    min-height: 34px;
+    padding: 0.42rem 0.58rem;
+    font-size: 0.72rem;
+    opacity: 0.32;
+  }
+
+  .reader-fullscreen .immersive-page-chip {
+    min-height: 28px;
+    font-size: 0.7rem;
+    opacity: 0.12;
+  }
+
+  .reader-fullscreen .single-page-view,
+  .reader-fullscreen.fit-width .single-page-view img,
+  .reader-fullscreen .single-page-view img {
+    width: 100vw !important;
+    width: 100dvw !important;
+  }
+}

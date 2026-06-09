@@ -20,7 +20,8 @@ const els = {
   pageCounter: document.querySelector('#page-counter'),
   viewToggle: document.querySelector('#view-toggle'),
   fitToggle: document.querySelector('#fit-toggle'),
-  fullscreenToggle: document.querySelector('#fullscreen-toggle')
+  fullscreenToggle: document.querySelector('#fullscreen-toggle'),
+  fullscreenHint: document.querySelector('#fullscreen-hint')
 };
 
 const state = {
@@ -235,33 +236,58 @@ function applyFitMode() {
 }
 
 let uiTimer = null;
+let fullscreenHintTimer = null;
 
 function setUiHidden(hidden) {
   state.uiHidden = hidden;
   document.body.classList.toggle('reader-ui-hidden', hidden);
 }
 
-function showReaderUi({ keep = false } = {}) {
-  setUiHidden(false);
+function flashFullscreenHint() {
+  if (!els.fullscreenHint) return;
+  if (fullscreenHintTimer) window.clearTimeout(fullscreenHintTimer);
+  els.fullscreenHint.hidden = false;
+  requestAnimationFrame(() => els.fullscreenHint.classList.add('is-visible'));
+  fullscreenHintTimer = window.setTimeout(() => {
+    els.fullscreenHint.classList.remove('is-visible');
+    window.setTimeout(() => {
+      if (!els.fullscreenHint.classList.contains('is-visible')) els.fullscreenHint.hidden = true;
+    }, 220);
+  }, 1900);
+}
+
+function showReaderUi({ keep = false, force = false } = {}) {
   if (uiTimer) window.clearTimeout(uiTimer);
+
+  if (state.immersiveFullscreen && !force) {
+    setUiHidden(true);
+    return;
+  }
+
+  setUiHidden(false);
   if (keep || state.viewMode !== 'paged') return;
   uiTimer = window.setTimeout(() => {
     const activeTag = document.activeElement?.tagName?.toLowerCase();
     if (['input', 'select', 'textarea', 'button'].includes(activeTag)) return;
     setUiHidden(true);
-  }, state.immersiveFullscreen ? 1400 : 2600);
+  }, 2600);
 }
 
 function applyFullscreenState(active) {
   state.immersiveFullscreen = Boolean(active);
   document.body.classList.toggle('reader-fullscreen', state.immersiveFullscreen);
-  els.fullscreenToggle.textContent = state.immersiveFullscreen ? 'Esci schermo intero' : 'Schermo intero';
+  els.fullscreenToggle.textContent = state.immersiveFullscreen ? 'Esci' : 'Schermo intero';
   els.fullscreenToggle.setAttribute('aria-pressed', String(state.immersiveFullscreen));
 
   if (state.immersiveFullscreen) {
     setUiHidden(true);
+    flashFullscreenHint();
   } else {
-    showReaderUi({ keep: true });
+    if (els.fullscreenHint) {
+      els.fullscreenHint.classList.remove('is-visible');
+      els.fullscreenHint.hidden = true;
+    }
+    showReaderUi({ keep: true, force: true });
   }
 }
 
@@ -366,11 +392,11 @@ els.image.addEventListener('error', () => {
 });
 
 els.prevPage.addEventListener('click', () => {
-  showReaderUi({ keep: true });
+  if (!state.immersiveFullscreen) showReaderUi({ keep: true });
   goPreviousPage();
 });
 els.nextPage.addEventListener('click', () => {
-  showReaderUi({ keep: true });
+  if (!state.immersiveFullscreen) showReaderUi({ keep: true });
   goNextPage();
 });
 
@@ -422,7 +448,12 @@ document.addEventListener('keydown', (event) => {
     goPreviousPage();
   }
 
-  if (event.key === ' ' || event.key.toLowerCase() === 'h') {
+  if (event.key === 'Escape' && state.immersiveFullscreen) {
+    event.preventDefault();
+    toggleFullscreen();
+  }
+
+  if ((event.key === ' ' || event.key.toLowerCase() === 'h') && !state.immersiveFullscreen) {
     event.preventDefault();
     setUiHidden(!state.uiHidden);
   }
@@ -436,21 +467,59 @@ document.addEventListener('keydown', (event) => {
 let touchStartX = 0;
 let touchStartY = 0;
 let touchMoved = false;
+let longPressTimer = null;
+let longPressTriggered = false;
+let ignoreClickUntil = 0;
+
+const LONG_PRESS_TO_EXIT_MS = 720;
+
+function clearLongPressTimer() {
+  if (longPressTimer) {
+    window.clearTimeout(longPressTimer);
+    longPressTimer = null;
+  }
+}
+
+function isCenterGesture(clientX) {
+  const rect = els.singleView.getBoundingClientRect();
+  const x = clientX - rect.left;
+  return x >= rect.width * 0.34 && x <= rect.width * 0.66;
+}
 
 els.singleView.addEventListener('touchstart', (event) => {
   const touch = event.changedTouches[0];
   touchStartX = touch.clientX;
   touchStartY = touch.clientY;
   touchMoved = false;
+  longPressTriggered = false;
+
+  clearLongPressTimer();
+
+  if (state.immersiveFullscreen && isCenterGesture(touch.clientX)) {
+    longPressTimer = window.setTimeout(() => {
+      longPressTriggered = true;
+      ignoreClickUntil = Date.now() + 700;
+      toggleFullscreen();
+    }, LONG_PRESS_TO_EXIT_MS);
+    return;
+  }
+
   if (!state.immersiveFullscreen) showReaderUi();
 }, { passive: true });
 
 els.singleView.addEventListener('touchmove', (event) => {
   const touch = event.changedTouches[0];
-  if (Math.abs(touch.clientX - touchStartX) > 8 || Math.abs(touch.clientY - touchStartY) > 8) touchMoved = true;
+  const movedX = Math.abs(touch.clientX - touchStartX);
+  const movedY = Math.abs(touch.clientY - touchStartY);
+
+  if (movedX > 8 || movedY > 8) touchMoved = true;
+  if (movedX > 10 || movedY > 10) clearLongPressTimer();
 }, { passive: true });
 
 els.singleView.addEventListener('touchend', (event) => {
+  clearLongPressTimer();
+  if (longPressTriggered) return;
+
   const touch = event.changedTouches[0];
   const diffX = touch.clientX - touchStartX;
   const diffY = touch.clientY - touchStartY;
@@ -461,8 +530,23 @@ els.singleView.addEventListener('touchend', (event) => {
   }
 }, { passive: true });
 
+els.singleView.addEventListener('touchcancel', () => {
+  clearLongPressTimer();
+}, { passive: true });
+
+els.singleView.addEventListener('dblclick', (event) => {
+  if (!state.immersiveFullscreen) return;
+  const activeTag = event.target?.tagName?.toLowerCase();
+  if (['select', 'button', 'a'].includes(activeTag)) return;
+  if (!isCenterGesture(event.clientX)) return;
+
+  event.preventDefault();
+  ignoreClickUntil = Date.now() + 500;
+  toggleFullscreen();
+});
+
 els.singleView.addEventListener('click', (event) => {
-  if (touchMoved) return;
+  if (touchMoved || Date.now() < ignoreClickUntil) return;
   const activeTag = event.target?.tagName?.toLowerCase();
   if (['select', 'button', 'a'].includes(activeTag)) return;
 
@@ -476,6 +560,11 @@ els.singleView.addEventListener('click', (event) => {
 
   if (x > rect.width * 0.72) {
     goNextPage();
+    return;
+  }
+
+  if (state.immersiveFullscreen) {
+    flashFullscreenHint();
     return;
   }
 

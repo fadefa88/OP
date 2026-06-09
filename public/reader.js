@@ -21,9 +21,8 @@ const els = {
   viewToggle: document.querySelector('#view-toggle'),
   fitToggle: document.querySelector('#fit-toggle'),
   fullscreenToggle: document.querySelector('#fullscreen-toggle'),
-  fullscreenHint: document.querySelector('#fullscreen-hint'),
-  immersiveExit: document.querySelector('#immersive-exit'),
-  immersivePageChip: document.querySelector('#immersive-page-chip')
+  fullscreenExit: document.querySelector('#fullscreen-exit'),
+  fullscreenHint: document.querySelector('#fullscreen-hint')
 };
 
 const state = {
@@ -37,19 +36,6 @@ const state = {
   uiHidden: false,
   immersiveFullscreen: false
 };
-
-function syncReaderViewportHeight() {
-  const height = window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight;
-  if (height) document.documentElement.style.setProperty('--reader-vh', `${Math.round(height)}px`);
-}
-
-syncReaderViewportHeight();
-window.addEventListener('resize', syncReaderViewportHeight, { passive: true });
-window.addEventListener('orientationchange', () => window.setTimeout(syncReaderViewportHeight, 250), { passive: true });
-if (window.visualViewport) {
-  window.visualViewport.addEventListener('resize', syncReaderViewportHeight, { passive: true });
-  window.visualViewport.addEventListener('scroll', syncReaderViewportHeight, { passive: true });
-}
 
 async function loadManifest() {
   const response = await fetch('/api/manifest');
@@ -192,7 +178,6 @@ function renderPage() {
   els.seriesTitle.textContent = state.series.title;
   els.chapterTitle.textContent = `${state.chapter.title} · pagina ${state.pageIndex + 1}/${totalPages}`;
   els.pageCounter.textContent = `Pagina ${state.pageIndex + 1} / ${totalPages}`;
-  if (els.immersivePageChip) els.immersivePageChip.textContent = `${state.pageIndex + 1} / ${totalPages}`;
 
   if (!page) {
     els.image.removeAttribute('src');
@@ -259,17 +244,6 @@ function setUiHidden(hidden) {
   document.body.classList.toggle('reader-ui-hidden', hidden);
 }
 
-
-let immersiveChipTimer = null;
-function pulseImmersivePageChip() {
-  if (!els.immersivePageChip || !state.immersiveFullscreen) return;
-  if (immersiveChipTimer) window.clearTimeout(immersiveChipTimer);
-  els.immersivePageChip.classList.add('is-visible');
-  immersiveChipTimer = window.setTimeout(() => {
-    els.immersivePageChip.classList.remove('is-visible');
-  }, 900);
-}
-
 function flashFullscreenHint() {
   if (!els.fullscreenHint) return;
   if (fullscreenHintTimer) window.clearTimeout(fullscreenHintTimer);
@@ -280,7 +254,7 @@ function flashFullscreenHint() {
     window.setTimeout(() => {
       if (!els.fullscreenHint.classList.contains('is-visible')) els.fullscreenHint.hidden = true;
     }, 220);
-  }, 1400);
+  }, 1900);
 }
 
 function showReaderUi({ keep = false, force = false } = {}) {
@@ -302,32 +276,22 @@ function showReaderUi({ keep = false, force = false } = {}) {
 
 function applyFullscreenState(active) {
   state.immersiveFullscreen = Boolean(active);
-  syncReaderViewportHeight();
   document.body.classList.toggle('reader-fullscreen', state.immersiveFullscreen);
-  document.body.classList.toggle('reader-ui-hidden', state.immersiveFullscreen || state.uiHidden);
   els.fullscreenToggle.textContent = state.immersiveFullscreen ? 'Esci' : 'Schermo intero';
   els.fullscreenToggle.setAttribute('aria-pressed', String(state.immersiveFullscreen));
+  if (els.fullscreenExit) {
+    els.fullscreenExit.hidden = !state.immersiveFullscreen;
+    els.fullscreenExit.setAttribute('aria-hidden', String(!state.immersiveFullscreen));
+  }
 
   if (state.immersiveFullscreen) {
-    // In immersive mode the image must own the screen. Controls never reopen on normal taps.
-    if (state.viewMode !== 'paged') {
-      state.viewMode = 'paged';
-      applyViewMode();
-    }
-    if (state.fitMode !== 'width') {
-      state.fitMode = 'width';
-      applyFitMode();
-    }
     setUiHidden(true);
-    els.singleView.scrollTop = 0;
     flashFullscreenHint();
-    pulseImmersivePageChip();
   } else {
     if (els.fullscreenHint) {
       els.fullscreenHint.classList.remove('is-visible');
       els.fullscreenHint.hidden = true;
     }
-    if (els.immersivePageChip) els.immersivePageChip.classList.remove('is-visible');
     showReaderUi({ keep: true, force: true });
   }
 }
@@ -384,12 +348,7 @@ function setChapter(chapterId, page = 1) {
 function goToPage(index) {
   state.pageIndex = clampPageIndex(index);
   renderPage();
-  if (state.immersiveFullscreen) {
-    setUiHidden(true);
-    pulseImmersivePageChip();
-  } else {
-    showReaderUi();
-  }
+  showReaderUi();
 }
 
 function goNextPage() {
@@ -476,10 +435,10 @@ els.fullscreenToggle.addEventListener('click', () => {
   toggleFullscreen();
 });
 
-els.immersiveExit?.addEventListener('click', (event) => {
+els.fullscreenExit?.addEventListener('click', (event) => {
   event.preventDefault();
   event.stopPropagation();
-  if (state.immersiveFullscreen) toggleFullscreen();
+  toggleFullscreen();
 });
 
 document.addEventListener('fullscreenchange', () => {
@@ -550,7 +509,7 @@ els.singleView.addEventListener('touchstart', (event) => {
   if (state.immersiveFullscreen && isCenterGesture(touch.clientX)) {
     longPressTimer = window.setTimeout(() => {
       longPressTriggered = true;
-      ignoreClickUntil = Date.now() + 900;
+      ignoreClickUntil = Date.now() + 700;
       toggleFullscreen();
     }, LONG_PRESS_TO_EXIT_MS);
     return;
@@ -575,32 +534,10 @@ els.singleView.addEventListener('touchend', (event) => {
   const touch = event.changedTouches[0];
   const diffX = touch.clientX - touchStartX;
   const diffY = touch.clientY - touchStartY;
-  const absX = Math.abs(diffX);
-  const absY = Math.abs(diffY);
 
-  // Horizontal swipe changes page. Vertical gestures are left to the browser for natural reading.
-  if (absX >= 55 && absX > absY * 1.35) {
-    ignoreClickUntil = Date.now() + 800;
+  if (Math.abs(diffX) >= 45 && Math.abs(diffX) > Math.abs(diffY)) {
     if (diffX < 0) goNextPage();
     else goPreviousPage();
-    return;
-  }
-
-  if (!state.immersiveFullscreen) return;
-  if (absX > 10 || absY > 10) return;
-
-  // In fullscreen a normal center tap must do nothing: no toolbar, no menu, no accidental UI.
-  const rect = els.singleView.getBoundingClientRect();
-  const x = touch.clientX - rect.left;
-  ignoreClickUntil = Date.now() + 650;
-
-  if (x < rect.width * 0.20) {
-    goPreviousPage();
-    return;
-  }
-
-  if (x > rect.width * 0.80) {
-    goNextPage();
   }
 }, { passive: true });
 
@@ -627,21 +564,6 @@ els.singleView.addEventListener('click', (event) => {
   const rect = els.singleView.getBoundingClientRect();
   const x = event.clientX - rect.left;
 
-  if (state.immersiveFullscreen) {
-    if (x < rect.width * 0.20) {
-      goPreviousPage();
-      return;
-    }
-
-    if (x > rect.width * 0.80) {
-      goNextPage();
-      return;
-    }
-
-    // Center tap intentionally does nothing in fullscreen.
-    return;
-  }
-
   if (x < rect.width * 0.28) {
     goPreviousPage();
     return;
@@ -652,12 +574,17 @@ els.singleView.addEventListener('click', (event) => {
     return;
   }
 
+  if (state.immersiveFullscreen) {
+    flashFullscreenHint();
+    return;
+  }
+
   setUiHidden(!state.uiHidden);
 });
 
 ['mousemove', 'pointermove', 'focusin'].forEach((eventName) => {
   document.addEventListener(eventName, () => {
-    if (state.immersiveFullscreen) return;
+    if (state.immersiveFullscreen && eventName !== 'focusin') return;
     showReaderUi();
   }, { passive: true });
 });

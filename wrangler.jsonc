@@ -13,8 +13,9 @@
   },
   "vars": {
     "SITE_NAME": "OP Reader",
+    "MANIFEST_INDEX_PATH": "/content/index.json",
     "MANIFEST_PATH": "/content/manifest.json",
-    "R2_PUBLIC_PREFIX": "manga"
+    "R2_PUBLIC_PREFIX": "op"
   },
 
   // Optional R2 binding.

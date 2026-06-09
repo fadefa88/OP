@@ -27,18 +27,54 @@ function safeR2Key(key) {
   return decoded;
 }
 
-async function fetchManifest(request, env) {
-  const manifestPath = env.MANIFEST_PATH || "/content/manifest.json";
+async function fetchAssetJson(request, env, path) {
   const url = new URL(request.url);
-  const manifestUrl = new URL(manifestPath, url.origin);
-  const response = await env.ASSETS.fetch(new Request(manifestUrl.toString(), request));
+  const assetUrl = new URL(path, url.origin);
+  const response = await env.ASSETS.fetch(new Request(assetUrl.toString(), request));
+  if (!response.ok) return null;
+  return response.json();
+}
 
-  if (!response.ok) {
-    return json({ ok: false, error: "Manifest not found", manifestPath }, { status: 500, headers: { "cache-control": "no-store" } });
+async function fetchSplitManifest(request, env) {
+  const indexPath = env.MANIFEST_INDEX_PATH || "/content/index.json";
+  const legacyManifestPath = env.MANIFEST_PATH || "/content/manifest.json";
+
+  const index = await fetchAssetJson(request, env, indexPath);
+  if (!index) {
+    const legacy = await fetchAssetJson(request, env, legacyManifestPath);
+    if (!legacy) {
+      return json({ ok: false, error: "Manifest not found", indexPath, legacyManifestPath }, { status: 500, headers: { "cache-control": "no-store" } });
+    }
+    return json({ ok: true, source: "legacy-manifest", data: legacy });
   }
 
-  const data = await response.json();
-  return json({ ok: true, source: "static-assets", data });
+  const assembled = structuredClone(index);
+
+  for (const series of assembled.series || []) {
+    const chapters = [];
+    for (const volume of series.volumes || []) {
+      const manifestPath = volume.manifest;
+      if (!manifestPath) continue;
+      const volumeManifest = await fetchAssetJson(request, env, manifestPath);
+      if (!volumeManifest) continue;
+      for (const chapter of volumeManifest.chapters || []) chapters.push(chapter);
+    }
+    chapters.sort((a, b) => Number(a.number || 0) - Number(b.number || 0));
+    series.chapters = chapters;
+  }
+
+  return json({ ok: true, source: "split-manifest", data: assembled });
+}
+
+async function fetchVolumeManifest(request, env) {
+  const url = new URL(request.url);
+  const volume = url.searchParams.get("volume");
+  if (!volume) return badRequest("Missing volume parameter");
+  const padded = Number(volume) < 100 ? String(Number(volume)).padStart(3, "0") : String(Number(volume));
+  const path = `/content/volumes/${padded}.json`;
+  const data = await fetchAssetJson(request, env, path);
+  if (!data) return notFound("Volume manifest not found");
+  return json({ ok: true, source: "split-volume", data });
 }
 
 async function fetchR2Object(request, env, key) {
@@ -46,7 +82,7 @@ async function fetchR2Object(request, env, key) {
     return json({
       ok: false,
       error: "R2 binding not configured",
-      hint: "Uncomment r2_buckets in wrangler.jsonc and bind a bucket as MANGA_R2."
+      hint: "This endpoint is optional. In production the reader uses the R2 public custom domain directly."
     }, { status: 501, headers: { "cache-control": "no-store" } });
   }
 
@@ -71,14 +107,18 @@ export default {
     if (url.pathname === "/api/health") {
       return json({
         ok: true,
-        service: env.SITE_NAME || "Manga Reader",
+        service: env.SITE_NAME || "OP Reader",
         runtime: "cloudflare-workers",
         time: new Date().toISOString()
       }, { headers: { "cache-control": "no-store" } });
     }
 
     if (url.pathname === "/api/manifest" || url.pathname === "/api/chapters") {
-      return fetchManifest(request, env);
+      return fetchSplitManifest(request, env);
+    }
+
+    if (url.pathname === "/api/volume") {
+      return fetchVolumeManifest(request, env);
     }
 
     if (url.pathname.startsWith("/api/r2/")) {

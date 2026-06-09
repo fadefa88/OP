@@ -1,12 +1,30 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-06-08T19:40:40.508106+00:00",
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-09T07:17:19.103112+00:00",
   "series": [
     {
       "id": "op",
       "title": "OP Reader",
-      "description": "Archivio capitoli aggiornato automaticamente.",
-      "cover": "/manga/op/chapter-1166/page-001.jpg",
+      "description": "Archivio ordinato per volume, capitolo e pagina.",
+      "cover": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-001.webp",
+      "latestChapter": 1184,
+      "chaptersCount": 19,
+      "volumes": [
+        {
+          "volume": 115,
+          "fromChapter": 1166,
+          "toChapter": 1175,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/115.json"
+        },
+        {
+          "volume": 116,
+          "fromChapter": 1176,
+          "toChapter": 1185,
+          "chaptersCount": 9,
+          "manifest": "/content/volumes/116.json"
+        }
+      ],
       "chapters": [
         {
           "id": "chapter-1166",
@@ -16,52 +34,68 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1166/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-001.webp",
+              "key": "op/vol-115/chapter-1166/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-002.webp",
+              "key": "op/vol-115/chapter-1166/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-003.webp",
+              "key": "op/vol-115/chapter-1166/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-004.webp",
+              "key": "op/vol-115/chapter-1166/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-005.webp",
+              "key": "op/vol-115/chapter-1166/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-006.webp",
+              "key": "op/vol-115/chapter-1166/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-007.webp",
+              "key": "op/vol-115/chapter-1166/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-008.webp",
+              "key": "op/vol-115/chapter-1166/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-009.webp",
+              "key": "op/vol-115/chapter-1166/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-010.webp",
+              "key": "op/vol-115/chapter-1166/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-011.webp",
+              "key": "op/vol-115/chapter-1166/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-012.webp",
+              "key": "op/vol-115/chapter-1166/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-013.webp",
+              "key": "op/vol-115/chapter-1166/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-014.webp",
+              "key": "op/vol-115/chapter-1166/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-015.webp",
+              "key": "op/vol-115/chapter-1166/page-015.webp"
             },
             {
-              "src": "/manga/op/chapter-1166/page-016.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1166/page-016.webp",
+              "key": "op/vol-115/chapter-1166/page-016.webp"
             }
           ]
         },
@@ -73,52 +107,68 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1167/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-001.webp",
+              "key": "op/vol-115/chapter-1167/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-002.webp",
+              "key": "op/vol-115/chapter-1167/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-003.webp",
+              "key": "op/vol-115/chapter-1167/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-004.webp",
+              "key": "op/vol-115/chapter-1167/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-005.webp",
+              "key": "op/vol-115/chapter-1167/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-006.webp",
+              "key": "op/vol-115/chapter-1167/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-007.webp",
+              "key": "op/vol-115/chapter-1167/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-008.webp",
+              "key": "op/vol-115/chapter-1167/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-009.webp",
+              "key": "op/vol-115/chapter-1167/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-010.webp",
+              "key": "op/vol-115/chapter-1167/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-011.webp",
+              "key": "op/vol-115/chapter-1167/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-012.webp",
+              "key": "op/vol-115/chapter-1167/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-013.webp",
+              "key": "op/vol-115/chapter-1167/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-014.webp",
+              "key": "op/vol-115/chapter-1167/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-015.webp",
+              "key": "op/vol-115/chapter-1167/page-015.webp"
             },
             {
-              "src": "/manga/op/chapter-1167/page-016.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1167/page-016.webp",
+              "key": "op/vol-115/chapter-1167/page-016.webp"
             }
           ]
         },
@@ -130,49 +180,64 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1168/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-001.webp",
+              "key": "op/vol-115/chapter-1168/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-002.webp",
+              "key": "op/vol-115/chapter-1168/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-003.webp",
+              "key": "op/vol-115/chapter-1168/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-004.webp",
+              "key": "op/vol-115/chapter-1168/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-005.webp",
+              "key": "op/vol-115/chapter-1168/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-006.webp",
+              "key": "op/vol-115/chapter-1168/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-007.webp",
+              "key": "op/vol-115/chapter-1168/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-008.webp",
+              "key": "op/vol-115/chapter-1168/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-009.webp",
+              "key": "op/vol-115/chapter-1168/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-010.webp",
+              "key": "op/vol-115/chapter-1168/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-011.webp",
+              "key": "op/vol-115/chapter-1168/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-012.webp",
+              "key": "op/vol-115/chapter-1168/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-013.webp",
+              "key": "op/vol-115/chapter-1168/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-014.webp",
+              "key": "op/vol-115/chapter-1168/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1168/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1168/page-015.webp",
+              "key": "op/vol-115/chapter-1168/page-015.webp"
             }
           ]
         },
@@ -184,55 +249,72 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1169/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-001.webp",
+              "key": "op/vol-115/chapter-1169/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-002.webp",
+              "key": "op/vol-115/chapter-1169/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-003.webp",
+              "key": "op/vol-115/chapter-1169/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-004.webp",
+              "key": "op/vol-115/chapter-1169/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-005.webp",
+              "key": "op/vol-115/chapter-1169/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-006.webp",
+              "key": "op/vol-115/chapter-1169/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-007.webp",
+              "key": "op/vol-115/chapter-1169/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-008.webp",
+              "key": "op/vol-115/chapter-1169/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-009.webp",
+              "key": "op/vol-115/chapter-1169/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-010.webp",
+              "key": "op/vol-115/chapter-1169/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-011.webp",
+              "key": "op/vol-115/chapter-1169/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-012.webp",
+              "key": "op/vol-115/chapter-1169/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-013.webp",
+              "key": "op/vol-115/chapter-1169/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-014.webp",
+              "key": "op/vol-115/chapter-1169/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-015.webp",
+              "key": "op/vol-115/chapter-1169/page-015.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-016.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-016.webp",
+              "key": "op/vol-115/chapter-1169/page-016.webp"
             },
             {
-              "src": "/manga/op/chapter-1169/page-017.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1169/page-017.webp",
+              "key": "op/vol-115/chapter-1169/page-017.webp"
             }
           ]
         },
@@ -244,52 +326,68 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1170/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-001.webp",
+              "key": "op/vol-115/chapter-1170/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-002.webp",
+              "key": "op/vol-115/chapter-1170/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-003.webp",
+              "key": "op/vol-115/chapter-1170/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-004.webp",
+              "key": "op/vol-115/chapter-1170/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-005.webp",
+              "key": "op/vol-115/chapter-1170/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-006.webp",
+              "key": "op/vol-115/chapter-1170/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-007.webp",
+              "key": "op/vol-115/chapter-1170/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-008.webp",
+              "key": "op/vol-115/chapter-1170/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-009.webp",
+              "key": "op/vol-115/chapter-1170/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-010.webp",
+              "key": "op/vol-115/chapter-1170/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-011.webp",
+              "key": "op/vol-115/chapter-1170/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-012.webp",
+              "key": "op/vol-115/chapter-1170/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-013.webp",
+              "key": "op/vol-115/chapter-1170/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-014.webp",
+              "key": "op/vol-115/chapter-1170/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-015.webp",
+              "key": "op/vol-115/chapter-1170/page-015.webp"
             },
             {
-              "src": "/manga/op/chapter-1170/page-016.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1170/page-016.webp",
+              "key": "op/vol-115/chapter-1170/page-016.webp"
             }
           ]
         },
@@ -301,43 +399,56 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1171/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-001.webp",
+              "key": "op/vol-115/chapter-1171/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-002.webp",
+              "key": "op/vol-115/chapter-1171/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-003.webp",
+              "key": "op/vol-115/chapter-1171/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-004.webp",
+              "key": "op/vol-115/chapter-1171/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-005.webp",
+              "key": "op/vol-115/chapter-1171/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-006.webp",
+              "key": "op/vol-115/chapter-1171/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-007.webp",
+              "key": "op/vol-115/chapter-1171/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-008.webp",
+              "key": "op/vol-115/chapter-1171/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-009.webp",
+              "key": "op/vol-115/chapter-1171/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-010.webp",
+              "key": "op/vol-115/chapter-1171/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-011.webp",
+              "key": "op/vol-115/chapter-1171/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-012.webp",
+              "key": "op/vol-115/chapter-1171/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1171/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1171/page-013.webp",
+              "key": "op/vol-115/chapter-1171/page-013.webp"
             }
           ]
         },
@@ -349,43 +460,56 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1172/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-001.webp",
+              "key": "op/vol-115/chapter-1172/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-002.webp",
+              "key": "op/vol-115/chapter-1172/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-003.webp",
+              "key": "op/vol-115/chapter-1172/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-004.webp",
+              "key": "op/vol-115/chapter-1172/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-005.webp",
+              "key": "op/vol-115/chapter-1172/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-006.webp",
+              "key": "op/vol-115/chapter-1172/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-007.webp",
+              "key": "op/vol-115/chapter-1172/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-008.webp",
+              "key": "op/vol-115/chapter-1172/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-009.webp",
+              "key": "op/vol-115/chapter-1172/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-010.webp",
+              "key": "op/vol-115/chapter-1172/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-011.webp",
+              "key": "op/vol-115/chapter-1172/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-012.webp",
+              "key": "op/vol-115/chapter-1172/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1172/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1172/page-013.webp",
+              "key": "op/vol-115/chapter-1172/page-013.webp"
             }
           ]
         },
@@ -397,46 +521,60 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1173/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-001.webp",
+              "key": "op/vol-115/chapter-1173/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-002.webp",
+              "key": "op/vol-115/chapter-1173/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-003.webp",
+              "key": "op/vol-115/chapter-1173/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-004.webp",
+              "key": "op/vol-115/chapter-1173/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-005.webp",
+              "key": "op/vol-115/chapter-1173/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-006.webp",
+              "key": "op/vol-115/chapter-1173/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-007.webp",
+              "key": "op/vol-115/chapter-1173/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-008.webp",
+              "key": "op/vol-115/chapter-1173/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-009.webp",
+              "key": "op/vol-115/chapter-1173/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-010.webp",
+              "key": "op/vol-115/chapter-1173/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-011.webp",
+              "key": "op/vol-115/chapter-1173/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-012.webp",
+              "key": "op/vol-115/chapter-1173/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-013.webp",
+              "key": "op/vol-115/chapter-1173/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1173/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1173/page-014.webp",
+              "key": "op/vol-115/chapter-1173/page-014.webp"
             }
           ]
         },
@@ -448,49 +586,64 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1174/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-001.webp",
+              "key": "op/vol-115/chapter-1174/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-002.webp",
+              "key": "op/vol-115/chapter-1174/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-003.webp",
+              "key": "op/vol-115/chapter-1174/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-004.webp",
+              "key": "op/vol-115/chapter-1174/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-005.webp",
+              "key": "op/vol-115/chapter-1174/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-006.webp",
+              "key": "op/vol-115/chapter-1174/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-007.webp",
+              "key": "op/vol-115/chapter-1174/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-008.webp",
+              "key": "op/vol-115/chapter-1174/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-009.webp",
+              "key": "op/vol-115/chapter-1174/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-010.webp",
+              "key": "op/vol-115/chapter-1174/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-011.webp",
+              "key": "op/vol-115/chapter-1174/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-012.webp",
+              "key": "op/vol-115/chapter-1174/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-013.webp",
+              "key": "op/vol-115/chapter-1174/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-014.webp",
+              "key": "op/vol-115/chapter-1174/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1174/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1174/page-015.webp",
+              "key": "op/vol-115/chapter-1174/page-015.webp"
             }
           ]
         },
@@ -502,37 +655,48 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1175/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-001.webp",
+              "key": "op/vol-115/chapter-1175/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-002.webp",
+              "key": "op/vol-115/chapter-1175/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-003.webp",
+              "key": "op/vol-115/chapter-1175/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-004.webp",
+              "key": "op/vol-115/chapter-1175/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-005.webp",
+              "key": "op/vol-115/chapter-1175/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-006.webp",
+              "key": "op/vol-115/chapter-1175/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-007.webp",
+              "key": "op/vol-115/chapter-1175/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-008.webp",
+              "key": "op/vol-115/chapter-1175/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-009.webp",
+              "key": "op/vol-115/chapter-1175/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-010.webp",
+              "key": "op/vol-115/chapter-1175/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1175/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-115/chapter-1175/page-011.webp",
+              "key": "op/vol-115/chapter-1175/page-011.webp"
             }
           ]
         },
@@ -544,55 +708,72 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1176/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-001.webp",
+              "key": "op/vol-116/chapter-1176/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-002.webp",
+              "key": "op/vol-116/chapter-1176/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-003.webp",
+              "key": "op/vol-116/chapter-1176/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-004.webp",
+              "key": "op/vol-116/chapter-1176/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-005.webp",
+              "key": "op/vol-116/chapter-1176/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-006.webp",
+              "key": "op/vol-116/chapter-1176/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-007.webp",
+              "key": "op/vol-116/chapter-1176/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-008.webp",
+              "key": "op/vol-116/chapter-1176/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-009.webp",
+              "key": "op/vol-116/chapter-1176/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-010.webp",
+              "key": "op/vol-116/chapter-1176/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-011.webp",
+              "key": "op/vol-116/chapter-1176/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-012.webp",
+              "key": "op/vol-116/chapter-1176/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-013.webp",
+              "key": "op/vol-116/chapter-1176/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-014.webp",
+              "key": "op/vol-116/chapter-1176/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-015.webp",
+              "key": "op/vol-116/chapter-1176/page-015.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-016.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-016.webp",
+              "key": "op/vol-116/chapter-1176/page-016.webp"
             },
             {
-              "src": "/manga/op/chapter-1176/page-017.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1176/page-017.webp",
+              "key": "op/vol-116/chapter-1176/page-017.webp"
             }
           ]
         },
@@ -604,52 +785,68 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1177/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-001.webp",
+              "key": "op/vol-116/chapter-1177/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-002.webp",
+              "key": "op/vol-116/chapter-1177/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-003.webp",
+              "key": "op/vol-116/chapter-1177/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-004.webp",
+              "key": "op/vol-116/chapter-1177/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-005.webp",
+              "key": "op/vol-116/chapter-1177/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-006.webp",
+              "key": "op/vol-116/chapter-1177/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-007.webp",
+              "key": "op/vol-116/chapter-1177/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-008.webp",
+              "key": "op/vol-116/chapter-1177/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-009.webp",
+              "key": "op/vol-116/chapter-1177/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-010.webp",
+              "key": "op/vol-116/chapter-1177/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-011.webp",
+              "key": "op/vol-116/chapter-1177/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-012.webp",
+              "key": "op/vol-116/chapter-1177/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-013.webp",
+              "key": "op/vol-116/chapter-1177/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-014.webp",
+              "key": "op/vol-116/chapter-1177/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-015.webp",
+              "key": "op/vol-116/chapter-1177/page-015.webp"
             },
             {
-              "src": "/manga/op/chapter-1177/page-016.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1177/page-016.webp",
+              "key": "op/vol-116/chapter-1177/page-016.webp"
             }
           ]
         },
@@ -661,43 +858,56 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1178/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-001.webp",
+              "key": "op/vol-116/chapter-1178/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-002.webp",
+              "key": "op/vol-116/chapter-1178/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-003.webp",
+              "key": "op/vol-116/chapter-1178/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-004.webp",
+              "key": "op/vol-116/chapter-1178/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-005.webp",
+              "key": "op/vol-116/chapter-1178/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-006.webp",
+              "key": "op/vol-116/chapter-1178/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-007.webp",
+              "key": "op/vol-116/chapter-1178/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-008.webp",
+              "key": "op/vol-116/chapter-1178/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-009.webp",
+              "key": "op/vol-116/chapter-1178/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-010.webp",
+              "key": "op/vol-116/chapter-1178/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-011.webp",
+              "key": "op/vol-116/chapter-1178/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-012.webp",
+              "key": "op/vol-116/chapter-1178/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1178/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1178/page-013.webp",
+              "key": "op/vol-116/chapter-1178/page-013.webp"
             }
           ]
         },
@@ -709,49 +919,64 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1179/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-001.webp",
+              "key": "op/vol-116/chapter-1179/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-002.webp",
+              "key": "op/vol-116/chapter-1179/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-003.webp",
+              "key": "op/vol-116/chapter-1179/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-004.webp",
+              "key": "op/vol-116/chapter-1179/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-005.webp",
+              "key": "op/vol-116/chapter-1179/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-006.webp",
+              "key": "op/vol-116/chapter-1179/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-007.webp",
+              "key": "op/vol-116/chapter-1179/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-008.webp",
+              "key": "op/vol-116/chapter-1179/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-009.webp",
+              "key": "op/vol-116/chapter-1179/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-010.webp",
+              "key": "op/vol-116/chapter-1179/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-011.webp",
+              "key": "op/vol-116/chapter-1179/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-012.webp",
+              "key": "op/vol-116/chapter-1179/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-013.webp",
+              "key": "op/vol-116/chapter-1179/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-014.webp",
+              "key": "op/vol-116/chapter-1179/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1179/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1179/page-015.webp",
+              "key": "op/vol-116/chapter-1179/page-015.webp"
             }
           ]
         },
@@ -763,49 +988,64 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1180/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-001.webp",
+              "key": "op/vol-116/chapter-1180/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-002.webp",
+              "key": "op/vol-116/chapter-1180/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-003.webp",
+              "key": "op/vol-116/chapter-1180/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-004.webp",
+              "key": "op/vol-116/chapter-1180/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-005.webp",
+              "key": "op/vol-116/chapter-1180/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-006.webp",
+              "key": "op/vol-116/chapter-1180/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-007.webp",
+              "key": "op/vol-116/chapter-1180/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-008.webp",
+              "key": "op/vol-116/chapter-1180/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-009.webp",
+              "key": "op/vol-116/chapter-1180/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-010.webp",
+              "key": "op/vol-116/chapter-1180/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-011.webp",
+              "key": "op/vol-116/chapter-1180/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-012.webp",
+              "key": "op/vol-116/chapter-1180/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-013.webp",
+              "key": "op/vol-116/chapter-1180/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-014.webp",
+              "key": "op/vol-116/chapter-1180/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1180/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1180/page-015.webp",
+              "key": "op/vol-116/chapter-1180/page-015.webp"
             }
           ]
         },
@@ -817,40 +1057,52 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1181/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-001.webp",
+              "key": "op/vol-116/chapter-1181/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-002.webp",
+              "key": "op/vol-116/chapter-1181/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-003.webp",
+              "key": "op/vol-116/chapter-1181/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-004.webp",
+              "key": "op/vol-116/chapter-1181/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-005.webp",
+              "key": "op/vol-116/chapter-1181/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-006.webp",
+              "key": "op/vol-116/chapter-1181/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-007.webp",
+              "key": "op/vol-116/chapter-1181/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-008.webp",
+              "key": "op/vol-116/chapter-1181/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-009.webp",
+              "key": "op/vol-116/chapter-1181/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-010.webp",
+              "key": "op/vol-116/chapter-1181/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-011.webp",
+              "key": "op/vol-116/chapter-1181/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1181/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1181/page-012.webp",
+              "key": "op/vol-116/chapter-1181/page-012.webp"
             }
           ]
         },
@@ -862,43 +1114,56 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1182/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-001.webp",
+              "key": "op/vol-116/chapter-1182/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-002.webp",
+              "key": "op/vol-116/chapter-1182/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-003.webp",
+              "key": "op/vol-116/chapter-1182/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-004.webp",
+              "key": "op/vol-116/chapter-1182/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-005.webp",
+              "key": "op/vol-116/chapter-1182/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-006.webp",
+              "key": "op/vol-116/chapter-1182/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-007.webp",
+              "key": "op/vol-116/chapter-1182/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-008.webp",
+              "key": "op/vol-116/chapter-1182/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-009.webp",
+              "key": "op/vol-116/chapter-1182/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-010.webp",
+              "key": "op/vol-116/chapter-1182/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-011.webp",
+              "key": "op/vol-116/chapter-1182/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-012.webp",
+              "key": "op/vol-116/chapter-1182/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1182/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1182/page-013.webp",
+              "key": "op/vol-116/chapter-1182/page-013.webp"
             }
           ]
         },
@@ -910,52 +1175,68 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1183/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-001.webp",
+              "key": "op/vol-116/chapter-1183/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-002.webp",
+              "key": "op/vol-116/chapter-1183/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-003.webp",
+              "key": "op/vol-116/chapter-1183/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-004.webp",
+              "key": "op/vol-116/chapter-1183/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-005.webp",
+              "key": "op/vol-116/chapter-1183/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-006.webp",
+              "key": "op/vol-116/chapter-1183/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-007.webp",
+              "key": "op/vol-116/chapter-1183/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-008.webp",
+              "key": "op/vol-116/chapter-1183/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-009.webp",
+              "key": "op/vol-116/chapter-1183/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-010.webp",
+              "key": "op/vol-116/chapter-1183/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-011.webp",
+              "key": "op/vol-116/chapter-1183/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-012.webp",
+              "key": "op/vol-116/chapter-1183/page-012.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-013.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-013.webp",
+              "key": "op/vol-116/chapter-1183/page-013.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-014.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-014.webp",
+              "key": "op/vol-116/chapter-1183/page-014.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-015.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-015.webp",
+              "key": "op/vol-116/chapter-1183/page-015.webp"
             },
             {
-              "src": "/manga/op/chapter-1183/page-016.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1183/page-016.webp",
+              "key": "op/vol-116/chapter-1183/page-016.webp"
             }
           ]
         },
@@ -967,40 +1248,52 @@
           "publishedAt": "2026-06-08",
           "pages": [
             {
-              "src": "/manga/op/chapter-1184/page-001.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-001.webp",
+              "key": "op/vol-116/chapter-1184/page-001.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-002.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-002.webp",
+              "key": "op/vol-116/chapter-1184/page-002.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-003.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-003.webp",
+              "key": "op/vol-116/chapter-1184/page-003.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-004.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-004.webp",
+              "key": "op/vol-116/chapter-1184/page-004.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-005.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-005.webp",
+              "key": "op/vol-116/chapter-1184/page-005.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-006.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-006.webp",
+              "key": "op/vol-116/chapter-1184/page-006.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-007.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-007.webp",
+              "key": "op/vol-116/chapter-1184/page-007.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-008.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-008.webp",
+              "key": "op/vol-116/chapter-1184/page-008.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-009.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-009.webp",
+              "key": "op/vol-116/chapter-1184/page-009.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-010.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-010.webp",
+              "key": "op/vol-116/chapter-1184/page-010.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-011.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-011.webp",
+              "key": "op/vol-116/chapter-1184/page-011.webp"
             },
             {
-              "src": "/manga/op/chapter-1184/page-012.jpg"
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1184/page-012.webp",
+              "key": "op/vol-116/chapter-1184/page-012.webp"
             }
           ]
         }

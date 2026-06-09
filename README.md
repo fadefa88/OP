@@ -1,317 +1,322 @@
-# OP-main Manga Reader + Cloudflare
+# OP Reader
 
-Repo unificato tra:
+Reader statico/serverless per capitoli organizzati per volume, con frontend su Cloudflare Workers e immagini su Cloudflare R2.
 
-- `OP-main`
-- `manga-reader-cloudflare`
-
-Il progetto ora contiene un **manga reader moderno** con:
-
-- frontend statico in `public/`
-- Cloudflare Worker in `src/worker.js`
-- API `/api/health`, `/api/manifest`, `/api/chapters`
-- manifest JSON in `public/content/manifest.json`
-- predisposizione Cloudflare R2 per immagini pesanti
-- GitHub Actions per deploy Cloudflare
-- GitHub Action oraria che controlla solo il prossimo capitolo e committa/deploya solo se trova nuove immagini
-
-> Nota: usa il download reale solo con immagini che puoi legalmente copiare e pubblicare: contenuti tuoi, licenziati, public domain o comunque autorizzati. Il workflow non ha un URL hardcoded verso siti terzi.
-
----
-
-## Struttura principale
+## Architettura
 
 ```text
-.
-├── public/
-│   ├── index.html
-│   ├── reader.html
-│   ├── styles.css
-│   ├── app.js
-│   ├── reader.js
-│   ├── content/manifest.json
-│   ├── manga/
-│   └── img/                    # asset originali OP-main copiati anche in public
-├── src/worker.js
-├── scripts/
-│   ├── prepare-local-chapter.mjs
-│   └── upload-r2.mjs
-├── download_manga.py
-├── .github/workflows/
-│   ├── deploy-cloudflare.yml
-│   └── daily-download.yml
-├── wrangler.jsonc
-├── package.json
-└── requirements.txt
+GitHub repo
+├── codice sito
+├── Worker
+├── workflow GitHub Actions
+└── manifest JSON diviso per volumi
+
+Cloudflare R2
+└── immagini WebP
+
+manga.lucahome.uk
+└── sito reader
+
+static.lucahome.uk
+└── immagini pubbliche da R2
 ```
 
-La cartella `img/` originale è stata mantenuta alla root e copiata anche in `public/img/`, così Cloudflare può servirla come asset statico.
+Le immagini non devono essere committate nel repository. Il workflow committa solo JSON sotto `public/content`.
 
----
+## Manifest
 
-## Test locale
-
-Installa dipendenze frontend/Cloudflare:
-
-```bash
-npm install
-```
-
-Installa dipendenze Python:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-Avvia il Worker in locale:
-
-```bash
-npm run dev
-```
-
-Poi apri l'URL mostrato da Wrangler, di solito:
+Manifest principale:
 
 ```text
-http://localhost:8787
+public/content/index.json
 ```
 
-Endpoint utili:
+Manifest per volume:
 
 ```text
-/api/health
-/api/manifest
-/api/chapters
+public/content/volumes/001.json
+public/content/volumes/002.json
+...
+public/content/volumes/117.json
 ```
 
----
+`public/content/manifest.json` resta solo come file di compatibilità generato automaticamente.
 
-## Deploy su Cloudflare
+## Dipendenze Python
 
-### Secret GitHub necessari
+Da Windows PowerShell, dentro la cartella del repo:
 
-Nel repo GitHub vai in:
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+## Variabili locali per import storico
+
+In PowerShell, imposta le variabili così:
+
+```powershell
+$env:AUTHORIZED_MANGA_BASE_URL="https://tua-sorgente-autorizzata"
+$env:I_CONFIRM_RIGHTS="true"
+$env:CLOUDFLARE_ACCOUNT_ID="tuo_account_id"
+$env:R2_BUCKET_NAME="op-reader-images"
+$env:R2_PUBLIC_BASE_URL="https://static.lucahome.uk"
+$env:R2_ACCESS_KEY_ID="tua_access_key_id_r2"
+$env:R2_SECRET_ACCESS_KEY="tua_secret_access_key_r2"
+```
+
+Usa solo una sorgente che puoi copiare e pubblicare legalmente.
+
+## Import storico one-time verso R2
+
+Comando consigliato per importare tutti i capitoli storici fino al 1184:
+
+```powershell
+python scripts/import_history_to_r2.py `
+  --from-chapter 1 `
+  --to-chapter 1184 `
+  --extensions jpg,jpeg `
+  --max-pages 45 `
+  --min-pages 3 `
+  --webp-quality 90 `
+  --i-confirm-rights
+```
+
+Se vuoi importare fino al 1185:
+
+```powershell
+python scripts/import_history_to_r2.py `
+  --from-chapter 1 `
+  --to-chapter 1185 `
+  --extensions jpg,jpeg `
+  --max-pages 45 `
+  --min-pages 3 `
+  --webp-quality 90 `
+  --i-confirm-rights
+```
+
+Lo script:
 
 ```text
-Settings → Secrets and variables → Actions → Secrets
+1. scarica temporaneamente JPG/JPEG dalla sorgente autorizzata
+2. converte in WebP qualità 90 mantenendo la stessa risoluzione
+3. carica su R2
+4. aggiorna solo i manifest JSON
+5. non salva immagini nel repository
 ```
 
-Aggiungi:
+Se si interrompe, rilancialo: i capitoli già presenti nel manifest vengono saltati. Per forzare la riscrittura usa `--overwrite`.
+
+## Import di un solo volume o capitolo
+
+Un volume:
+
+```powershell
+python scripts/import_history_to_r2.py `
+  --volume 116 `
+  --extensions jpg,jpeg `
+  --webp-quality 90 `
+  --i-confirm-rights
+```
+
+Un capitolo:
+
+```powershell
+python scripts/import_history_to_r2.py `
+  --chapter 1176 `
+  --extensions jpg,jpeg `
+  --webp-quality 90 `
+  --i-confirm-rights
+```
+
+## Pattern sorgente
+
+Di default lo script prova URL così:
 
 ```text
-CLOUDFLARE_API_TOKEN
-CLOUDFLARE_ACCOUNT_ID
+{base_url}/volumi/volume{volume_padded}/{chapter_padded}/{page_padded}.{extension}
 ```
 
-Ogni push su `main` o `master` esegue:
+Esempio:
 
 ```text
-.github/workflows/deploy-cloudflare.yml
+https://sorgente/volumi/volume116/1176/01.jpg
 ```
 
-Il deploy pubblica il reader su Cloudflare tramite Wrangler.
+Se la tua sorgente usa un pattern diverso, passa `--source-template`:
 
----
+```powershell
+python scripts/import_history_to_r2.py `
+  --from-chapter 1 `
+  --to-chapter 10 `
+  --source-template "{base_url}/v{volume_padded}/c{chapter_padded}/{page_padded}.{extension}" `
+  --i-confirm-rights
+```
 
-## Import immagini: controllo orario nuovo capitolo
+Placeholder disponibili:
 
-Il workflow orario è:
+```text
+{base_url}
+{volume}
+{volume_padded}
+{chapter}
+{chapter_padded}
+{chapter_4}
+{page}
+{page_padded}
+{page_3}
+{extension}
+```
+
+## Dopo l'import storico
+
+Controlla cosa è cambiato:
+
+```powershell
+git status
+```
+
+Devono risultare modifiche solo in:
+
+```text
+public/content/index.json
+public/content/manifest.json
+public/content/volumes/*.json
+reports/history-import-summary.json
+```
+
+Aggiungi solo i manifest:
+
+```powershell
+git add public/content/index.json public/content/manifest.json public/content/volumes/*.json
+git commit -m "Import historical manga manifests to R2"
+git push
+```
+
+Non fare `git add .` se hai cartelle temporanee o report che non vuoi versionare.
+
+## Workflow orario nuovi capitoli
+
+File:
 
 ```text
 .github/workflows/daily-download.yml
 ```
 
-Fa questo:
+Ogni ora:
 
 ```text
-1. Legge il capitolo più alto presente in public/content/manifest.json.
-2. Prova latest + 1, e opzionalmente qualche capitolo successivo con scan_ahead.
-3. Prova la cartella volume corrente e volume successivo, oppure i volumi configurati da variabile.
-4. Scarica solo se trova almeno min_pages immagini valide.
-5. Crea commit solo se ci sono nuove immagini e manifest aggiornato.
-6. Cloudflare deploya solo perché quel commit fa partire deploy-cloudflare.yml.
+1. legge latestChapter da public/content/index.json
+2. prova latestChapter + 1
+3. eventualmente prova anche i successivi in scan-ahead
+4. calcola il volume in automatico
+5. scarica dalla sorgente autorizzata
+6. converte in WebP qualità 90
+7. carica su R2
+8. aggiorna solo JSON
+9. fa commit solo se i JSON sono cambiati
 ```
 
-Se non trova nulla, esce con:
+Il deploy Cloudflare parte solo perché cambia il repository. Se non trova un nuovo capitolo, non committa nulla e quindi non parte deploy inutile.
+
+## Variabili GitHub Actions
+
+Repository → Settings → Secrets and variables → Actions.
+
+Secrets:
 
 ```text
-No new chapter found. No commit will be created.
+CLOUDFLARE_ACCOUNT_ID
+CLOUDFLARE_API_TOKEN
+R2_ACCESS_KEY_ID
+R2_SECRET_ACCESS_KEY
 ```
 
-Quindi non parte nessun deploy Cloudflare inutile.
-
-### Variabili GitHub richieste per attivare il download reale
-
-Vai in:
+Variables:
 
 ```text
-Settings → Secrets and variables → Actions → Variables
+AUTHORIZED_MANGA_BASE_URL
+I_CONFIRM_RIGHTS=true
+R2_BUCKET_NAME=op-reader-images
+R2_PUBLIC_BASE_URL=https://static.lucahome.uk
 ```
 
-Aggiungi:
+Opzionale, solo se la sorgente usa URL diversi dal default:
 
 ```text
-AUTHORIZED_MANGA_BASE_URL = https://tuo-dominio-autorizzato/esempio
-I_CONFIRM_RIGHTS = true
+AUTHORIZED_MANGA_SOURCE_TEMPLATE
 ```
 
-Variabile opzionale, utile se il nuovo capitolo viene pubblicato in una cartella volume specifica:
+## Mappa capitoli/volumi futura
+
+La mappa è dinamica da volume 117:
 
 ```text
-NEW_CHAPTER_VOLUME_CANDIDATES = 116,117
+Volume 117 = 1186-1195
+Volume 118 = 1196-1205
+Volume 119 = 1206-1215
+...
 ```
 
-Senza `AUTHORIZED_MANGA_BASE_URL` e `I_CONFIRM_RIGHTS=true` il workflow parte, ma salta il download reale.
-
-### Avvio manuale
-
-Da GitHub:
+Questa regola è implementata in:
 
 ```text
-Actions → Scan New Manga Chapter Hourly → Run workflow
+scripts/op_importer_common.py
 ```
 
-Puoi passare manualmente:
+## Reader
+
+Il reader legge il manifest assemblato da:
 
 ```text
-base_url
-chapter
-volume_candidates
-scan_ahead
-max_pages
-min_pages
+/api/manifest
 ```
 
-## Uso manuale dello script
-
-Audit senza scaricare:
-
-```bash
-python download_manga.py \
-  --base-url "https://tuo-dominio-autorizzato/esempio" \
-  --volume 115 \
-  --max-pages 40 \
-  --csv reports/audit-volume-115.csv
-```
-
-Download reale, solo se hai i diritti:
-
-```bash
-python download_manga.py \
-  --base-url "https://tuo-dominio-autorizzato/esempio" \
-  --volume 115 \
-  --max-pages 40 \
-  --download \
-  --i-confirm-rights \
-  --public-dir public \
-  --output-dir public/manga \
-  --manifest public/content/manifest.json \
-  --series-id op \
-  --series-title "OP Reader"
-```
-
-Per volume 116 cambia solo:
-
-```bash
---volume 116
-```
-
-Lo script salva le immagini in:
+Il Worker combina automaticamente `index.json` e i manifest dei volumi. Le immagini vengono lette dal dominio pubblico R2, per esempio:
 
 ```text
-public/manga/op/chapter-XXXX/page-001.jpg
+https://static.lucahome.uk/op/vol-116/chapter-1176/page-001.webp
 ```
 
-E aggiorna automaticamente:
+## Manual single-chapter import from GitHub Actions
+
+Use this when you want to test or import one chapter without running the historical importer from your PC.
+
+Required GitHub configuration:
+
+Secrets:
 
 ```text
-public/content/manifest.json
+CLOUDFLARE_ACCOUNT_ID
+R2_ACCESS_KEY_ID
+R2_SECRET_ACCESS_KEY
 ```
 
----
-
-## Import da file locali autorizzati
-
-Puoi evitare download HTTP e importare immagini già in tuo possesso.
-
-Esempio:
+Variables:
 
 ```text
-input/capitolo-1176/
-├── 001.jpg
-├── 002.jpg
-└── 003.jpg
+AUTHORIZED_MANGA_BASE_URL
+I_CONFIRM_RIGHTS=true
+R2_BUCKET_NAME=op-reader-images
+R2_PUBLIC_BASE_URL=https://static.lucahome.uk
 ```
 
-Comando:
+Run:
 
-```bash
-node scripts/prepare-local-chapter.mjs ./input/capitolo-1176 \
-  --series op \
-  --series-title "OP Reader" \
-  --chapter chapter-1176 \
-  --number 1176 \
-  --title "Volume 116 · Capitolo 1176"
+```text
+Actions → Manual Import Single Chapter to R2 → Run workflow
 ```
 
----
+Inputs:
 
-## Cloudflare R2
-
-Per non appesantire GitHub con migliaia di immagini, puoi usare R2.
-
-In `wrangler.jsonc` è già presente il blocco commentato:
-
-```jsonc
-// "r2_buckets": [
-//   {
-//     "binding": "MANGA_R2",
-//     "bucket_name": "manga-reader-assets"
-//   }
-// ]
+```text
+chapter: 1176
+max_pages: 45
+min_pages: 3
+webp_quality: 90
+overwrite: false
 ```
 
-Dopo aver creato il bucket, lo sblocchi e usi URL nel manifest come:
-
-```json
-{ "src": "/api/r2/manga/op/chapter-1176/page-001.jpg" }
-```
-
----
-
-## Note operative
-
-- `daily-download.yml` committa solo se trova un nuovo capitolo con nuove immagini accettate.
-- Il push ha retry con `git pull --rebase --autostash` per ridurre i conflitti.
-- Il deploy Cloudflare parte automaticamente dopo il push generato dal workflow di import.
-- Per ora il progetto rimane semplice: niente CMS, niente database, solo JSON + file statici.
-
----
-
-## Reader UI aggiornata per cataloghi grandi
-
-La home non mostra più tutti i capitoli in una lista piatta. Ora usa:
-
-- menu a tendina **Serie**;
-- menu a tendina **Volume**;
-- menu a tendina **Capitolo**;
-- ricerca rapida capitolo/volume;
-- pulsante **Continua lettura** salvato in `localStorage`;
-- griglia limitata al volume selezionato.
-
-Il reader del capitolo è ora pensato principalmente come **pagina singola**:
-
-- freccia destra = pagina successiva;
-- freccia sinistra = pagina precedente;
-- da PC funzionano anche i tasti `ArrowRight` e `ArrowLeft`;
-- da mobile funzionano swipe laterale e tap sui lati dell'immagine;
-- a fine capitolo passa al capitolo successivo;
-- a inizio capitolo passa all'ultima pagina del capitolo precedente;
-- URL aggiornato con `page=`, quindi puoi condividere o ricaricare una pagina precisa;
-- menu rapidi anche nel reader: **Volume**, **Capitolo**, **Pagina**.
-
-Resta disponibile anche la modalità **Scroll verticale**, attivabile dal pulsante in alto nel reader.
-
-
-## Mappa capitoli futura
-
-Da volume 117 in poi la mappa è dinamica: volume 117 = capitoli 1186-1195, volume 118 = 1196-1205, e ogni volume successivo aggiunge 10 capitoli. Non serve aggiornare manualmente lo script per i volumi futuri.
+The workflow uploads images to R2 and commits only JSON manifest files under `public/content`. It never commits image binaries.

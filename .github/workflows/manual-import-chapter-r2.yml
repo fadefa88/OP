@@ -1,41 +1,43 @@
-name: Scan New Chapter to R2 Hourly
+name: Manual Import Single Chapter to R2
 
 on:
-  schedule:
-    # Every hour. This job uploads images to R2 and commits only JSON manifests if a new chapter is found.
-    - cron: "0 * * * *"
   workflow_dispatch:
     inputs:
       chapter:
-        description: "Optional chapter number to force-check. Empty = latest manifest chapter + 1."
-        required: false
-        type: string
-      scan_ahead:
-        description: "How many future chapters to probe starting from latest+1."
-        required: false
-        default: "3"
+        description: "Chapter number to import, for example 1176."
+        required: true
         type: string
       max_pages:
-        description: "Maximum pages to try per chapter."
+        description: "Maximum pages to try."
         required: false
         default: "45"
         type: string
       min_pages:
-        description: "Minimum pages required before accepting a chapter."
+        description: "Minimum pages required before accepting the chapter."
         required: false
         default: "3"
         type: string
+      webp_quality:
+        description: "WebP quality, 1-100."
+        required: false
+        default: "90"
+        type: string
+      overwrite:
+        description: "Overwrite manifest/R2 objects if the chapter already exists."
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
 
 concurrency:
-  group: scan-new-chapter-to-r2-hourly
-  cancel-in-progress: true
+  group: manual-import-single-chapter-to-r2-${{ github.event.inputs.chapter }}
+  cancel-in-progress: false
 
 jobs:
-  scan:
-    name: Check next chapter, upload to R2, commit JSON only
+  import:
+    name: Import one chapter, upload images to R2, commit JSON only
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
@@ -49,7 +51,6 @@ jobs:
       R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       IMAGE_EXTENSIONS: "jpg,jpeg"
-      WEBP_QUALITY: "90"
       STOP_AFTER_MISSING: "3"
       IMPORT_DELAY: "0.25"
       IMPORT_TIMEOUT: "15"
@@ -71,59 +72,52 @@ jobs:
           pip install -r requirements.txt
 
       - name: Validate configuration
-        id: config
         shell: bash
         run: |
           set -euo pipefail
           if [ -z "${AUTHORIZED_MANGA_BASE_URL:-}" ]; then
-            echo "Missing repository variable AUTHORIZED_MANGA_BASE_URL. Skipping."
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            echo "Missing repository variable AUTHORIZED_MANGA_BASE_URL."
+            exit 1
           fi
           if [ "${I_CONFIRM_RIGHTS:-}" != "true" ]; then
-            echo "I_CONFIRM_RIGHTS is not true. Skipping."
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            echo "I_CONFIRM_RIGHTS must be true."
+            exit 1
           fi
           if [ -z "${R2_BUCKET_NAME:-}" ] || [ -z "${R2_PUBLIC_BASE_URL:-}" ]; then
-            echo "Missing R2_BUCKET_NAME or R2_PUBLIC_BASE_URL repository variable. Skipping."
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            echo "Missing R2_BUCKET_NAME or R2_PUBLIC_BASE_URL repository variable."
+            exit 1
           fi
           if [ -z "${R2_ACCESS_KEY_ID:-}" ] || [ -z "${R2_SECRET_ACCESS_KEY:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
-            echo "Missing R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, or CLOUDFLARE_ACCOUNT_ID secret. Skipping."
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            echo "Missing R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, or CLOUDFLARE_ACCOUNT_ID secret."
+            exit 1
           fi
-          echo "skip=false" >> "$GITHUB_OUTPUT"
 
-      - name: Import next chapter to R2
-        if: steps.config.outputs.skip != 'true'
+      - name: Import requested chapter to R2
         shell: bash
         run: |
           set -euo pipefail
 
-          CHAPTER_INPUT="${{ github.event.inputs.chapter || '' }}"
-          SCAN_AHEAD_INPUT="${{ github.event.inputs.scan_ahead || '3' }}"
-          MAX_PAGES_INPUT="${{ github.event.inputs.max_pages || '45' }}"
-          MIN_PAGES_INPUT="${{ github.event.inputs.min_pages || '3' }}"
+          CHAPTER_INPUT="${{ github.event.inputs.chapter }}"
+          MAX_PAGES_INPUT="${{ github.event.inputs.max_pages }}"
+          MIN_PAGES_INPUT="${{ github.event.inputs.min_pages }}"
+          WEBP_QUALITY_INPUT="${{ github.event.inputs.webp_quality }}"
+          OVERWRITE_INPUT="${{ github.event.inputs.overwrite }}"
 
           EXTRA_ARGS=()
-          if [ -n "$CHAPTER_INPUT" ]; then
-            EXTRA_ARGS+=(--chapter "$CHAPTER_INPUT")
-          else
-            EXTRA_ARGS+=(--scan-ahead "$SCAN_AHEAD_INPUT")
+          if [ "$OVERWRITE_INPUT" = "true" ]; then
+            EXTRA_ARGS+=(--overwrite)
           fi
 
-          python scripts/import_new_chapter_to_r2.py \
+          python scripts/import_history_to_r2.py \
+            --chapter "$CHAPTER_INPUT" \
+            --extensions "$IMAGE_EXTENSIONS" \
             --max-pages "$MAX_PAGES_INPUT" \
             --min-pages "$MIN_PAGES_INPUT" \
-            --webp-quality 90 \
+            --webp-quality "$WEBP_QUALITY_INPUT" \
             --i-confirm-rights \
             "${EXTRA_ARGS[@]}"
 
       - name: Commit JSON manifest changes only
-        if: steps.config.outputs.skip != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -136,7 +130,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          # Safety guard: never stage image binaries from any path.
+          # Safety guard: stage manifests only. Never stage downloaded images.
           git add public/content/index.json public/content/manifest.json public/content/volumes/*.json
 
           if git diff --cached --quiet; then
@@ -144,7 +138,7 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Import new manga chapter manifest"
+          git commit -m "Import manga chapter ${{ github.event.inputs.chapter }} manifest"
 
           for attempt in 1 2 3; do
             echo "Push attempt $attempt"

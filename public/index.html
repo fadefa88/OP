@@ -19,6 +19,7 @@
       </a>
       <nav class="top-nav" aria-label="Navigazione principale">
         <a href="#reader-picker">Reader</a>
+        <a href="#volumes">Volumi</a>
         <a href="#library">Archivio</a>
       </nav>
     </header>
@@ -26,9 +27,9 @@
     <main>
       <section class="hero onepace-hero" aria-label="Ingresso reader">
         <div class="home-video-backdrop" aria-hidden="true">
-          <video class="home-backdrop-video" role="presentation" tabindex="-1" autoplay muted loop playsinline preload="metadata" disablepictureinpicture>
-            <source media="(prefers-reduced-motion: no-preference)" src="/media/backdrop-loop.webm" type="video/webm" />
-            <source media="(prefers-reduced-motion: no-preference)" src="/media/backdrop-loop.mp4" type="video/mp4" />
+          <video class="home-backdrop-video" role="presentation" tabindex="-1" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="/media/backdrop-poster.jpg" disablepictureinpicture>
+            <source src="/media/backdrop-loop.mp4" type="video/mp4" />
+            <source src="/media/backdrop-loop.webm" type="video/webm" />
           </video>
         </div>
 
@@ -81,6 +82,22 @@
           </label>
           <div class="library-stats" id="library-stats" aria-live="polite"></div>
         </div>
+      </section>
+
+
+      <section id="volumes" class="section volume-browser-section">
+        <div class="section-head inline-head">
+          <div>
+            <p class="eyebrow">Volumi</p>
+            <h2>Archivio completo</h2>
+            <p>Seleziona rapidamente un volume. La lista capitoli viene caricata sotto senza mostrare un elenco ingestibile.</p>
+          </div>
+          <label class="volume-range-filter">
+            <span>Intervallo</span>
+            <select id="volume-range-select" aria-label="Filtra intervallo volumi"></select>
+          </label>
+        </div>
+        <div id="volume-grid" class="volume-grid" aria-live="polite"></div>
       </section>
 
       <section id="library" class="section">

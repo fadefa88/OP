@@ -34,7 +34,8 @@ const state = {
   viewMode: localStorage.getItem('reader.viewMode') || 'paged',
   fitMode: localStorage.getItem('reader.fitMode') || 'width',
   uiHidden: false,
-  immersiveFullscreen: false
+  immersiveFullscreen: false,
+  restoreAfterFullscreen: null
 };
 
 async function loadManifest() {
@@ -239,6 +240,11 @@ function applyFitMode() {
 let uiTimer = null;
 let fullscreenHintTimer = null;
 
+function isDesktopFullscreenLayout() {
+  return window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 821px)').matches;
+}
+
+
 function setUiHidden(hidden) {
   state.uiHidden = hidden;
   document.body.classList.toggle('reader-ui-hidden', hidden);
@@ -275,7 +281,28 @@ function showReaderUi({ keep = false, force = false } = {}) {
 }
 
 function applyFullscreenState(active) {
-  state.immersiveFullscreen = Boolean(active);
+  const nextActive = Boolean(active);
+
+  if (nextActive && !state.immersiveFullscreen) {
+    state.restoreAfterFullscreen = {
+      viewMode: state.viewMode,
+      fitMode: state.fitMode
+    };
+    state.viewMode = 'paged';
+    state.fitMode = isDesktopFullscreenLayout() ? 'page' : 'width';
+    applyViewMode();
+    applyFitMode();
+  }
+
+  if (!nextActive && state.immersiveFullscreen && state.restoreAfterFullscreen) {
+    state.viewMode = state.restoreAfterFullscreen.viewMode;
+    state.fitMode = state.restoreAfterFullscreen.fitMode;
+    state.restoreAfterFullscreen = null;
+    applyViewMode();
+    applyFitMode();
+  }
+
+  state.immersiveFullscreen = nextActive;
   document.body.classList.toggle('reader-fullscreen', state.immersiveFullscreen);
   els.fullscreenToggle.textContent = state.immersiveFullscreen ? 'Esci' : 'Schermo intero';
   els.fullscreenToggle.setAttribute('aria-pressed', String(state.immersiveFullscreen));

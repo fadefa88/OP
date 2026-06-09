@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-09T11:51:25.885608+00:00",
+  "generatedAt": "2026-06-09T15:12:28.059703+00:00",
   "series": [
     {
       "id": "op",
@@ -8,7 +8,7 @@
       "description": "Archivio ordinato per volume, capitolo e pagina.",
       "cover": "https://static.lucahome.uk/op/vol-001/chapter-0001/page-001.webp",
       "latestChapter": 1184,
-      "chaptersCount": 239,
+      "chaptersCount": 539,
       "volumes": [
         {
           "volume": 1,
@@ -175,8 +175,211 @@
           "volume": 24,
           "fromChapter": 217,
           "toChapter": 226,
-          "chaptersCount": 4,
+          "chaptersCount": 10,
           "manifest": "/content/volumes/024.json"
+        },
+        {
+          "volume": 25,
+          "fromChapter": 227,
+          "toChapter": 236,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/025.json"
+        },
+        {
+          "volume": 26,
+          "fromChapter": 237,
+          "toChapter": 246,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/026.json"
+        },
+        {
+          "volume": 27,
+          "fromChapter": 247,
+          "toChapter": 255,
+          "chaptersCount": 9,
+          "manifest": "/content/volumes/027.json"
+        },
+        {
+          "volume": 28,
+          "fromChapter": 256,
+          "toChapter": 264,
+          "chaptersCount": 9,
+          "manifest": "/content/volumes/028.json"
+        },
+        {
+          "volume": 29,
+          "fromChapter": 265,
+          "toChapter": 275,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/029.json"
+        },
+        {
+          "volume": 30,
+          "fromChapter": 276,
+          "toChapter": 285,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/030.json"
+        },
+        {
+          "volume": 31,
+          "fromChapter": 286,
+          "toChapter": 295,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/031.json"
+        },
+        {
+          "volume": 32,
+          "fromChapter": 296,
+          "toChapter": 305,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/032.json"
+        },
+        {
+          "volume": 33,
+          "fromChapter": 306,
+          "toChapter": 316,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/033.json"
+        },
+        {
+          "volume": 34,
+          "fromChapter": 317,
+          "toChapter": 327,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/034.json"
+        },
+        {
+          "volume": 35,
+          "fromChapter": 328,
+          "toChapter": 336,
+          "chaptersCount": 9,
+          "manifest": "/content/volumes/035.json"
+        },
+        {
+          "volume": 36,
+          "fromChapter": 337,
+          "toChapter": 346,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/036.json"
+        },
+        {
+          "volume": 37,
+          "fromChapter": 347,
+          "toChapter": 357,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/037.json"
+        },
+        {
+          "volume": 38,
+          "fromChapter": 358,
+          "toChapter": 367,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/038.json"
+        },
+        {
+          "volume": 39,
+          "fromChapter": 368,
+          "toChapter": 377,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/039.json"
+        },
+        {
+          "volume": 40,
+          "fromChapter": 378,
+          "toChapter": 388,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/040.json"
+        },
+        {
+          "volume": 41,
+          "fromChapter": 389,
+          "toChapter": 399,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/041.json"
+        },
+        {
+          "volume": 42,
+          "fromChapter": 400,
+          "toChapter": 409,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/042.json"
+        },
+        {
+          "volume": 43,
+          "fromChapter": 410,
+          "toChapter": 419,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/043.json"
+        },
+        {
+          "volume": 44,
+          "fromChapter": 420,
+          "toChapter": 430,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/044.json"
+        },
+        {
+          "volume": 45,
+          "fromChapter": 431,
+          "toChapter": 440,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/045.json"
+        },
+        {
+          "volume": 46,
+          "fromChapter": 441,
+          "toChapter": 449,
+          "chaptersCount": 9,
+          "manifest": "/content/volumes/046.json"
+        },
+        {
+          "volume": 47,
+          "fromChapter": 450,
+          "toChapter": 459,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/047.json"
+        },
+        {
+          "volume": 48,
+          "fromChapter": 460,
+          "toChapter": 470,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/048.json"
+        },
+        {
+          "volume": 49,
+          "fromChapter": 471,
+          "toChapter": 481,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/049.json"
+        },
+        {
+          "volume": 50,
+          "fromChapter": 482,
+          "toChapter": 491,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/050.json"
+        },
+        {
+          "volume": 51,
+          "fromChapter": 492,
+          "toChapter": 502,
+          "chaptersCount": 11,
+          "manifest": "/content/volumes/051.json"
+        },
+        {
+          "volume": 52,
+          "fromChapter": 503,
+          "toChapter": 512,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/052.json"
+        },
+        {
+          "volume": 53,
+          "fromChapter": 513,
+          "toChapter": 522,
+          "chaptersCount": 8,
+          "manifest": "/content/volumes/053.json"
         },
         {
           "volume": 115,

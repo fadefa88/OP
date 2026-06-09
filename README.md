@@ -12,7 +12,7 @@ GitHub repo
 └── manifest JSON diviso per volumi
 
 Cloudflare R2
-└── immagini WebP
+└── immagini ottimizzate: WebP quando è più leggero, altrimenti JPG originale
 
 manga.lucahome.uk
 └── sito reader
@@ -80,7 +80,7 @@ python scripts/import_history_to_r2.py `
   --extensions jpg,jpeg `
   --max-pages 45 `
   --min-pages 3 `
-  --webp-quality 90 `
+  --webp-quality 82 `
   --i-confirm-rights
 ```
 
@@ -93,7 +93,7 @@ python scripts/import_history_to_r2.py `
   --extensions jpg,jpeg `
   --max-pages 45 `
   --min-pages 3 `
-  --webp-quality 90 `
+  --webp-quality 82 `
   --i-confirm-rights
 ```
 
@@ -101,7 +101,7 @@ Lo script:
 
 ```text
 1. scarica temporaneamente JPG/JPEG dalla sorgente autorizzata
-2. converte in WebP qualità 90 mantenendo la stessa risoluzione
+2. converte in WebP qualità 82 mantenendo la stessa risoluzione e lo usa solo se pesa meno del JPG originale
 3. carica su R2
 4. aggiorna solo i manifest JSON
 5. non salva immagini nel repository
@@ -117,7 +117,7 @@ Un volume:
 python scripts/import_history_to_r2.py `
   --volume 116 `
   --extensions jpg,jpeg `
-  --webp-quality 90 `
+  --webp-quality 82 `
   --i-confirm-rights
 ```
 
@@ -127,8 +127,36 @@ Un capitolo:
 python scripts/import_history_to_r2.py `
   --chapter 1176 `
   --extensions jpg,jpeg `
-  --webp-quality 90 `
+  --webp-quality 82 `
   --i-confirm-rights
+```
+
+
+## Strategia immagini: best-size
+
+Per default gli importer usano:
+
+```text
+image_strategy = best-size
+webp_quality = 82
+```
+
+La logica è:
+
+```text
+1. scarica il JPG/JPEG originale
+2. prova conversione WebP alla qualità indicata
+3. se WebP pesa meno, carica WebP su R2
+4. se WebP pesa di più, tiene il JPG originale
+5. il manifest punta automaticamente all'estensione corretta pagina per pagina
+```
+
+Strategie disponibili:
+
+```text
+best-size = scelta consigliata, WebP solo quando conviene
+webp      = forza sempre WebP
+original  = carica sempre il file originale
 ```
 
 ## Pattern sorgente
@@ -213,7 +241,7 @@ Ogni ora:
 3. eventualmente prova anche i successivi in scan-ahead
 4. calcola il volume in automatico
 5. scarica dalla sorgente autorizzata
-6. converte in WebP qualità 90
+6. usa strategia best-size: WebP qualità 82 solo se più leggero, altrimenti JPG originale
 7. carica su R2
 8. aggiorna solo JSON
 9. fa commit solo se i JSON sono cambiati
@@ -278,6 +306,7 @@ Il Worker combina automaticamente `index.json` e i manifest dei volumi. Le immag
 
 ```text
 https://static.lucahome.uk/op/vol-116/chapter-1176/page-001.webp
+https://static.lucahome.uk/op/vol-116/chapter-1176/page-001.jpg
 ```
 
 ## Manual single-chapter import from GitHub Actions
@@ -315,8 +344,9 @@ Inputs:
 chapter: 1176
 max_pages: 45
 min_pages: 3
-webp_quality: 90
+webp_quality: 82
+image_strategy: best-size
 overwrite: false
 ```
 
-The workflow uploads images to R2 and commits only JSON manifest files under `public/content`. It never commits image binaries.
+The workflow uploads images to R2 using `best-size` by default and commits only JSON manifest files under `public/content`. It never commits image binaries.

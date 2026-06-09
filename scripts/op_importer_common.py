@@ -3,7 +3,7 @@
 Shared utilities for legal OP Reader imports.
 
 The importer is intentionally generic: it can fetch from a source you are
-allowed to copy from, convert JPG/JPEG pages to WebP, upload to Cloudflare R2,
+allowed to copy from, convert JPG/JPEG pages only when WebP is smaller, upload to Cloudflare R2,
 and update JSON manifests. It does not require storing images in Git.
 """
 
@@ -180,6 +180,18 @@ class UploadedPage:
 
 
 @dataclass(frozen=True)
+class EncodedPage:
+    body: bytes
+    width: int
+    height: int
+    extension: str
+    content_type: str
+    strategy: str
+    original_bytes: int
+    encoded_bytes: int
+
+
+@dataclass(frozen=True)
 class ChapterImportResult:
     chapter: int
     volume: int
@@ -283,8 +295,11 @@ def build_source_url(base_url: str, volume: int, chapter: int, page: int, extens
     return urljoin(base, f"volumi/volume{pad_volume(volume)}/{pad_source_chapter(chapter)}/{pad_page(page)}.{extension.lstrip('.')}")
 
 
-def r2_key_for_page(series_id: str, volume: int, chapter: int, page: int) -> str:
-    return f"{slugify(series_id)}/vol-{pad_volume(volume)}/chapter-{pad_chapter(chapter)}/page-{page:03d}.webp"
+def r2_key_for_page(series_id: str, volume: int, chapter: int, page: int, extension: str = "webp") -> str:
+    clean_extension = extension.lower().lstrip(".") or "webp"
+    if clean_extension == "jpeg":
+        clean_extension = "jpg"
+    return f"{slugify(series_id)}/vol-{pad_volume(volume)}/chapter-{pad_chapter(chapter)}/page-{page:03d}.{clean_extension}"
 
 
 def public_url_for_key(public_base_url: str, key: str) -> str:
@@ -333,15 +348,81 @@ def fetch_image_bytes(session: requests.Session, url: str, timeout: float) -> tu
         return None, "", None, exc.__class__.__name__
 
 
-def convert_to_webp(image_bytes: bytes, quality: int = 90) -> tuple[bytes, int, int]:
+def _normalized_source_extension(content_type: str, fallback: str) -> str:
+    extension = guess_extension_from_content_type(content_type, fallback).lower().lstrip(".")
+    if extension in {"jpe", "jpeg"}:
+        return "jpg"
+    if extension not in {"jpg", "png", "gif", "webp", "avif"}:
+        # The importer is expected to ingest jpg/jpeg sources, but keep this conservative.
+        return fallback.lower().lstrip(".") or "jpg"
+    return extension
+
+
+def encode_page_asset(
+    image_bytes: bytes,
+    *,
+    quality: int = 82,
+    strategy: str = "best-size",
+    source_extension: str = "jpg",
+    content_type: str = "",
+) -> EncodedPage:
+    """Return the asset to upload.
+
+    strategy=best-size converts to WebP, compares the final byte size, and keeps
+    the original JPG/JPEG when it is smaller than the WebP version. This avoids
+    making already-compressed scans heavier.
+    """
+    strategy = (strategy or "best-size").lower().strip()
+    if strategy not in {"best-size", "webp", "original"}:
+        raise ValueError("image strategy must be one of: best-size, webp, original")
+
     with Image.open(io.BytesIO(image_bytes)) as image:
         image = ImageOps.exif_transpose(image)
-        if image.mode not in ("RGB", "RGBA"):
-            image = image.convert("RGB")
         width, height = image.size
+
+        if strategy == "original":
+            extension = _normalized_source_extension(content_type, source_extension)
+            return EncodedPage(
+                body=image_bytes,
+                width=width,
+                height=height,
+                extension=extension,
+                content_type=mimetypes.types_map.get(f".{extension}", content_type or "application/octet-stream"),
+                strategy="original",
+                original_bytes=len(image_bytes),
+                encoded_bytes=len(image_bytes),
+            )
+
+        output_image = image
+        if output_image.mode not in ("RGB", "RGBA"):
+            output_image = output_image.convert("RGB")
         output = io.BytesIO()
-        image.save(output, format="WEBP", quality=quality, method=6)
-        return output.getvalue(), width, height
+        output_image.save(output, format="WEBP", quality=quality, method=6)
+        webp_bytes = output.getvalue()
+
+    if strategy == "webp" or len(webp_bytes) < len(image_bytes):
+        return EncodedPage(
+            body=webp_bytes,
+            width=width,
+            height=height,
+            extension="webp",
+            content_type="image/webp",
+            strategy="webp",
+            original_bytes=len(image_bytes),
+            encoded_bytes=len(webp_bytes),
+        )
+
+    extension = _normalized_source_extension(content_type, source_extension)
+    return EncodedPage(
+        body=image_bytes,
+        width=width,
+        height=height,
+        extension=extension,
+        content_type=mimetypes.types_map.get(f".{extension}", content_type or "application/octet-stream"),
+        strategy="original-smaller",
+        original_bytes=len(image_bytes),
+        encoded_bytes=len(image_bytes),
+    )
 
 
 def build_r2_client(account_id: str, access_key_id: str, secret_access_key: str):
@@ -364,12 +445,19 @@ def r2_object_exists(client, bucket: str, key: str) -> bool:
         return False
 
 
-def upload_webp_to_r2(client, bucket: str, key: str, body: bytes, cache_control: str = "public, max-age=31536000, immutable") -> None:
+def upload_asset_to_r2(
+    client,
+    bucket: str,
+    key: str,
+    body: bytes,
+    content_type: str,
+    cache_control: str = "public, max-age=31536000, immutable",
+) -> None:
     client.put_object(
         Bucket=bucket,
         Key=key,
         Body=body,
-        ContentType="image/webp",
+        ContentType=content_type,
         CacheControl=cache_control,
     )
 
@@ -601,6 +689,7 @@ def import_single_chapter_to_r2(
     timeout: float,
     delay: float,
     webp_quality: int,
+    image_strategy: str,
     overwrite: bool,
     dry_run: bool = False,
 ) -> ChapterImportResult:
@@ -649,27 +738,38 @@ def import_single_chapter_to_r2(
 
         consecutive_missing = 0
         try:
-            webp_bytes, width, height = convert_to_webp(image_bytes, quality=webp_quality)
+            encoded = encode_page_asset(
+                image_bytes,
+                quality=webp_quality,
+                strategy=image_strategy,
+                source_extension=used_extension,
+                content_type=used_content_type,
+            )
         except UnidentifiedImageError:
             print(f"  page {page:03d}: downloaded but not a readable image ({used_url})")
             if delay > 0:
                 time.sleep(delay)
             continue
 
-        key = r2_key_for_page(series_id, volume, chapter, page)
+        key = r2_key_for_page(series_id, volume, chapter, page, encoded.extension)
         src = public_url_for_key(public_base_url, key)
 
         if not dry_run:
             if overwrite or not r2_object_exists(r2_client, bucket, key):
-                upload_webp_to_r2(r2_client, bucket, key, webp_bytes)
+                upload_asset_to_r2(r2_client, bucket, key, encoded.body, encoded.content_type)
                 action = "uploaded"
             else:
                 action = "already on R2"
         else:
             action = "dry-run"
 
-        print(f"  page {page:03d}: {action} {key} ({width}x{height}, {len(webp_bytes)} bytes, source={used_extension}/{used_content_type or 'unknown'})")
-        found_pages.append(UploadedPage(page=page, key=key, src=src, width=width, height=height, bytes=len(webp_bytes)))
+        size_note = f"{encoded.encoded_bytes} bytes"
+        if encoded.strategy in {"webp", "original-smaller"}:
+            size_note += f", original={encoded.original_bytes} bytes, strategy={encoded.strategy}"
+        else:
+            size_note += f", strategy={encoded.strategy}"
+        print(f"  page {page:03d}: {action} {key} ({encoded.width}x{encoded.height}, {size_note}, source={used_extension}/{used_content_type or 'unknown'})")
+        found_pages.append(UploadedPage(page=page, key=key, src=src, width=encoded.width, height=encoded.height, bytes=encoded.encoded_bytes))
 
         if delay > 0:
             time.sleep(delay)

@@ -17,7 +17,7 @@ import sys
 def main() -> int:
     print("download_manga.py has been replaced by the R2 importers.")
     print("Historical one-time import:")
-    print("  python scripts/import_history_to_r2.py --from-chapter 1 --to-chapter 1184 --webp-quality 90 --i-confirm-rights")
+    print("  python scripts/import_history_to_r2.py --from-chapter 1 --to-chapter 1184 --webp-quality 82 --image-strategy best-size --i-confirm-rights")
     print("New chapter import:")
     print("  python scripts/import_new_chapter_to_r2.py --i-confirm-rights")
     return 0

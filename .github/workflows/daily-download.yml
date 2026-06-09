@@ -49,7 +49,8 @@ jobs:
       R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       IMAGE_EXTENSIONS: "jpg,jpeg"
-      WEBP_QUALITY: "90"
+      WEBP_QUALITY: "82"
+      IMAGE_STRATEGY: "best-size"
       STOP_AFTER_MISSING: "3"
       IMPORT_DELAY: "0.25"
       IMPORT_TIMEOUT: "15"
@@ -118,7 +119,8 @@ jobs:
           python scripts/import_new_chapter_to_r2.py \
             --max-pages "$MAX_PAGES_INPUT" \
             --min-pages "$MIN_PAGES_INPUT" \
-            --webp-quality 90 \
+            --webp-quality "$WEBP_QUALITY" \
+            --image-strategy "$IMAGE_STRATEGY" \
             --i-confirm-rights \
             "${EXTRA_ARGS[@]}"
 

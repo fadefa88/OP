@@ -16,5 +16,6 @@ python scripts/import_history_to_r2.py `
   --extensions jpg,jpeg `
   --max-pages 45 `
   --min-pages 3 `
-  --webp-quality 90 `
+  --webp-quality 82 `
+  --image-strategy best-size `
   --i-confirm-rights

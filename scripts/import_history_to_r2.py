@@ -3,7 +3,7 @@
 One-time historical importer to Cloudflare R2.
 
 Run from your PC. It downloads only from a source you are allowed to copy from,
-converts JPG/JPEG pages to WebP quality 90 by default, uploads pages to R2,
+uses best-size image selection by default (WebP quality 82 only when smaller), uploads pages to R2,
 and commits no images to Git. Only JSON manifests are written locally.
 """
 
@@ -53,7 +53,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--stop-after-missing", type=int, default=3, help="Stop after N consecutive missing pages. Default: 3")
     parser.add_argument("--timeout", type=float, default=15.0, help="HTTP timeout seconds. Default: 15")
     parser.add_argument("--delay", type=float, default=0.25, help="Delay between page requests. Default: 0.25")
-    parser.add_argument("--webp-quality", type=int, default=90, help="WebP quality. Default: 90")
+    parser.add_argument("--webp-quality", type=int, default=82, help="WebP quality used when WebP is selected. Default: 82")
+    parser.add_argument("--image-strategy", choices=["best-size", "webp", "original"], default=os.environ.get("IMAGE_STRATEGY", "best-size"), help="best-size keeps JPG/JPEG when WebP is larger. Default: best-size")
     parser.add_argument("--overwrite", action="store_true", help="Overwrite existing manifest entries and R2 objects.")
     parser.add_argument("--dry-run", action="store_true", help="Check and convert but do not upload or write manifests.")
     parser.add_argument("--i-confirm-rights", action="store_true", default=os.environ.get("I_CONFIRM_RIGHTS", "").lower() == "true", help="Required: confirms you can legally copy and host the images.")
@@ -118,6 +119,7 @@ def main(argv: list[str]) -> int:
         print(f"R2 bucket: {bucket}")
         print(f"Public base URL: {public_base_url}")
         print(f"WebP quality: {args.webp_quality}")
+        print(f"Image strategy: {args.image_strategy}")
 
         session = make_session()
         r2_client = build_r2_client(account_id, access_key_id, secret_access_key)
@@ -152,6 +154,7 @@ def main(argv: list[str]) -> int:
                 timeout=args.timeout,
                 delay=args.delay,
                 webp_quality=args.webp_quality,
+                image_strategy=args.image_strategy,
                 overwrite=args.overwrite,
                 dry_run=args.dry_run,
             )

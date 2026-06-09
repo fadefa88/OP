@@ -18,10 +18,19 @@ on:
         default: "3"
         type: string
       webp_quality:
-        description: "WebP quality, 1-100."
+        description: "WebP quality used only when WebP is smaller or forced."
         required: false
-        default: "90"
+        default: "82"
         type: string
+      image_strategy:
+        description: "best-size keeps JPG/JPEG when WebP is larger. Options: best-size, webp, original."
+        required: false
+        default: "best-size"
+        type: choice
+        options:
+          - best-size
+          - webp
+          - original
       overwrite:
         description: "Overwrite manifest/R2 objects if the chapter already exists."
         required: false
@@ -101,6 +110,7 @@ jobs:
           MAX_PAGES_INPUT="${{ github.event.inputs.max_pages }}"
           MIN_PAGES_INPUT="${{ github.event.inputs.min_pages }}"
           WEBP_QUALITY_INPUT="${{ github.event.inputs.webp_quality }}"
+          IMAGE_STRATEGY_INPUT="${{ github.event.inputs.image_strategy }}"
           OVERWRITE_INPUT="${{ github.event.inputs.overwrite }}"
 
           EXTRA_ARGS=()
@@ -114,6 +124,7 @@ jobs:
             --max-pages "$MAX_PAGES_INPUT" \
             --min-pages "$MIN_PAGES_INPUT" \
             --webp-quality "$WEBP_QUALITY_INPUT" \
+            --image-strategy "$IMAGE_STRATEGY_INPUT" \
             --i-confirm-rights \
             "${EXTRA_ARGS[@]}"
 

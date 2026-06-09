@@ -42,7 +42,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--stop-after-missing", type=int, default=int(os.environ.get("STOP_AFTER_MISSING", "3")))
     parser.add_argument("--timeout", type=float, default=float(os.environ.get("IMPORT_TIMEOUT", "15")))
     parser.add_argument("--delay", type=float, default=float(os.environ.get("IMPORT_DELAY", "0.25")))
-    parser.add_argument("--webp-quality", type=int, default=int(os.environ.get("WEBP_QUALITY", "90")))
+    parser.add_argument("--webp-quality", type=int, default=int(os.environ.get("WEBP_QUALITY", "82")))
+    parser.add_argument("--image-strategy", choices=["best-size", "webp", "original"], default=os.environ.get("IMAGE_STRATEGY", "best-size"), help="best-size keeps JPG/JPEG when WebP is larger. Default: best-size")
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--i-confirm-rights", action="store_true", default=os.environ.get("I_CONFIRM_RIGHTS", "").lower() == "true")
 
@@ -121,6 +122,7 @@ def main(argv: list[str]) -> int:
                 timeout=args.timeout,
                 delay=args.delay,
                 webp_quality=args.webp_quality,
+                image_strategy=args.image_strategy,
                 overwrite=args.overwrite,
                 dry_run=False,
             )

@@ -24,27 +24,29 @@
     </header>
 
     <main>
-      <section class="hero compact-hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Archivio digitale</p>
-          <h1>Leggi i capitoli in modo pulito e immediato.</h1>
+      <section class="hero onepace-hero" aria-label="Ingresso reader">
+        <div class="home-video-backdrop" aria-hidden="true">
+          <video class="home-backdrop-video" role="presentation" tabindex="-1" autoplay muted loop playsinline preload="metadata" disablepictureinpicture>
+            <source media="(prefers-reduced-motion: no-preference)" src="/media/backdrop-loop.webm" type="video/webm" />
+            <source media="(prefers-reduced-motion: no-preference)" src="/media/backdrop-loop.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="hero-copy onepace-hero-copy">
+          <p class="release-pill">Archivio aggiornato · Lettura full screen · Mobile first</p>
+          <p class="eyebrow">OP Reader</p>
+          <h1>Il reader pulito per navigare volumi, capitoli e pagine.</h1>
           <p>
-            Scegli il volume, apri il capitolo e riprendi la lettura dall'ultima pagina visualizzata.
-            Il reader è ottimizzato per desktop, tablet e smartphone.
+            Scegli un volume, entra nel capitolo e leggi a schermo intero con swipe, tap laterali e ripresa automatica dall’ultima pagina.
           </p>
           <div class="hero-actions">
             <a id="continue-reading" class="button primary" href="#reader-picker">Continua lettura</a>
-            <a class="button ghost" href="#reader-picker">Scegli capitolo</a>
+            <a class="button ghost" href="#reader-picker">Sfoglia archivio</a>
           </div>
-        </div>
-        <div class="hero-card reader-preview" aria-label="Anteprima reader">
-          <div class="mock-browser">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="mock-reader-screen">
-            <button type="button" aria-hidden="true">‹</button>
-            <div class="mock-page single"></div>
-            <button type="button" aria-hidden="true">›</button>
+          <div class="hero-status-grid" aria-label="Funzioni principali">
+            <span>Menu per volume</span>
+            <span>Reader immersivo</span>
+            <span>Archivio su R2</span>
           </div>
         </div>
       </section>

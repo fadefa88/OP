@@ -1,6 +1,6 @@
 const JSON_HEADERS = {
   "content-type": "application/json; charset=utf-8",
-  "cache-control": "public, max-age=60, s-maxage=300"
+  "cache-control": "public, max-age=60, s-maxage=600"
 };
 
 function json(data, init = {}) {
@@ -27,12 +27,188 @@ function safeR2Key(key) {
   return decoded;
 }
 
+function pad3(value) {
+  return String(Number(value)).padStart(3, "0");
+}
+
+function pad4(value) {
+  return String(Number(value)).padStart(4, "0");
+}
+
+function publicUrlForKey(env, request, key) {
+  const explicitBase = (env.R2_PUBLIC_BASE_URL || "").replace(/\/$/, "");
+  if (explicitBase) return `${explicitBase}/${key}`;
+  const url = new URL(request.url);
+  return `${url.origin}/api/r2/${key}`;
+}
+
 async function fetchAssetJson(request, env, path) {
   const url = new URL(request.url);
   const assetUrl = new URL(path, url.origin);
   const response = await env.ASSETS.fetch(new Request(assetUrl.toString(), request));
   if (!response.ok) return null;
   return response.json();
+}
+
+async function listAllR2Objects(env, prefix) {
+  const objects = [];
+  let cursor;
+
+  do {
+    const result = await env.MANGA_R2.list({
+      prefix,
+      cursor,
+      limit: 1000
+    });
+
+    objects.push(...(result.objects || []));
+    cursor = result.truncated ? result.cursor : undefined;
+  } while (cursor);
+
+  return objects;
+}
+
+function addPage(chapterPages, pageNumber, page) {
+  const existing = chapterPages.get(pageNumber);
+  if (!existing) {
+    chapterPages.set(pageNumber, page);
+    return;
+  }
+
+  const existingSize = Number(existing.size ?? Number.MAX_SAFE_INTEGER);
+  const newSize = Number(page.size ?? Number.MAX_SAFE_INTEGER);
+
+  if (newSize < existingSize) {
+    chapterPages.set(pageNumber, page);
+    return;
+  }
+
+  if (newSize === existingSize && page.ext === "webp" && existing.ext !== "webp") {
+    chapterPages.set(pageNumber, page);
+  }
+}
+
+async function buildR2Manifest(request, env) {
+  if (!env.MANGA_R2) return null;
+
+  const prefix = `${(env.R2_PUBLIC_PREFIX || "op").replace(/^\/+|\/+$/g, "")}/`;
+  const objects = await listAllR2Objects(env, prefix);
+  const keyPattern = new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}vol-(\\d+)\\/chapter-(\\d+)\\/page-(\\d+)\\.(webp|jpe?g|png)$`, "i");
+  const volumes = new Map();
+
+  for (const object of objects) {
+    const match = object.key.match(keyPattern);
+    if (!match) continue;
+
+    const volumeNumber = Number(match[1]);
+    const chapterNumber = Number(match[2]);
+    const pageNumber = Number(match[3]);
+    const ext = match[4].toLowerCase() === "jpeg" ? "jpg" : match[4].toLowerCase();
+
+    if (!Number.isFinite(volumeNumber) || !Number.isFinite(chapterNumber) || !Number.isFinite(pageNumber)) continue;
+
+    if (!volumes.has(volumeNumber)) volumes.set(volumeNumber, new Map());
+    const chapters = volumes.get(volumeNumber);
+    if (!chapters.has(chapterNumber)) chapters.set(chapterNumber, new Map());
+
+    addPage(chapters.get(chapterNumber), pageNumber, {
+      src: publicUrlForKey(env, request, object.key),
+      key: object.key,
+      number: pageNumber,
+      ext,
+      size: object.size || null
+    });
+  }
+
+  const volumeEntries = [];
+  const chapterEntries = [];
+  const sortedVolumeNumbers = [...volumes.keys()].sort((a, b) => a - b);
+
+  for (const volumeNumber of sortedVolumeNumbers) {
+    const chapters = volumes.get(volumeNumber);
+    const sortedChapterNumbers = [...chapters.keys()].sort((a, b) => a - b);
+    const volumeChapters = [];
+
+    for (const chapterNumber of sortedChapterNumbers) {
+      const pagesMap = chapters.get(chapterNumber);
+      const pages = [...pagesMap.entries()]
+        .sort(([a], [b]) => a - b)
+        .map(([, page]) => ({ src: page.src, key: page.key }));
+
+      if (!pages.length) continue;
+
+      const chapter = {
+        id: `chapter-${pad4(chapterNumber)}`,
+        number: chapterNumber,
+        volume: volumeNumber,
+        title: `Capitolo ${chapterNumber}`,
+        pages
+      };
+
+      volumeChapters.push(chapter);
+      chapterEntries.push(chapter);
+    }
+
+    if (!volumeChapters.length) continue;
+
+    volumeEntries.push({
+      volume: volumeNumber,
+      fromChapter: volumeChapters[0].number,
+      toChapter: volumeChapters.at(-1).number,
+      chaptersCount: volumeChapters.length,
+      source: "r2"
+    });
+  }
+
+  chapterEntries.sort((a, b) => Number(a.number || 0) - Number(b.number || 0));
+
+  return {
+    schemaVersion: 3,
+    generatedAt: new Date().toISOString(),
+    source: "r2-dynamic-listing",
+    r2: {
+      prefix: prefix.replace(/\/$/, ""),
+      publicBaseUrl: env.R2_PUBLIC_BASE_URL || null,
+      objectsScanned: objects.length
+    },
+    series: [
+      {
+        id: env.SERIES_ID || "op",
+        title: env.SERIES_TITLE || "OP Reader",
+        description: "Archivio ordinato da Cloudflare R2 per volume, capitolo e pagina.",
+        cover: chapterEntries[0]?.pages?.[0]?.src || null,
+        latestChapter: chapterEntries.at(-1)?.number || null,
+        chaptersCount: chapterEntries.length,
+        volumes: volumeEntries,
+        chapters: chapterEntries
+      }
+    ]
+  };
+}
+
+async function cachedR2Manifest(request, env, ctx) {
+  const url = new URL(request.url);
+  const refresh = url.searchParams.get("refresh") === "1";
+  const ttl = Number(env.R2_MANIFEST_CACHE_SECONDS || 600);
+  const cacheKey = new Request(`${url.origin}/api/manifest:r2:${env.R2_PUBLIC_PREFIX || "op"}:v3`);
+  const cache = caches.default;
+
+  if (!refresh) {
+    const cached = await cache.match(cacheKey);
+    if (cached) return cached;
+  }
+
+  const manifest = await buildR2Manifest(request, env);
+  if (!manifest) return null;
+
+  const response = json({ ok: true, source: "r2-dynamic-listing", data: manifest }, {
+    headers: {
+      "cache-control": `public, max-age=60, s-maxage=${ttl}`
+    }
+  });
+
+  ctx.waitUntil(cache.put(cacheKey, response.clone()));
+  return response;
 }
 
 async function fetchSplitManifest(request, env) {
@@ -48,7 +224,7 @@ async function fetchSplitManifest(request, env) {
     return json({ ok: true, source: "legacy-manifest", data: legacy });
   }
 
-  const assembled = structuredClone(index);
+  const assembled = JSON.parse(JSON.stringify(index));
 
   for (const series of assembled.series || []) {
     const chapters = [];
@@ -66,10 +242,37 @@ async function fetchSplitManifest(request, env) {
   return json({ ok: true, source: "split-manifest", data: assembled });
 }
 
+async function fetchManifest(request, env, ctx) {
+  const mode = String(env.R2_LIBRARY_MODE || "dynamic").toLowerCase();
+
+  if (mode === "dynamic" || mode === "r2") {
+    const r2Response = await cachedR2Manifest(request, env, ctx);
+    if (r2Response) return r2Response;
+  }
+
+  return fetchSplitManifest(request, env);
+}
+
 async function fetchVolumeManifest(request, env) {
   const url = new URL(request.url);
   const volume = url.searchParams.get("volume");
   if (!volume) return badRequest("Missing volume parameter");
+
+  if (String(env.R2_LIBRARY_MODE || "dynamic").toLowerCase() === "dynamic" && env.MANGA_R2) {
+    const manifest = await buildR2Manifest(request, env);
+    const series = manifest?.series?.[0];
+    const chapters = (series?.chapters || []).filter((chapter) => String(chapter.volume) === String(Number(volume)));
+    if (!chapters.length) return notFound("Volume not found in R2");
+    return json({
+      ok: true,
+      source: "r2-dynamic-volume",
+      data: {
+        volume: Number(volume),
+        chapters
+      }
+    });
+  }
+
   const padded = Number(volume) < 100 ? String(Number(volume)).padStart(3, "0") : String(Number(volume));
   const path = `/content/volumes/${padded}.json`;
   const data = await fetchAssetJson(request, env, path);
@@ -82,7 +285,7 @@ async function fetchR2Object(request, env, key) {
     return json({
       ok: false,
       error: "R2 binding not configured",
-      hint: "This endpoint is optional. In production the reader uses the R2 public custom domain directly."
+      hint: "Configure the MANGA_R2 binding in wrangler.jsonc."
     }, { status: 501, headers: { "cache-control": "no-store" } });
   }
 
@@ -109,12 +312,14 @@ export default {
         ok: true,
         service: env.SITE_NAME || "OP Reader",
         runtime: "cloudflare-workers",
+        r2LibraryMode: env.R2_LIBRARY_MODE || "dynamic",
+        hasR2Binding: Boolean(env.MANGA_R2),
         time: new Date().toISOString()
       }, { headers: { "cache-control": "no-store" } });
     }
 
-    if (url.pathname === "/api/manifest" || url.pathname === "/api/chapters") {
-      return fetchSplitManifest(request, env);
+    if (url.pathname === "/api/manifest" || url.pathname === "/api/chapters" || url.pathname === "/api/r2/library") {
+      return fetchManifest(request, env, ctx);
     }
 
     if (url.pathname === "/api/volume") {

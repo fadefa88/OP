@@ -95,8 +95,15 @@ async function buildR2Manifest(request, env) {
   const objects = await listAllR2Objects(env, prefix);
   const keyPattern = new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}vol-(\\d+)\\/chapter-(\\d+)\\/page-(\\d+)\\.(webp|jpe?g|png)$`, "i");
   const volumes = new Map();
+  let latestObjectUploadedAt = null;
 
   for (const object of objects) {
+    if (object.uploaded) {
+      const uploadedAt = new Date(object.uploaded);
+      if (!Number.isNaN(uploadedAt.getTime()) && (!latestObjectUploadedAt || uploadedAt > latestObjectUploadedAt)) {
+        latestObjectUploadedAt = uploadedAt;
+      }
+    }
     const match = object.key.match(keyPattern);
     if (!match) continue;
 
@@ -162,9 +169,13 @@ async function buildR2Manifest(request, env) {
 
   chapterEntries.sort((a, b) => Number(a.number || 0) - Number(b.number || 0));
 
+  const generatedAt = new Date().toISOString();
+  const lastUpdatedAt = latestObjectUploadedAt ? latestObjectUploadedAt.toISOString() : generatedAt;
+
   return {
     schemaVersion: 3,
-    generatedAt: new Date().toISOString(),
+    generatedAt,
+    lastUpdatedAt,
     source: "r2-dynamic-listing",
     r2: {
       prefix: prefix.replace(/\/$/, ""),
@@ -174,11 +185,12 @@ async function buildR2Manifest(request, env) {
     series: [
       {
         id: env.SERIES_ID || "op",
-        title: env.SERIES_TITLE || "OP Reader",
+        title: env.SERIES_TITLE || "© LDF",
         description: "Archivio ordinato da Cloudflare R2 per volume, capitolo e pagina.",
         cover: chapterEntries[0]?.pages?.[0]?.src || null,
         latestChapter: chapterEntries.at(-1)?.number || null,
         chaptersCount: chapterEntries.length,
+        lastUpdatedAt,
         volumes: volumeEntries,
         chapters: chapterEntries
       }
@@ -225,6 +237,7 @@ async function fetchSplitManifest(request, env) {
   }
 
   const assembled = JSON.parse(JSON.stringify(index));
+  assembled.lastUpdatedAt = assembled.lastUpdatedAt || assembled.generatedAt || null;
 
   for (const series of assembled.series || []) {
     const chapters = [];
@@ -237,6 +250,7 @@ async function fetchSplitManifest(request, env) {
     }
     chapters.sort((a, b) => Number(a.number || 0) - Number(b.number || 0));
     series.chapters = chapters;
+    series.lastUpdatedAt = series.lastUpdatedAt || assembled.lastUpdatedAt || null;
   }
 
   return json({ ok: true, source: "split-manifest", data: assembled });
@@ -310,7 +324,7 @@ export default {
     if (url.pathname === "/api/health") {
       return json({
         ok: true,
-        service: env.SITE_NAME || "OP Reader",
+        service: env.SITE_NAME || "© LDF",
         runtime: "cloudflare-workers",
         r2LibraryMode: env.R2_LIBRARY_MODE || "dynamic",
         hasR2Binding: Boolean(env.MANGA_R2),

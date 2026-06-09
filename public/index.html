@@ -4,22 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0f172a" />
-    <title>OP Reader</title>
+    <title>© LDF</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header compact-site-header">
       <a class="brand" href="/" aria-label="Vai alla home">
-        <span class="brand-mark">OP</span>
+        <span class="brand-mark">LDF</span>
         <span>
-          <strong>OP Reader</strong>
-          <small>Lettura ordinata per volume e capitolo</small>
+          <strong>© LDF</strong>
         </span>
       </a>
       <nav class="top-nav" aria-label="Navigazione principale">
         <a href="#reader-picker">Reader</a>
-        <a href="#volumes">Volumi</a>
         <a href="#library">Archivio</a>
       </nav>
     </header>
@@ -34,36 +32,22 @@
         </div>
 
         <div class="hero-copy onepace-hero-copy">
-          <p class="release-pill">Archivio aggiornato · Lettura full screen · Mobile first</p>
-          <p class="eyebrow">OP Reader</p>
-          <h1>Il reader pulito per navigare volumi, capitoli e pagine.</h1>
-          <p>
-            Scegli un volume, entra nel capitolo e leggi a schermo intero con swipe, tap laterali e ripresa automatica dall’ultima pagina.
-          </p>
+          <p class="eyebrow">© LDF</p>
+          <h1>The Definitive One Piece ITA Reading Experience</h1>
           <div class="hero-actions">
             <a id="continue-reading" class="button primary" href="#reader-picker">Continua lettura</a>
             <a class="button ghost" href="#reader-picker">Sfoglia archivio</a>
           </div>
-          <div class="hero-status-grid" aria-label="Funzioni principali">
-            <span>Menu per volume</span>
-            <span>Reader immersivo</span>
-            <span>Archivio su R2</span>
-          </div>
         </div>
       </section>
 
-      <section id="reader-picker" class="section picker-section">
-        <div class="section-head">
+      <section id="reader-picker" class="section picker-section compact-picker-section">
+        <div class="section-head compact-section-head">
           <p class="eyebrow">Inizia a leggere</p>
           <h2>Seleziona volume e capitolo</h2>
-          <p>Usa i menu a tendina per navigare rapidamente l'archivio. La lista mostra solo i capitoli pertinenti alla selezione corrente.</p>
         </div>
 
-        <form id="reader-picker-form" class="reader-picker-card">
-          <label>
-            <span>Serie</span>
-            <select id="series-select" name="series"></select>
-          </label>
+        <form id="reader-picker-form" class="reader-picker-card compact-reader-picker-card">
           <label>
             <span>Volume</span>
             <select id="volume-select" name="volume"></select>
@@ -75,7 +59,7 @@
           <button class="button primary" type="submit">Apri capitolo</button>
         </form>
 
-        <div class="library-tools">
+        <div class="library-tools compact-library-tools">
           <label class="search-box">
             <span>Cerca capitolo</span>
             <input id="chapter-search" type="search" placeholder="Es. 1176, volume 116…" autocomplete="off" />
@@ -84,24 +68,8 @@
         </div>
       </section>
 
-
-      <section id="volumes" class="section volume-browser-section">
-        <div class="section-head inline-head">
-          <div>
-            <p class="eyebrow">Volumi</p>
-            <h2>Archivio completo</h2>
-            <p>Seleziona rapidamente un volume. La lista capitoli viene caricata sotto senza mostrare un elenco ingestibile.</p>
-          </div>
-          <label class="volume-range-filter">
-            <span>Intervallo</span>
-            <select id="volume-range-select" aria-label="Filtra intervallo volumi"></select>
-          </label>
-        </div>
-        <div id="volume-grid" class="volume-grid" aria-live="polite"></div>
-      </section>
-
-      <section id="library" class="section">
-        <div class="section-head inline-head">
+      <section id="library" class="section compact-library-section">
+        <div class="section-head inline-head compact-library-head">
           <div>
             <p class="eyebrow">Archivio</p>
             <h2 id="volume-title">Capitoli disponibili</h2>
@@ -113,8 +81,8 @@
     </main>
 
     <footer class="site-footer">
-      <span>OP Reader</span>
-      <span>Archivio organizzato per volume, capitolo e pagina.</span>
+      <span id="copyright-label">© LDF 2026</span>
+      <span id="last-updated-label">last updated --/--/----</span>
     </footer>
 
     <script type="module" src="/app.js"></script>

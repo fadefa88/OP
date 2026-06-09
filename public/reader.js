@@ -31,8 +31,8 @@ const state = {
   chapter: null,
   chapterIndex: 0,
   pageIndex: requestedPage - 1,
-  viewMode: localStorage.getItem('reader.viewMode') || 'paged',
-  fitMode: localStorage.getItem('reader.fitMode') || 'width',
+  viewMode: 'paged',
+  fitMode: 'width',
   uiHidden: false,
   immersiveFullscreen: false,
   restoreAfterFullscreen: null
@@ -136,21 +136,22 @@ function renderSelectors() {
 
   els.volumeSelect.innerHTML = '';
   getVolumes(state.series).forEach(([volume, chapters]) => {
-    els.volumeSelect.appendChild(option(`Volume ${volume} · ${chapters.length} cap.`, String(volume), String(volume) === String(currentVolume)));
+    els.volumeSelect.appendChild(option(`Volume ${volume}`, String(volume), String(volume) === String(currentVolume)));
   });
 
   els.chapterSelect.innerHTML = '';
   getChapters(state.series)
     .filter((chapter) => String(chapter.volume ?? 'speciali') === String(currentVolume))
     .forEach((chapter) => {
-      const pages = chapter.pages?.length || 0;
-      els.chapterSelect.appendChild(option(`Cap. ${chapter.number ?? chapter.id} · ${pages} pag.`, chapter.id, chapter.id === state.chapter.id));
+      els.chapterSelect.appendChild(option(`Cap. ${chapter.number ?? chapter.id}`, chapter.id, chapter.id === state.chapter.id));
     });
 
-  els.pageSelect.innerHTML = '';
-  const totalPages = state.chapter.pages?.length || 0;
-  for (let index = 0; index < totalPages; index += 1) {
-    els.pageSelect.appendChild(option(`Pagina ${index + 1}`, String(index + 1), index === state.pageIndex));
+  if (els.pageSelect) {
+    els.pageSelect.innerHTML = '';
+    const totalPages = state.chapter.pages?.length || 0;
+    for (let index = 0; index < totalPages; index += 1) {
+      els.pageSelect.appendChild(option(`Pagina ${index + 1}`, String(index + 1), index === state.pageIndex));
+    }
   }
 }
 
@@ -178,7 +179,7 @@ function renderPage() {
   document.title = `${state.chapter.title} · Pagina ${state.pageIndex + 1} - ${state.series.title}`;
   els.seriesTitle.textContent = state.series.title;
   els.chapterTitle.textContent = `${state.chapter.title} · pagina ${state.pageIndex + 1}/${totalPages}`;
-  els.pageCounter.textContent = `Pagina ${state.pageIndex + 1} / ${totalPages}`;
+  els.pageCounter.textContent = `${state.pageIndex + 1} / ${totalPages}`;
 
   if (!page) {
     els.image.removeAttribute('src');
@@ -194,7 +195,7 @@ function renderPage() {
   els.singleView.scrollTop = 0;
   els.image.alt = `${state.chapter.title}, pagina ${state.pageIndex + 1}`;
   els.image.src = page.src;
-  els.pageSelect.value = String(state.pageIndex + 1);
+  if (els.pageSelect) els.pageSelect.value = String(state.pageIndex + 1);
 
   const hasPreviousPage = state.pageIndex > 0 || Boolean(getPreviousChapter());
   const hasNextPage = state.pageIndex < totalPages - 1 || Boolean(getNextChapter());
@@ -221,20 +222,22 @@ function renderScrollReader() {
 }
 
 function applyViewMode() {
-  const paged = state.viewMode === 'paged';
-  document.body.classList.toggle('scroll-mode', !paged);
-  els.viewToggle.textContent = paged ? 'Pagina singola' : 'Scroll verticale';
-  els.viewToggle.setAttribute('aria-pressed', String(!paged));
-  localStorage.setItem('reader.viewMode', state.viewMode);
+  state.viewMode = 'paged';
+  document.body.classList.remove('scroll-mode');
+  if (els.viewToggle) {
+    els.viewToggle.textContent = 'Pagina singola';
+    els.viewToggle.setAttribute('aria-pressed', 'false');
+  }
 }
 
 function applyFitMode() {
   const fitWidth = state.fitMode === 'width';
   document.body.classList.toggle('fit-width', fitWidth);
   document.body.classList.toggle('fit-page', !fitWidth);
-  els.fitToggle.textContent = fitWidth ? 'Fit larghezza' : 'Pagina intera';
-  els.fitToggle.setAttribute('aria-pressed', String(fitWidth));
-  localStorage.setItem('reader.fitMode', state.fitMode);
+  if (els.fitToggle) {
+    els.fitToggle.textContent = fitWidth ? 'Fit larghezza' : 'Pagina intera';
+    els.fitToggle.setAttribute('aria-pressed', String(fitWidth));
+  }
 }
 
 let uiTimer = null;
@@ -441,17 +444,17 @@ els.chapterSelect.addEventListener('change', () => {
   setChapter(els.chapterSelect.value, 1);
 });
 
-els.pageSelect.addEventListener('change', () => {
+els.pageSelect?.addEventListener('change', () => {
   goToPage(Number(els.pageSelect.value) - 1);
 });
 
-els.viewToggle.addEventListener('click', () => {
-  state.viewMode = state.viewMode === 'paged' ? 'scroll' : 'paged';
+els.viewToggle?.addEventListener('click', () => {
+  state.viewMode = 'paged';
   applyViewMode();
   showReaderUi({ keep: true });
 });
 
-els.fitToggle.addEventListener('click', () => {
+els.fitToggle?.addEventListener('click', () => {
   state.fitMode = state.fitMode === 'width' ? 'page' : 'width';
   applyFitMode();
   els.singleView.scrollTop = 0;

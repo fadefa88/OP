@@ -4,28 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#020617" />
-    <title>Reader - OP Reader</title>
+    <title>Reader - © LDF</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body class="reader-body">
-    <header class="reader-toolbar page-reader-toolbar">
+  <body class="reader-body simplified-reader-body">
+    <header class="reader-toolbar unified-reader-toolbar">
       <a class="reader-back" href="/">← Library</a>
 
-      <div class="reader-title">
+      <div class="reader-title compact-reader-title">
         <strong id="reader-series">Caricamento…</strong>
         <small id="reader-chapter"></small>
       </div>
 
-      <div class="reader-actions">
-        <button id="fullscreen-toggle" type="button" title="Apri a schermo intero">Schermo intero</button>
-        <button id="fit-toggle" type="button" title="Cambia adattamento immagine">Fit larghezza</button>
-        <button id="view-toggle" type="button" title="Cambia modalità">Pagina singola</button>
-      </div>
-    </header>
-
-    <main class="reader-page-shell">
-      <nav class="reader-picker-strip" aria-label="Selezione capitolo e pagina">
+      <div class="reader-main-controls" aria-label="Selezione reader">
         <label>
           <span>Volume</span>
           <select id="reader-volume-select"></select>
@@ -34,11 +26,13 @@
           <span>Capitolo</span>
           <select id="reader-chapter-select"></select>
         </label>
-        <label>
-          <span>Pagina</span>
-          <select id="reader-page-select"></select>
-        </label>
-      </nav>
+        <span id="page-counter" class="reader-page-indicator">0 / 0</span>
+        <button id="fullscreen-toggle" type="button" title="Apri a schermo intero">Schermo intero</button>
+      </div>
+    </header>
+
+    <main class="reader-page-shell">
+      <select id="reader-page-select" hidden aria-hidden="true"></select>
 
       <section class="single-reader-stage" aria-label="Pagina manga">
         <button id="prev-page" class="page-arrow page-arrow-left" type="button" aria-label="Pagina precedente">‹</button>
@@ -48,20 +42,18 @@
           <img id="reader-image" alt="" draggable="false" />
         </div>
 
-        <div id="fullscreen-hint" class="fullscreen-hint" hidden>Usa il pulsante Esci in basso a destra</div>
+        <div id="fullscreen-hint" class="fullscreen-hint" hidden>Esci in basso a destra</div>
         <button id="fullscreen-exit" class="fullscreen-exit" type="button" hidden>Esci</button>
 
         <button id="next-page" class="page-arrow page-arrow-right" type="button" aria-label="Pagina successiva">›</button>
       </section>
 
-      <section id="scroll-reader" class="scroll-reader" aria-label="Reader verticale"></section>
-
+      <section id="scroll-reader" class="scroll-reader" aria-label="Reader verticale" hidden></section>
     </main>
 
-    <nav class="bottom-page-nav" aria-label="Navigazione reader">
-      <a id="prev-chapter" class="button ghost" href="#">← Capitolo</a>
-      <div id="page-counter" class="page-counter">Pagina 0 / 0</div>
-      <a id="next-chapter" class="button primary" href="#">Capitolo →</a>
+    <nav class="reader-hidden-nav" hidden aria-hidden="true">
+      <a id="prev-chapter" href="#">Capitolo precedente</a>
+      <a id="next-chapter" href="#">Capitolo successivo</a>
     </nav>
 
     <script type="module" src="/reader.js"></script>

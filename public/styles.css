@@ -1503,3 +1503,266 @@ body:not(.reader-body) .site-footer {
   position: relative;
   z-index: 3;
 }
+
+/* Requested production simplification: cleaner home and single-bar reader. */
+.compact-site-header .brand small,
+.release-pill,
+.hero-status-grid,
+.volume-browser-section,
+.mock-browser,
+.mock-reader-screen,
+.hero-card.reader-preview {
+  display: none !important;
+}
+
+.compact-picker-section {
+  padding-top: clamp(1.4rem, 4vw, 2.4rem);
+}
+
+.compact-section-head {
+  margin-bottom: 1rem;
+}
+
+.compact-section-head h2 {
+  font-size: clamp(1.65rem, 3.5vw, 2.8rem);
+}
+
+.compact-reader-picker-card {
+  grid-template-columns: minmax(170px, 0.7fr) minmax(210px, 1.1fr) auto;
+}
+
+.compact-library-tools {
+  margin-top: 0.75rem;
+}
+
+.compact-library-section {
+  padding-top: 1.2rem;
+}
+
+.compact-library-head {
+  margin-bottom: 1rem;
+}
+
+body:not(.reader-body) .home-backdrop-video {
+  visibility: hidden;
+  opacity: 0;
+}
+
+body:not(.reader-body).video-playing .home-backdrop-video {
+  visibility: visible;
+  opacity: 0.82;
+}
+
+body:not(.reader-body).video-autoplay-blocked .home-backdrop-video {
+  visibility: hidden;
+  opacity: 0;
+}
+
+body:not(.reader-body).video-autoplay-blocked .home-video-backdrop {
+  background: #050509 url('/media/backdrop-poster.jpg') center / cover no-repeat;
+}
+
+/* iOS may block autoplay in low-power/restricted modes. Keep the poster as the fallback and never show the native play overlay. */
+@supports (-webkit-touch-callout: none) {
+  body:not(.reader-body):not(.video-playing) .home-backdrop-video {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.unified-reader-toolbar {
+  display: grid;
+  grid-template-columns: auto minmax(120px, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  min-height: 72px;
+  padding-top: max(0.7rem, env(safe-area-inset-top));
+  padding-bottom: 0.7rem;
+}
+
+.reader-main-controls {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.75fr) minmax(210px, 1.05fr) auto auto;
+  gap: 0.55rem;
+  align-items: end;
+}
+
+.reader-main-controls label {
+  display: grid;
+  gap: 0.24rem;
+}
+
+.reader-main-controls label span {
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.reader-main-controls select {
+  min-height: 40px;
+  border-radius: 12px;
+  padding: 0.5rem 0.62rem;
+  font-size: 0.9rem;
+}
+
+.reader-page-indicator {
+  align-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 64px;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.62);
+  color: var(--muted);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.reader-main-controls button {
+  align-self: end;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.95), rgba(249, 115, 22, 0.78));
+  color: var(--text);
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.reader-body:not(.reader-fullscreen) .single-page-view {
+  padding-top: calc(72px + env(safe-area-inset-top));
+}
+
+.reader-body:not(.reader-fullscreen).fit-page .single-page-view {
+  padding-top: calc(72px + env(safe-area-inset-top));
+}
+
+.single-page-view {
+  touch-action: pan-x pan-y pinch-zoom;
+  -ms-touch-action: pan-x pan-y pinch-zoom;
+}
+
+.single-page-view img {
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+.reader-hidden-nav {
+  display: none !important;
+}
+
+.simplified-reader-body .bottom-page-nav,
+.simplified-reader-body .reader-picker-strip,
+.simplified-reader-body #fit-toggle,
+.simplified-reader-body #view-toggle {
+  display: none !important;
+}
+
+.simplified-reader-body.reader-fullscreen .reader-toolbar,
+.simplified-reader-body.reader-fullscreen.reader-ui-hidden .reader-toolbar {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-14px);
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 821px) {
+  .simplified-reader-body.reader-fullscreen .single-page-view {
+    padding: 0 !important;
+  }
+}
+
+@media (max-width: 920px) {
+  .compact-reader-picker-card,
+  .compact-library-tools {
+    grid-template-columns: 1fr;
+  }
+
+  .compact-library-head {
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --toolbar-height: 92px;
+  }
+
+  .unified-reader-toolbar {
+    grid-template-columns: auto 1fr auto;
+    min-height: 92px;
+    gap: 0.45rem;
+    padding: max(0.5rem, env(safe-area-inset-top)) max(0.55rem, env(safe-area-inset-right)) 0.52rem max(0.55rem, env(safe-area-inset-left));
+  }
+
+  .compact-reader-title {
+    display: none;
+  }
+
+  .reader-main-controls {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    grid-template-columns: minmax(92px, 0.82fr) minmax(130px, 1.18fr) auto auto;
+    gap: 0.38rem;
+    width: 100%;
+  }
+
+  .reader-main-controls label span {
+    display: none;
+  }
+
+  .reader-main-controls select {
+    min-height: 38px;
+    padding: 0.48rem 0.42rem;
+    font-size: 0.8rem;
+  }
+
+  .reader-page-indicator {
+    min-width: 48px;
+    min-height: 38px;
+    padding: 0.35rem 0.45rem;
+    font-size: 0.78rem;
+  }
+
+  .reader-main-controls button {
+    min-height: 38px;
+    padding: 0.48rem 0.62rem;
+    font-size: 0.78rem;
+  }
+
+  .reader-back {
+    min-height: 38px;
+    padding: 0.5rem 0.68rem;
+    font-size: 0.82rem;
+  }
+
+  .reader-body:not(.reader-fullscreen) .single-page-view {
+    padding-top: calc(92px + env(safe-area-inset-top));
+  }
+
+  .reader-fullscreen .single-page-view {
+    padding-top: 0 !important;
+  }
+
+  body:not(.reader-body).video-playing .home-backdrop-video {
+    opacity: 0.72;
+  }
+}
+
+@media (max-width: 420px) {
+  .reader-main-controls {
+    grid-template-columns: 0.86fr 1.14fr auto;
+  }
+
+  .reader-main-controls button {
+    grid-column: auto;
+  }
+
+  .reader-page-indicator {
+    display: none;
+  }
+}

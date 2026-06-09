@@ -1,6 +1,5 @@
 const els = {
   form: document.querySelector('#reader-picker-form'),
-  seriesSelect: document.querySelector('#series-select'),
   volumeSelect: document.querySelector('#volume-select'),
   chapterSelect: document.querySelector('#chapter-select'),
   chapterGrid: document.querySelector('#chapter-grid'),
@@ -9,16 +8,15 @@ const els = {
   volumeTitle: document.querySelector('#volume-title'),
   latestChapter: document.querySelector('#latest-chapter'),
   continueReading: document.querySelector('#continue-reading'),
-  volumeGrid: document.querySelector('#volume-grid'),
-  volumeRangeSelect: document.querySelector('#volume-range-select')
+  copyrightLabel: document.querySelector('#copyright-label'),
+  lastUpdatedLabel: document.querySelector('#last-updated-label')
 };
 
 const state = {
   manifest: null,
   series: null,
   volume: null,
-  search: '',
-  volumeRange: 'all'
+  search: ''
 };
 
 function setupHomeVideo() {
@@ -33,15 +31,33 @@ function setupHomeVideo() {
   video.setAttribute('webkit-playsinline', '');
   video.setAttribute('autoplay', '');
   video.setAttribute('loop', '');
+  video.removeAttribute('controls');
+
+  const markPlaying = () => {
+    document.body.classList.add('video-playing');
+    document.body.classList.remove('video-autoplay-blocked');
+  };
+
+  const markBlocked = () => {
+    document.body.classList.add('video-autoplay-blocked');
+    document.body.classList.remove('video-playing');
+  };
 
   const tryPlay = () => {
+    video.muted = true;
+    video.playsInline = true;
     const promise = video.play();
-    if (promise?.catch) {
-      promise.catch(() => {
-        document.body.classList.add('video-autoplay-blocked');
-      });
+    if (promise?.then) {
+      promise.then(markPlaying).catch(markBlocked);
+    } else if (!video.paused) {
+      markPlaying();
     }
   };
+
+  video.addEventListener('playing', markPlaying);
+  video.addEventListener('pause', () => {
+    if (!document.hidden) markBlocked();
+  });
 
   window.addEventListener('load', tryPlay, { once: true });
   document.addEventListener('visibilitychange', () => {
@@ -87,21 +103,6 @@ function getVolumes(series) {
   });
 }
 
-function getVolumeMeta(series, volume, chapters) {
-  const numericVolume = Number(volume);
-  const from = chapters[0]?.number ?? chapters[0]?.id ?? '';
-  const to = chapters.at(-1)?.number ?? chapters.at(-1)?.id ?? '';
-  const indexMeta = series?.volumes?.find((entry) => Number(entry.volume) === numericVolume || String(entry.volume) === String(volume));
-
-  return {
-    volume,
-    chapters,
-    from: indexMeta?.fromChapter ?? from,
-    to: indexMeta?.toChapter ?? to,
-    count: chapters.length
-  };
-}
-
 function chapterHref(seriesId, chapterId, page = 1) {
   const params = new URLSearchParams({ series: seriesId, chapter: chapterId, page: String(page) });
   return `/reader.html?${params.toString()}`;
@@ -123,21 +124,12 @@ function option(label, value, selected = false) {
   return el;
 }
 
-function renderSeriesSelect() {
-  els.seriesSelect.innerHTML = '';
-  state.manifest.series.forEach((series) => {
-    els.seriesSelect.appendChild(option(series.title, series.id, series.id === state.series.id));
-  });
-}
-
 function renderVolumeSelect() {
   const volumes = getVolumes(state.series);
   els.volumeSelect.innerHTML = '';
 
-  volumes.forEach(([volume, chapters]) => {
-    const meta = getVolumeMeta(state.series, volume, chapters);
-    const label = `Volume ${volume} · cap. ${meta.from}-${meta.to}`;
-    els.volumeSelect.appendChild(option(label, String(volume), String(volume) === String(state.volume)));
+  volumes.forEach(([volume]) => {
+    els.volumeSelect.appendChild(option(`Volume ${volume}`, String(volume), String(volume) === String(state.volume)));
   });
 
   if (!volumes.some(([volume]) => String(volume) === String(state.volume))) {
@@ -148,10 +140,9 @@ function renderVolumeSelect() {
 
 function getVisibleChapters() {
   const query = state.search.trim().toLowerCase();
-  let chapters = getChapters(state.series).filter((chapter) => String(chapter.volume ?? 'speciali') === String(state.volume));
 
   if (query) {
-    chapters = getChapters(state.series).filter((chapter) => {
+    return getChapters(state.series).filter((chapter) => {
       const haystack = [chapter.title, chapter.number, chapter.volume, chapter.id]
         .filter(Boolean)
         .join(' ')
@@ -160,7 +151,7 @@ function getVisibleChapters() {
     });
   }
 
-  return chapters;
+  return getChapters(state.series).filter((chapter) => String(chapter.volume ?? 'speciali') === String(state.volume));
 }
 
 function renderChapterSelect() {
@@ -169,8 +160,7 @@ function renderChapterSelect() {
   els.chapterSelect.innerHTML = '';
 
   chapters.forEach((chapter) => {
-    const pages = chapter.pages?.length || 0;
-    const label = `Cap. ${chapter.number ?? chapter.id} · ${pages} pagine`;
+    const label = `Cap. ${chapter.number ?? chapter.id}`;
     els.chapterSelect.appendChild(option(label, chapter.id, chapter.id === previousValue));
   });
 
@@ -202,7 +192,7 @@ function renderChapterGrid() {
       <span class="chapter-number">${chapter.number ?? chapter.id}</span>
       <span class="chapter-meta">
         <strong>${chapter.title || `Capitolo ${chapter.number}`}</strong>
-        <small>Volume ${chapter.volume ?? 'speciali'} · ${chapter.pages?.length || 0} pagine</small>
+        <small>Volume ${chapter.volume ?? 'speciali'}</small>
       </span>
       <span aria-hidden="true">›</span>
     `;
@@ -212,90 +202,11 @@ function renderChapterGrid() {
   els.chapterGrid.appendChild(fragment);
 }
 
-function getVolumeRanges(volumes) {
-  const numeric = volumes
-    .map(([volume]) => Number(volume))
-    .filter((volume) => Number.isFinite(volume))
-    .sort((a, b) => a - b);
-
-  if (!numeric.length) return [];
-
-  const min = Math.floor((numeric[0] - 1) / 20) * 20 + 1;
-  const max = numeric.at(-1);
-  const ranges = [];
-  for (let start = min; start <= max; start += 20) {
-    const end = start + 19;
-    if (numeric.some((volume) => volume >= start && volume <= end)) {
-      ranges.push({ value: `${start}-${end}`, start, end, label: `Vol. ${String(start).padStart(3, '0')}–${String(end).padStart(3, '0')}` });
-    }
-  }
-  return ranges;
-}
-
-function renderVolumeRangeSelect() {
-  if (!els.volumeRangeSelect) return;
-  const volumes = getVolumes(state.series);
-  const ranges = getVolumeRanges(volumes);
-  els.volumeRangeSelect.innerHTML = '';
-  els.volumeRangeSelect.appendChild(option('Tutti i volumi', 'all', state.volumeRange === 'all'));
-  ranges.forEach((range) => {
-    els.volumeRangeSelect.appendChild(option(range.label, range.value, range.value === state.volumeRange));
-  });
-}
-
-function volumeInRange(volume) {
-  if (state.volumeRange === 'all') return true;
-  const numeric = Number(volume);
-  if (!Number.isFinite(numeric)) return true;
-  const [start, end] = state.volumeRange.split('-').map(Number);
-  return numeric >= start && numeric <= end;
-}
-
-function renderVolumeGrid() {
-  if (!els.volumeGrid) return;
-  const volumes = getVolumes(state.series)
-    .filter(([volume]) => volumeInRange(volume))
-    .sort(([a], [b]) => Number(b) - Number(a));
-
-  els.volumeGrid.innerHTML = '';
-  if (!volumes.length) {
-    els.volumeGrid.innerHTML = '<article class="empty-state"><h3>Nessun volume disponibile</h3><p>Verifica l’import su R2 oppure cambia filtro.</p></article>';
-    return;
-  }
-
-  const fragment = document.createDocumentFragment();
-  volumes.forEach(([volume, chapters]) => {
-    const meta = getVolumeMeta(state.series, volume, chapters);
-    const firstChapter = chapters[0];
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = `volume-card ${String(volume) === String(state.volume) ? 'is-active' : ''}`;
-    card.innerHTML = `
-      <span class="volume-card-kicker">Volume</span>
-      <strong>${String(volume).padStart(3, '0')}</strong>
-      <small>Cap. ${meta.from}–${meta.to}</small>
-      <em>${meta.count} capitoli</em>
-    `;
-    card.addEventListener('click', () => {
-      state.volume = volume;
-      state.search = '';
-      els.chapterSearch.value = '';
-      renderAll();
-      document.querySelector('#library')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (firstChapter) els.chapterSelect.value = firstChapter.id;
-    });
-    fragment.appendChild(card);
-  });
-
-  els.volumeGrid.appendChild(fragment);
-}
-
 function renderStats() {
   const volumes = getVolumes(state.series);
   const totalChapters = getChapters(state.series).length;
-  const totalPages = getChapters(state.series).reduce((sum, chapter) => sum + (chapter.pages?.length || 0), 0);
   const visibleCount = getVisibleChapters().length;
-  els.libraryStats.textContent = `${volumes.length} volumi · ${totalChapters} capitoli · ${totalPages} pagine · ${visibleCount} mostrati`;
+  els.libraryStats.textContent = `${volumes.length} volumi · ${totalChapters} capitoli · ${visibleCount} mostrati`;
   els.volumeTitle.textContent = state.search ? 'Risultati ricerca' : `Volume ${state.volume}`;
 }
 
@@ -320,15 +231,33 @@ function renderQuickLinks() {
   }
 }
 
+function formatItalianDate(value) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+function renderFooter() {
+  const startYear = 2026;
+  const currentYear = new Date().getFullYear();
+  els.copyrightLabel.textContent = currentYear <= startYear ? `© LDF ${startYear}` : `© LDF ${startYear}-${currentYear}`;
+
+  const lastUpdated = state.manifest?.lastUpdatedAt || state.manifest?.generatedAt || state.series?.lastUpdatedAt || state.series?.generatedAt;
+  const formatted = formatItalianDate(lastUpdated);
+  els.lastUpdatedLabel.textContent = formatted ? `last updated ${formatted}` : 'last updated --/--/----';
+}
+
 function renderAll() {
-  renderSeriesSelect();
   renderVolumeSelect();
   renderChapterSelect();
-  renderVolumeRangeSelect();
-  renderVolumeGrid();
   renderChapterGrid();
   renderStats();
   renderQuickLinks();
+  renderFooter();
 }
 
 function selectDefaultState(manifest) {
@@ -343,25 +272,11 @@ function selectDefaultState(manifest) {
 }
 
 function bindEvents() {
-  els.seriesSelect.addEventListener('change', () => {
-    state.series = state.manifest.series.find((series) => series.id === els.seriesSelect.value) || state.manifest.series[0];
-    state.volume = getVolumes(state.series).at(-1)?.[0] ?? null;
-    state.volumeRange = 'all';
-    state.search = '';
-    els.chapterSearch.value = '';
-    renderAll();
-  });
-
   els.volumeSelect.addEventListener('change', () => {
     state.volume = els.volumeSelect.value;
     state.search = '';
     els.chapterSearch.value = '';
     renderAll();
-  });
-
-  els.volumeRangeSelect?.addEventListener('change', () => {
-    state.volumeRange = els.volumeRangeSelect.value;
-    renderVolumeGrid();
   });
 
   els.chapterSearch.addEventListener('input', () => {
@@ -381,6 +296,7 @@ function bindEvents() {
 
 setupHomeVideo();
 bindEvents();
+renderFooter();
 
 loadManifest()
   .then((manifest) => {
@@ -395,12 +311,4 @@ loadManifest()
         <p>${error.message}</p>
       </article>
     `;
-    if (els.volumeGrid) {
-      els.volumeGrid.innerHTML = `
-        <article class="empty-state">
-          <h3>Archivio R2 non raggiungibile</h3>
-          <p>Verifica binding R2, bucket e dominio statico.</p>
-        </article>
-      `;
-    }
   });

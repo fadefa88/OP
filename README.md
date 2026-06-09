@@ -48,10 +48,11 @@ Da Windows PowerShell, dentro la cartella del repo:
 
 ```powershell
 py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
+
+Uso il Python del virtual environment direttamente, così non serve abilitare `Activate.ps1` nelle policy di PowerShell.
 
 ## Variabili locali per import storico
 
@@ -69,45 +70,76 @@ $env:R2_SECRET_ACCESS_KEY="tua_secret_access_key_r2"
 
 Usa solo una sorgente che puoi copiare e pubblicare legalmente.
 
-## Import storico one-time verso R2
+## Import massivo one-time verso R2
 
-Comando consigliato per importare tutti i capitoli storici fino al 1184:
+Per caricare tutto l'archivio storico usa il nuovo script:
 
-```powershell
-python scripts/import_history_to_r2.py `
-  --from-chapter 1 `
-  --to-chapter 1184 `
-  --extensions jpg,jpeg `
-  --max-pages 45 `
-  --min-pages 3 `
-  --webp-quality 82 `
-  --i-confirm-rights
+```text
+scripts/import_all_to_r2.py
 ```
 
-Se vuoi importare fino al 1185:
+Comando consigliato da PowerShell, dentro la cartella del repo:
 
 ```powershell
-python scripts/import_history_to_r2.py `
+.\.venv\Scripts\python.exe scripts\import_all_to_r2.py `
   --from-chapter 1 `
   --to-chapter 1185 `
   --extensions jpg,jpeg `
   --max-pages 45 `
   --min-pages 3 `
   --webp-quality 82 `
+  --image-strategy best-size `
+  --pause-every 50 `
+  --pause-seconds 20 `
   --i-confirm-rights
 ```
 
-Lo script:
+Logica dell'import massivo:
 
 ```text
-1. scarica temporaneamente JPG/JPEG dalla sorgente autorizzata
-2. converte in WebP qualità 82 mantenendo la stessa risoluzione e lo usa solo se pesa meno del JPG originale
-3. carica su R2
-4. aggiorna solo i manifest JSON
-5. non salva immagini nel repository
+1. parte dal capitolo 1
+2. per ogni capitolo calcola automaticamente il volume corretto
+3. prova le pagine JPG/JPEG una alla volta
+4. quando trova immagini valide, le converte in WebP qualità 82 mantenendo la stessa risoluzione
+5. usa WebP solo se pesa meno del JPG/JPEG originale
+6. se WebP pesa di più, carica su R2 il JPG originale
+7. aggiorna solo i manifest JSON divisi per volume
+8. non salva mai immagini nel repository
+9. scrive un checkpoint dopo ogni capitolo
+10. se si interrompe, puoi ripartire senza rifare tutto
 ```
 
-Se si interrompe, rilancialo: i capitoli già presenti nel manifest vengono saltati. Per forzare la riscrittura usa `--overwrite`.
+La mappa volumi/capitoli è questa:
+
+```text
+Volumi 1-116: tabella storica dentro scripts/op_importer_common.py
+Volume 117: capitoli 1186-1195
+Volume 118: capitoli 1196-1205
+Volume 119: capitoli 1206-1215
+Poi ogni volume aumenta di 10 capitoli indefinitamente.
+```
+
+Se lo script si interrompe, rilancia così:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\import_all_to_r2.py `
+  --from-chapter 1 `
+  --to-chapter 1185 `
+  --resume-from-checkpoint `
+  --extensions jpg,jpeg `
+  --webp-quality 82 `
+  --image-strategy best-size `
+  --i-confirm-rights
+```
+
+I capitoli già presenti nel manifest e presenti su R2 vengono saltati. Per forzare la riscrittura usa `--overwrite`.
+
+Al termine trovi:
+
+```text
+reports/import-all-progress.json
+reports/import-all-summary.json
+```
 
 ## Import di un solo volume o capitolo
 

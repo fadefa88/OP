@@ -10,8 +10,9 @@
     "cf:login": "wrangler login",
     "prepare:chapter": "node scripts/prepare-local-chapter.mjs",
     "upload:r2": "node scripts/upload-r2.mjs",
-    "import:history:r2": "python scripts/import_history_to_r2.py --from-chapter 1 --to-chapter 1184 --webp-quality 82 --image-strategy best-size --i-confirm-rights",
-    "import:new:r2": "python scripts/import_new_chapter_to_r2.py --i-confirm-rights"
+    "import:history:r2": "python scripts/import_history_to_r2.py --from-chapter 1 --to-chapter 1185 --webp-quality 82 --image-strategy best-size --i-confirm-rights",
+    "import:new:r2": "python scripts/import_new_chapter_to_r2.py --i-confirm-rights",
+    "import:all:r2": "python scripts/import_all_to_r2.py --from-chapter 1 --to-chapter 1185 --webp-quality 82 --image-strategy best-size --i-confirm-rights"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"

@@ -41,7 +41,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: manual-import-single-chapter-to-r2-${{ github.event.inputs.chapter }}
+  group: r2-import-runs
   cancel-in-progress: false
 
 jobs:

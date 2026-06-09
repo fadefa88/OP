@@ -382,3 +382,44 @@ overwrite: false
 ```
 
 The workflow uploads images to R2 using `best-size` by default and commits only JSON manifest files under `public/content`. It never commits image binaries.
+
+## Import massivo da GitHub Actions verso R2
+
+Se la sorgente autorizzata consente accesso solo dagli IP dei runner GitHub, usa il workflow manuale:
+
+```text
+Actions → Mass Import Archive to R2 → Run workflow
+```
+
+Parametri consigliati per il primo caricamento completo:
+
+```text
+from_chapter: 1
+to_chapter: 1185
+batch_size: 20
+max_pages: 45
+min_pages: 3
+webp_quality: 82
+image_strategy: best-size
+overwrite: false
+stop_on_error: false
+pause_seconds_between_batches: 10
+```
+
+La logica resta questa:
+
+```text
+1. GitHub Actions scarica solo dalla sorgente autorizzata.
+2. Ogni capitolo viene convertito pagina per pagina con strategia best-size.
+3. Se WebP qualità 82 pesa meno del JPG/JPEG, viene caricato WebP.
+4. Se WebP pesa di più, viene mantenuto JPG/JPEG.
+5. Le immagini vengono caricate su Cloudflare R2.
+6. GitHub committa solo i JSON in public/content.
+7. Le immagini non vengono mai committate nel repository.
+8. Il workflow committa a batch, così se si interrompe puoi rilanciarlo con lo stesso range.
+9. I capitoli già presenti nel manifest e già presenti su R2 vengono saltati.
+```
+
+Per rendere il primo import più robusto, il workflow processa il range a blocchi e fa commit dopo ogni blocco. Se il job si interrompe, rilancia lo stesso workflow con gli stessi parametri: lo script salterà i capitoli già importati correttamente.
+
+Durante l'import massivo, il workflow orario e il workflow manuale a capitolo singolo condividono la stessa concurrency group `r2-import-runs`, così non dovrebbero sovrapporsi allo stesso import R2/manifest.

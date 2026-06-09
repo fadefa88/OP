@@ -30,8 +30,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: scan-new-chapter-to-r2-hourly
-  cancel-in-progress: true
+  group: r2-import-runs
+  cancel-in-progress: false
 
 jobs:
   scan:

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-09T13:28:49.004248+00:00",
+  "generatedAt": "2026-06-09T13:40:34.627227+00:00",
   "series": [
     {
       "id": "op",
@@ -8,7 +8,7 @@
       "description": "Archivio ordinato per volume, capitolo e pagina.",
       "cover": "https://static.lucahome.uk/op/vol-001/chapter-0001/page-001.webp",
       "latestChapter": 1184,
-      "chaptersCount": 379,
+      "chaptersCount": 399,
       "volumes": [
         {
           "volume": 1,
@@ -273,8 +273,22 @@
           "volume": 38,
           "fromChapter": 358,
           "toChapter": 367,
-          "chaptersCount": 3,
+          "chaptersCount": 10,
           "manifest": "/content/volumes/038.json"
+        },
+        {
+          "volume": 39,
+          "fromChapter": 368,
+          "toChapter": 377,
+          "chaptersCount": 10,
+          "manifest": "/content/volumes/039.json"
+        },
+        {
+          "volume": 40,
+          "fromChapter": 378,
+          "toChapter": 388,
+          "chaptersCount": 3,
+          "manifest": "/content/volumes/040.json"
         },
         {
           "volume": 115,

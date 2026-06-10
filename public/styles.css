@@ -2013,3 +2013,67 @@ body:not(.reader-body).video-autoplay-blocked .home-backdrop-video {
     max-height: calc(100dvh - var(--toolbar-height) - env(safe-area-inset-top)) !important;
   }
 }
+
+
+/* --- Short video restore + mobile landscape fullscreen fit-height patch --- */
+body:not(.reader-body) .home-video-backdrop {
+  background: #050509 !important;
+}
+
+body:not(.reader-body) .home-backdrop-video {
+  visibility: visible !important;
+  opacity: 0.84 !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+body:not(.reader-body).video-playing .home-backdrop-video,
+body:not(.reader-body).video-autoplay-blocked .home-backdrop-video {
+  visibility: visible !important;
+  opacity: 0.84 !important;
+}
+
+/* iOS fallback only: if autoplay is actually blocked, keep the static poster and hide the video layer. */
+@supports (-webkit-touch-callout: none) {
+  body:not(.reader-body).video-autoplay-blocked:not(.video-playing) .home-video-backdrop {
+    background: #050509 url('/media/backdrop-poster.jpg') center / cover no-repeat !important;
+  }
+
+  body:not(.reader-body).video-autoplay-blocked:not(.video-playing) .home-backdrop-video {
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
+.reader-fullscreen.fit-page .single-page-view,
+.reader-fullscreen.fit-page #single-page-view {
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+.reader-fullscreen.fit-page .single-page-view img,
+.reader-fullscreen.fit-page #reader-image {
+  width: auto !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-width: 100vw !important;
+  max-width: 100dvw !important;
+  max-height: 100vh !important;
+  max-height: 100dvh !important;
+  object-fit: contain !important;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .reader-fullscreen.fit-page .single-page-view img,
+  .reader-fullscreen.fit-page #reader-image {
+    width: auto !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-width: 100vw !important;
+    max-width: 100dvw !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    object-fit: contain !important;
+  }
+}

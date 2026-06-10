@@ -252,8 +252,23 @@ function isLandscapeLayout() {
   return window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
 }
 
-function shouldUseHeightFit() {
-  return isDesktopLayout() || (state.immersiveFullscreen && isLandscapeLayout());
+function shouldUseHeightFit({ fullscreen = state.immersiveFullscreen } = {}) {
+  return isDesktopLayout() || (fullscreen && isLandscapeLayout());
+}
+
+function syncFullscreenFitMode() {
+  if (!state.immersiveFullscreen) return;
+  const nextFitMode = shouldUseHeightFit({ fullscreen: true }) ? 'page' : 'width';
+  if (state.fitMode !== nextFitMode) {
+    state.fitMode = nextFitMode;
+    applyFitMode();
+  } else {
+    applyFitMode();
+  }
+  requestAnimationFrame(() => {
+    els.singleView.scrollTop = 0;
+    els.singleView.scrollLeft = 0;
+  });
 }
 
 function getDefaultFitMode() {
@@ -308,7 +323,7 @@ function applyFullscreenState(active) {
       fitMode: state.fitMode
     };
     state.viewMode = 'paged';
-    state.fitMode = shouldUseHeightFit() ? 'page' : 'width';
+    state.fitMode = shouldUseHeightFit({ fullscreen: true }) ? 'page' : 'width';
     applyViewMode();
     applyFitMode();
   }
@@ -331,6 +346,9 @@ function applyFullscreenState(active) {
   }
 
   if (state.immersiveFullscreen) {
+    syncFullscreenFitMode();
+    window.setTimeout(syncFullscreenFitMode, 60);
+    window.setTimeout(syncFullscreenFitMode, 220);
     setUiHidden(true);
     flashFullscreenHint();
   } else {
@@ -359,13 +377,17 @@ async function toggleFullscreen() {
   }
 
   applyFullscreenState(true);
+  syncFullscreenFitMode();
 
   if (target.requestFullscreen) {
     try {
       await target.requestFullscreen({ navigationUI: 'hide' });
+      syncFullscreenFitMode();
+      window.setTimeout(syncFullscreenFitMode, 80);
     } catch (_) {
       // iOS/Safari may not allow native fullscreen for normal pages.
       // The CSS fullscreen mode remains active as a fallback.
+      syncFullscreenFitMode();
     }
   }
 }
@@ -491,13 +513,21 @@ els.fullscreenExit?.addEventListener('click', (event) => {
 
 document.addEventListener('fullscreenchange', () => {
   applyFullscreenState(Boolean(document.fullscreenElement));
+  syncFullscreenFitMode();
 });
 
-window.addEventListener('resize', () => {
+function handleViewportChange() {
   if (!state.immersiveFullscreen) return;
-  state.fitMode = shouldUseHeightFit() ? 'page' : 'width';
-  applyFitMode();
+  syncFullscreenFitMode();
+  window.setTimeout(syncFullscreenFitMode, 120);
+}
+
+window.addEventListener('resize', handleViewportChange, { passive: true });
+window.addEventListener('orientationchange', () => {
+  window.setTimeout(handleViewportChange, 80);
+  window.setTimeout(handleViewportChange, 260);
 }, { passive: true });
+window.visualViewport?.addEventListener('resize', handleViewportChange, { passive: true });
 
 document.addEventListener('keydown', (event) => {
   const activeTag = document.activeElement?.tagName?.toLowerCase();

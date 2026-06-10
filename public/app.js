@@ -64,8 +64,10 @@ function setupHomeVideo() {
   };
 
   const keepLooping = () => {
+    // The source loop is intentionally very short. Do not jump too early,
+    // otherwise desktop browsers can look like they are showing a poster.
     if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-    if (video.currentTime >= video.duration - 0.12) {
+    if (video.currentTime >= video.duration - 0.025) {
       video.currentTime = 0.001;
       const replay = video.play();
       if (replay?.catch) replay.catch(markBlocked);
@@ -102,7 +104,9 @@ function setupHomeVideo() {
   video.addEventListener('playing', markPlaying);
   video.addEventListener('loadedmetadata', () => {
     if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-    if (video.currentTime === 0) video.currentTime = 0.001;
+    // Start from the first frame; avoiding poster on desktop is handled by removing
+    // the poster attribute and keeping the video layer visible.
+    video.currentTime = 0;
     tryPlay();
   }, { once: true });
   video.addEventListener('canplay', tryPlay, { once: true });

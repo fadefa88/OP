@@ -1951,3 +1951,65 @@ body:not(.reader-body) input#chapter-search::-moz-placeholder {
     transform: none !important;
   }
 }
+
+/* --- Final stability pass: fast home, real desktop loop, height-fit reader --- */
+body:not(.reader-body) .home-backdrop-video {
+  visibility: visible !important;
+  opacity: 0.82 !important;
+  transform-origin: center center;
+}
+
+body:not(.reader-body).video-autoplay-blocked .home-backdrop-video {
+  visibility: visible !important;
+  opacity: 0.82 !important;
+}
+
+/* Preserve the iPhone fallback: no native play overlay if autoplay is blocked. */
+@supports (-webkit-touch-callout: none) {
+  body:not(.reader-body):not(.video-playing) .home-backdrop-video,
+  body:not(.reader-body).video-autoplay-blocked:not(.video-playing) .home-backdrop-video {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    animation: none !important;
+  }
+}
+
+.reader-body:not(.reader-fullscreen).fit-page .single-page-view {
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  padding-top: calc(var(--toolbar-height) + env(safe-area-inset-top)) !important;
+  padding-bottom: 0 !important;
+}
+
+.reader-body:not(.reader-fullscreen).fit-page .single-page-view img {
+  width: auto !important;
+  height: calc(100vh - var(--toolbar-height) - env(safe-area-inset-top)) !important;
+  height: calc(100dvh - var(--toolbar-height) - env(safe-area-inset-top)) !important;
+  max-width: 100vw !important;
+  max-width: 100dvw !important;
+  max-height: calc(100vh - var(--toolbar-height) - env(safe-area-inset-top)) !important;
+  max-height: calc(100dvh - var(--toolbar-height) - env(safe-area-inset-top)) !important;
+  object-fit: contain !important;
+  box-shadow: none;
+}
+
+.reader-body:not(.reader-fullscreen).reader-ui-hidden .reader-toolbar,
+.reader-body:not(.reader-fullscreen).reader-ui-hidden .page-arrow {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: none !important;
+}
+
+@media (max-width: 720px) {
+  .reader-body:not(.reader-fullscreen).fit-page .single-page-view {
+    padding-top: calc(var(--toolbar-height) + env(safe-area-inset-top)) !important;
+  }
+
+  .reader-body:not(.reader-fullscreen).fit-page .single-page-view img {
+    height: calc(100vh - var(--toolbar-height) - env(safe-area-inset-top)) !important;
+    height: calc(100dvh - var(--toolbar-height) - env(safe-area-inset-top)) !important;
+    max-height: calc(100vh - var(--toolbar-height) - env(safe-area-inset-top)) !important;
+    max-height: calc(100dvh - var(--toolbar-height) - env(safe-area-inset-top)) !important;
+  }
+}

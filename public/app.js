@@ -28,6 +28,9 @@ function setupHomeVideo() {
   const video = document.querySelector('.home-backdrop-video');
   if (!video) return;
 
+  // The desktop background is decorative. Keep it visible even while play() is being negotiated.
+  // On iPhone we still hide it if autoplay is blocked, to avoid the native play overlay.
+
   const isCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -52,13 +55,18 @@ function setupHomeVideo() {
 
   const markBlocked = () => {
     document.body.classList.add('video-autoplay-blocked');
-    if (isIosLike()) document.body.classList.remove('video-playing');
+    if (isIosLike()) {
+      document.body.classList.remove('video-playing');
+    } else {
+      // Muted autoplay should work on desktop, but if the browser delays it, keep the animated background visible.
+      document.body.classList.add('video-playing');
+    }
   };
 
   const keepLooping = () => {
     if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-    if (video.currentTime >= video.duration - 0.05) {
-      video.currentTime = 0;
+    if (video.currentTime >= video.duration - 0.12) {
+      video.currentTime = 0.001;
       const replay = video.play();
       if (replay?.catch) replay.catch(markBlocked);
     }
@@ -92,6 +100,11 @@ function setupHomeVideo() {
   };
 
   video.addEventListener('playing', markPlaying);
+  video.addEventListener('loadedmetadata', () => {
+    if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+    if (video.currentTime === 0) video.currentTime = 0.001;
+    tryPlay();
+  }, { once: true });
   video.addEventListener('canplay', tryPlay, { once: true });
   video.addEventListener('timeupdate', keepLooping);
   video.addEventListener('ended', () => {
@@ -116,15 +129,11 @@ function setupHomeVideo() {
 }
 
 async function loadManifest() {
-  const refreshKey = 'reader.manifestRefreshAt';
-  const lastRefresh = Number(sessionStorage.getItem(refreshKey) || 0);
-  const shouldRefresh = Date.now() - lastRefresh > 5 * 60 * 1000;
-  const url = shouldRefresh ? '/api/manifest?refresh=1' : '/api/manifest';
-  const response = await fetch(url, { headers: { accept: 'application/json' }, cache: 'no-store' });
+  // Fast path: the importers keep this combined manifest updated.
+  // Avoid a full R2 bucket scan on normal page loads, otherwise the homepage waits too long before filling menus.
+  const response = await fetch('/content/manifest.json', { headers: { accept: 'application/json' }, cache: 'no-cache' });
   if (!response.ok) throw new Error('Archivio non disponibile');
-  if (shouldRefresh) sessionStorage.setItem(refreshKey, String(Date.now()));
-  const payload = await response.json();
-  return payload.data;
+  return response.json();
 }
 
 function naturalNumber(value, fallback = 0) {
@@ -308,7 +317,8 @@ function selectDefaultState(manifest) {
   state.series = firstSeries;
 
   const chapters = getChapters(state.series);
-  const latestChapter = chapters.at(-1);
+  const latestNumber = Number(state.series?.latestChapter);
+  const latestChapter = chapters.find((chapter) => Number(chapter.number) === latestNumber) || chapters.at(-1);
   const volumes = getVolumes(state.series);
   state.volume = latestChapter?.volume ?? volumes.at(-1)?.[0] ?? null;
   state.selectedChapterId = latestChapter?.id ?? null;

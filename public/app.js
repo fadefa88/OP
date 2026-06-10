@@ -16,7 +16,8 @@ const state = {
   manifest: null,
   series: null,
   volume: null,
-  search: ''
+  search: '',
+  selectedChapterId: null
 };
 
 function isIosLike() {
@@ -27,9 +28,16 @@ function setupHomeVideo() {
   const video = document.querySelector('.home-backdrop-video');
   if (!video) return;
 
+  const isCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   video.muted = true;
   video.defaultMuted = true;
+  video.loop = true;
+  video.autoplay = true;
   video.playsInline = true;
+  video.controls = false;
+  video.disablePictureInPicture = true;
   video.setAttribute('muted', '');
   video.setAttribute('playsinline', '');
   video.setAttribute('webkit-playsinline', '');
@@ -47,7 +55,21 @@ function setupHomeVideo() {
     if (isIosLike()) document.body.classList.remove('video-playing');
   };
 
+  const keepLooping = () => {
+    if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+    if (video.currentTime >= video.duration - 0.05) {
+      video.currentTime = 0;
+      const replay = video.play();
+      if (replay?.catch) replay.catch(markBlocked);
+    }
+  };
+
   const tryPlay = () => {
+    if (prefersReducedMotion) {
+      markBlocked();
+      return;
+    }
+
     video.muted = true;
     video.defaultMuted = true;
     video.loop = true;
@@ -58,6 +80,9 @@ function setupHomeVideo() {
     video.setAttribute('autoplay', '');
     video.setAttribute('playsinline', '');
     video.setAttribute('webkit-playsinline', '');
+
+    if (video.readyState === 0) video.load();
+
     const promise = video.play();
     if (promise?.then) {
       promise.then(markPlaying).catch(markBlocked);
@@ -67,13 +92,16 @@ function setupHomeVideo() {
   };
 
   video.addEventListener('playing', markPlaying);
+  video.addEventListener('canplay', tryPlay, { once: true });
+  video.addEventListener('timeupdate', keepLooping);
   video.addEventListener('ended', () => {
     video.currentTime = 0;
     tryPlay();
   });
-  video.addEventListener('stalled', () => {
-    window.setTimeout(tryPlay, 700);
+  video.addEventListener('pause', () => {
+    if (!document.hidden && !isCoarse) window.setTimeout(tryPlay, 250);
   });
+  video.addEventListener('stalled', () => window.setTimeout(tryPlay, 700));
 
   window.addEventListener('load', tryPlay, { once: true });
   document.addEventListener('visibilitychange', () => {
@@ -88,8 +116,13 @@ function setupHomeVideo() {
 }
 
 async function loadManifest() {
-  const response = await fetch('/api/manifest', { headers: { accept: 'application/json' } });
+  const refreshKey = 'reader.manifestRefreshAt';
+  const lastRefresh = Number(sessionStorage.getItem(refreshKey) || 0);
+  const shouldRefresh = Date.now() - lastRefresh > 5 * 60 * 1000;
+  const url = shouldRefresh ? '/api/manifest?refresh=1' : '/api/manifest';
+  const response = await fetch(url, { headers: { accept: 'application/json' }, cache: 'no-store' });
   if (!response.ok) throw new Error('Archivio non disponibile');
+  if (shouldRefresh) sessionStorage.setItem(refreshKey, String(Date.now()));
   const payload = await response.json();
   return payload.data;
 }
@@ -172,16 +205,20 @@ function getVisibleChapters() {
 
 function renderChapterSelect() {
   const chapters = getVisibleChapters();
-  const previousValue = els.chapterSelect.value;
   els.chapterSelect.innerHTML = '';
+
+  const preferredId = state.selectedChapterId && chapters.some((chapter) => chapter.id === state.selectedChapterId)
+    ? state.selectedChapterId
+    : chapters.at(-1)?.id;
 
   chapters.forEach((chapter) => {
     const label = `Cap. ${chapter.number ?? chapter.id}`;
-    els.chapterSelect.appendChild(option(label, chapter.id, chapter.id === previousValue));
+    els.chapterSelect.appendChild(option(label, chapter.id, chapter.id === preferredId));
   });
 
-  if (chapters.length && !chapters.some((chapter) => chapter.id === els.chapterSelect.value)) {
-    els.chapterSelect.value = chapters.at(-1).id;
+  if (preferredId) {
+    els.chapterSelect.value = preferredId;
+    state.selectedChapterId = preferredId;
   }
 }
 
@@ -274,27 +311,35 @@ function selectDefaultState(manifest) {
   const latestChapter = chapters.at(-1);
   const volumes = getVolumes(state.series);
   state.volume = latestChapter?.volume ?? volumes.at(-1)?.[0] ?? null;
+  state.selectedChapterId = latestChapter?.id ?? null;
 }
 
 function bindEvents() {
   els.volumeSelect.addEventListener('change', () => {
     state.volume = els.volumeSelect.value;
     state.search = '';
+    state.selectedChapterId = null;
     els.chapterSearch.value = '';
     renderAll();
   });
 
   els.chapterSearch.addEventListener('input', () => {
     state.search = els.chapterSearch.value;
+    state.selectedChapterId = null;
     renderChapterSelect();
     renderChapterGrid();
     renderStats();
+  });
+
+  els.chapterSelect.addEventListener('change', () => {
+    state.selectedChapterId = els.chapterSelect.value;
   });
 
   els.form.addEventListener('submit', (event) => {
     event.preventDefault();
     const chapterId = els.chapterSelect.value;
     if (!chapterId) return;
+    state.selectedChapterId = chapterId;
     window.location.href = chapterHref(state.series.id, chapterId);
   });
 }

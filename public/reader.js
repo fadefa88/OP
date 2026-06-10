@@ -281,7 +281,12 @@ function flashFullscreenHint() {
 function showReaderUi({ force = false } = {}) {
   if (uiTimer) window.clearTimeout(uiTimer);
 
-  if (state.immersiveFullscreen && !force) {
+  if (!state.immersiveFullscreen) {
+    setUiHidden(false);
+    return;
+  }
+
+  if (!force) {
     setUiHidden(true);
     return;
   }

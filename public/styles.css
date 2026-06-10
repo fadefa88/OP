@@ -1886,3 +1886,68 @@ body:not(.reader-body).video-autoplay-blocked .home-backdrop-video {
     object-fit: contain;
   }
 }
+
+/* --- Final homepage/reader corrections --- */
+@keyframes ldfBackdropDrift {
+  0% { transform: scale(1.035) translate3d(-1.4%, -0.8%, 0); }
+  50% { transform: scale(1.075) translate3d(1.2%, 0.7%, 0); }
+  100% { transform: scale(1.045) translate3d(-0.5%, 1.1%, 0); }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body:not(.reader-body) .home-backdrop-video {
+    animation: ldfBackdropDrift 18s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+}
+
+/* Keep the iPhone behavior from the previous build: hide the video if autoplay is blocked there. */
+@supports (-webkit-touch-callout: none) {
+  body:not(.reader-body):not(.video-playing) .home-backdrop-video {
+    visibility: hidden;
+    opacity: 0;
+    animation: none;
+  }
+}
+
+body:not(.reader-body) input#chapter-search::placeholder {
+  color: transparent;
+}
+
+body:not(.reader-body) input#chapter-search::-webkit-input-placeholder {
+  color: transparent;
+}
+
+body:not(.reader-body) input#chapter-search::-moz-placeholder {
+  color: transparent;
+  opacity: 0;
+}
+
+/* Desktop reader: default page view must be height-fit, with no automatic UI hiding. */
+@media (hover: hover) and (pointer: fine) and (min-width: 821px) {
+  .reader-body:not(.reader-fullscreen).fit-page .single-page-view {
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: calc(var(--toolbar-height) + env(safe-area-inset-top));
+    padding-bottom: 0;
+  }
+
+  .reader-body:not(.reader-fullscreen).fit-page .single-page-view img {
+    width: auto !important;
+    height: calc(100vh - var(--toolbar-height)) !important;
+    height: calc(100dvh - var(--toolbar-height)) !important;
+    max-width: 100vw;
+    max-width: 100dvw;
+    max-height: calc(100vh - var(--toolbar-height));
+    max-height: calc(100dvh - var(--toolbar-height));
+    object-fit: contain;
+  }
+
+  .reader-body:not(.reader-fullscreen).reader-ui-hidden .reader-toolbar,
+  .reader-body:not(.reader-fullscreen).reader-ui-hidden .page-arrow {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+}

@@ -202,7 +202,7 @@ async function cachedR2Manifest(request, env, ctx) {
   const url = new URL(request.url);
   const refresh = url.searchParams.get("refresh") === "1";
   const ttl = Number(env.R2_MANIFEST_CACHE_SECONDS || 600);
-  const cacheKey = new Request(`${url.origin}/api/manifest:r2:${env.R2_PUBLIC_PREFIX || "op"}:v3`);
+  const cacheKey = new Request(`${url.origin}/api/manifest:r2:${env.R2_PUBLIC_PREFIX || "op"}:v4`);
   const cache = caches.default;
 
   if (!refresh) {

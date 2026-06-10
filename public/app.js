@@ -19,6 +19,10 @@ const state = {
   search: ''
 };
 
+function isIosLike() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
 function setupHomeVideo() {
   const video = document.querySelector('.home-backdrop-video');
   if (!video) return;
@@ -40,12 +44,20 @@ function setupHomeVideo() {
 
   const markBlocked = () => {
     document.body.classList.add('video-autoplay-blocked');
-    document.body.classList.remove('video-playing');
+    if (isIosLike()) document.body.classList.remove('video-playing');
   };
 
   const tryPlay = () => {
     video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.autoplay = true;
     video.playsInline = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('loop', '');
+    video.setAttribute('autoplay', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
     const promise = video.play();
     if (promise?.then) {
       promise.then(markPlaying).catch(markBlocked);
@@ -55,8 +67,12 @@ function setupHomeVideo() {
   };
 
   video.addEventListener('playing', markPlaying);
-  video.addEventListener('pause', () => {
-    if (!document.hidden) markBlocked();
+  video.addEventListener('ended', () => {
+    video.currentTime = 0;
+    tryPlay();
+  });
+  video.addEventListener('stalled', () => {
+    window.setTimeout(tryPlay, 700);
   });
 
   window.addEventListener('load', tryPlay, { once: true });
@@ -165,7 +181,7 @@ function renderChapterSelect() {
   });
 
   if (chapters.length && !chapters.some((chapter) => chapter.id === els.chapterSelect.value)) {
-    els.chapterSelect.value = chapters[0].id;
+    els.chapterSelect.value = chapters.at(-1).id;
   }
 }
 
@@ -203,32 +219,22 @@ function renderChapterGrid() {
 }
 
 function renderStats() {
-  const volumes = getVolumes(state.series);
-  const totalChapters = getChapters(state.series).length;
-  const visibleCount = getVisibleChapters().length;
-  els.libraryStats.textContent = `${volumes.length} volumi · ${totalChapters} capitoli · ${visibleCount} mostrati`;
+  els.libraryStats.textContent = '';
+  els.libraryStats.hidden = true;
   els.volumeTitle.textContent = state.search ? 'Risultati ricerca' : `Volume ${state.volume}`;
 }
 
 function renderQuickLinks() {
   const chapters = getChapters(state.series);
   const latest = chapters.at(-1);
-  if (latest) {
-    els.latestChapter.href = chapterHref(state.series.id, latest.id);
-    els.latestChapter.textContent = `Ultimo capitolo: ${latest.number ?? latest.id}`;
-  }
+  if (!latest) return;
 
-  const last = getLastReading();
-  const lastSeries = state.manifest.series.find((series) => series.id === last?.seriesId);
-  const lastChapter = lastSeries?.chapters?.find((chapter) => chapter.id === last?.chapterId);
-
-  if (lastSeries && lastChapter) {
-    els.continueReading.href = chapterHref(lastSeries.id, lastChapter.id, last.page || 1);
-    els.continueReading.textContent = `Continua: cap. ${lastChapter.number ?? lastChapter.id}, pag. ${last.page || 1}`;
-  } else if (latest) {
-    els.continueReading.href = chapterHref(state.series.id, latest.id);
-    els.continueReading.textContent = 'Apri ultimo capitolo';
-  }
+  const latestNumber = latest.number ?? latest.id;
+  const latestText = `Ultimo capitolo ${latestNumber} appena uscito!`;
+  els.latestChapter.href = chapterHref(state.series.id, latest.id);
+  els.latestChapter.textContent = latestText;
+  els.continueReading.href = chapterHref(state.series.id, latest.id);
+  els.continueReading.textContent = latestText;
 }
 
 function formatItalianDate(value) {
@@ -262,13 +268,12 @@ function renderAll() {
 
 function selectDefaultState(manifest) {
   const firstSeries = manifest.series[0];
-  const lastReading = getLastReading();
-  const rememberedSeries = manifest.series.find((series) => series.id === lastReading?.seriesId);
-  state.series = rememberedSeries || firstSeries;
+  state.series = firstSeries;
 
+  const chapters = getChapters(state.series);
+  const latestChapter = chapters.at(-1);
   const volumes = getVolumes(state.series);
-  const rememberedChapter = getChapters(state.series).find((chapter) => chapter.id === lastReading?.chapterId);
-  state.volume = rememberedChapter?.volume ?? volumes.at(-1)?.[0] ?? null;
+  state.volume = latestChapter?.volume ?? volumes.at(-1)?.[0] ?? null;
 }
 
 function bindEvents() {

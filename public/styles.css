@@ -1766,3 +1766,123 @@ body:not(.reader-body).video-autoplay-blocked .home-video-backdrop {
     display: none;
   }
 }
+
+/* --- Targeted UX fixes: desktop height-fit, mobile tap-only, stable video, cleaner selects --- */
+select,
+input[type="search"] {
+  color: var(--text);
+  background-color: rgba(2, 6, 23, 0.92);
+}
+
+select option {
+  color: #0f172a;
+  background: #ffffff;
+}
+
+body:not(.reader-body) select,
+body:not(.reader-body) input[type="search"] {
+  color: #ffffff;
+  background-color: rgba(5, 5, 9, 0.74);
+}
+
+body:not(.reader-body) select option {
+  color: #111827;
+  background: #ffffff;
+}
+
+.library-stats:empty {
+  display: none;
+}
+
+body:not(.reader-body) .home-backdrop-video {
+  visibility: visible;
+  opacity: 0.82;
+}
+
+body:not(.reader-body).video-playing .home-backdrop-video {
+  visibility: visible;
+  opacity: 0.82;
+}
+
+body:not(.reader-body).video-autoplay-blocked .home-backdrop-video {
+  visibility: visible;
+  opacity: 0.82;
+}
+
+@supports (-webkit-touch-callout: none) {
+  body:not(.reader-body):not(.video-playing) .home-backdrop-video {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.fit-page .single-page-view {
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.fit-page .single-page-view img {
+  width: auto;
+  height: auto;
+  max-width: 100vw;
+  max-width: 100dvw;
+  max-height: calc(100vh - var(--toolbar-height));
+  max-height: calc(100dvh - var(--toolbar-height));
+  object-fit: contain;
+  box-shadow: none;
+}
+
+.reader-body:not(.reader-fullscreen).fit-page .single-page-view {
+  padding-top: calc(var(--toolbar-height) + env(safe-area-inset-top));
+  padding-bottom: 0;
+}
+
+.reader-fullscreen.fit-page .single-page-view {
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.reader-fullscreen.fit-page .single-page-view img {
+  width: auto;
+  height: 100vh;
+  height: 100dvh;
+  max-width: 100vw;
+  max-width: 100dvw;
+  max-height: 100vh;
+  max-height: 100dvh;
+  object-fit: contain;
+  box-shadow: none;
+}
+
+.reader-fullscreen.fit-width .single-page-view img {
+  height: auto;
+  max-height: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .single-page-view,
+  .single-page-view img {
+    touch-action: pan-x pan-y pinch-zoom;
+  }
+}
+
+@media (max-width: 920px) and (orientation: landscape) {
+  .reader-fullscreen.fit-page .single-page-view {
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .reader-fullscreen.fit-page .single-page-view img {
+    width: auto;
+    height: 100vh;
+    height: 100dvh;
+    max-width: 100vw;
+    max-width: 100dvw;
+    max-height: 100vh;
+    max-height: 100dvh;
+    object-fit: contain;
+  }
+}

@@ -32,7 +32,7 @@ const state = {
   chapterIndex: 0,
   pageIndex: requestedPage - 1,
   viewMode: 'paged',
-  fitMode: 'width',
+  fitMode: 'page',
   uiHidden: false,
   immersiveFullscreen: false,
   restoreAfterFullscreen: null
@@ -243,8 +243,20 @@ function applyFitMode() {
 let uiTimer = null;
 let fullscreenHintTimer = null;
 
-function isDesktopFullscreenLayout() {
+function isDesktopLayout() {
   return window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 821px)').matches;
+}
+
+function isLandscapeLayout() {
+  return window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
+}
+
+function shouldUseHeightFit() {
+  return isDesktopLayout() || (state.immersiveFullscreen && isLandscapeLayout());
+}
+
+function getDefaultFitMode() {
+  return isDesktopLayout() ? 'page' : 'width';
 }
 
 
@@ -266,7 +278,7 @@ function flashFullscreenHint() {
   }, 1900);
 }
 
-function showReaderUi({ keep = false, force = false } = {}) {
+function showReaderUi({ force = false } = {}) {
   if (uiTimer) window.clearTimeout(uiTimer);
 
   if (state.immersiveFullscreen && !force) {
@@ -275,12 +287,6 @@ function showReaderUi({ keep = false, force = false } = {}) {
   }
 
   setUiHidden(false);
-  if (keep || state.viewMode !== 'paged') return;
-  uiTimer = window.setTimeout(() => {
-    const activeTag = document.activeElement?.tagName?.toLowerCase();
-    if (['input', 'select', 'textarea', 'button'].includes(activeTag)) return;
-    setUiHidden(true);
-  }, 2600);
 }
 
 function applyFullscreenState(active) {
@@ -292,7 +298,7 @@ function applyFullscreenState(active) {
       fitMode: state.fitMode
     };
     state.viewMode = 'paged';
-    state.fitMode = isDesktopFullscreenLayout() ? 'page' : 'width';
+    state.fitMode = shouldUseHeightFit() ? 'page' : 'width';
     applyViewMode();
     applyFitMode();
   }
@@ -411,6 +417,7 @@ function selectInitialState(manifest) {
   if (state.chapterIndex === -1) state.chapterIndex = 0;
   state.chapter = chapters[state.chapterIndex];
   state.pageIndex = clampPageIndex(requestedPage - 1);
+  state.fitMode = getDefaultFitMode();
 }
 
 els.image.addEventListener('load', () => {
@@ -475,6 +482,12 @@ document.addEventListener('fullscreenchange', () => {
   applyFullscreenState(Boolean(document.fullscreenElement));
 });
 
+window.addEventListener('resize', () => {
+  if (!state.immersiveFullscreen) return;
+  state.fitMode = shouldUseHeightFit() ? 'page' : 'width';
+  applyFitMode();
+}, { passive: true });
+
 document.addEventListener('keydown', (event) => {
   const activeTag = document.activeElement?.tagName?.toLowerCase();
   if (['input', 'select', 'textarea'].includes(activeTag)) return;
@@ -508,6 +521,7 @@ document.addEventListener('keydown', (event) => {
 let touchStartX = 0;
 let touchStartY = 0;
 let touchMoved = false;
+let multiTouchGesture = false;
 let longPressTimer = null;
 let longPressTriggered = false;
 let ignoreClickUntil = 0;
@@ -528,10 +542,19 @@ function isCenterGesture(clientX) {
 }
 
 els.singleView.addEventListener('touchstart', (event) => {
+  if (event.touches.length > 1) {
+    multiTouchGesture = true;
+    touchMoved = true;
+    ignoreClickUntil = Date.now() + 900;
+    clearLongPressTimer();
+    return;
+  }
+
   const touch = event.changedTouches[0];
   touchStartX = touch.clientX;
   touchStartY = touch.clientY;
   touchMoved = false;
+  multiTouchGesture = false;
   longPressTriggered = false;
 
   clearLongPressTimer();
@@ -549,6 +572,14 @@ els.singleView.addEventListener('touchstart', (event) => {
 }, { passive: true });
 
 els.singleView.addEventListener('touchmove', (event) => {
+  if (event.touches.length > 1) {
+    multiTouchGesture = true;
+    touchMoved = true;
+    ignoreClickUntil = Date.now() + 900;
+    clearLongPressTimer();
+    return;
+  }
+
   const touch = event.changedTouches[0];
   const movedX = Math.abs(touch.clientX - touchStartX);
   const movedY = Math.abs(touch.clientY - touchStartY);
@@ -557,17 +588,11 @@ els.singleView.addEventListener('touchmove', (event) => {
   if (movedX > 10 || movedY > 10) clearLongPressTimer();
 }, { passive: true });
 
-els.singleView.addEventListener('touchend', (event) => {
+els.singleView.addEventListener('touchend', () => {
   clearLongPressTimer();
-  if (longPressTriggered) return;
-
-  const touch = event.changedTouches[0];
-  const diffX = touch.clientX - touchStartX;
-  const diffY = touch.clientY - touchStartY;
-
-  if (Math.abs(diffX) >= 45 && Math.abs(diffX) > Math.abs(diffY)) {
-    if (diffX < 0) goNextPage();
-    else goPreviousPage();
+  if (longPressTriggered || multiTouchGesture) {
+    ignoreClickUntil = Date.now() + 900;
+    return;
   }
 }, { passive: true });
 
@@ -606,10 +631,7 @@ els.singleView.addEventListener('click', (event) => {
 
   if (state.immersiveFullscreen) {
     flashFullscreenHint();
-    return;
   }
-
-  setUiHidden(!state.uiHidden);
 });
 
 ['mousemove', 'pointermove', 'focusin'].forEach((eventName) => {

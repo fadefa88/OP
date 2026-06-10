@@ -2077,3 +2077,55 @@ body:not(.reader-body).video-autoplay-blocked .home-backdrop-video {
     object-fit: contain !important;
   }
 }
+
+/* --- Verified desktop video visibility fix: use 8-bit browser-safe video and do not let poster/gradients hide it. --- */
+body:not(.reader-body) .home-video-backdrop {
+  background: #050509 !important;
+  overflow: hidden !important;
+}
+
+body:not(.reader-body) .home-backdrop-video {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.96 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  object-fit: cover !important;
+  z-index: 0 !important;
+  filter: brightness(1.08) contrast(1.08) saturate(1.02) !important;
+  mix-blend-mode: normal !important;
+  transform: scale(1.02) translateZ(0) !important;
+}
+
+body:not(.reader-body) .home-video-backdrop::before {
+  z-index: 1 !important;
+  background:
+    radial-gradient(circle at 12% 26%, rgba(225, 29, 72, 0.10), transparent 25rem),
+    radial-gradient(circle at 86% 16%, rgba(249, 115, 22, 0.08), transparent 26rem),
+    linear-gradient(90deg, rgba(5, 5, 9, 0.52) 0%, rgba(5, 5, 9, 0.32) 45%, rgba(5, 5, 9, 0.10) 100%) !important;
+}
+
+body:not(.reader-body) .home-video-backdrop::after {
+  z-index: 2 !important;
+  background:
+    linear-gradient(180deg, rgba(5, 5, 9, 0.02), rgba(5, 5, 9, 0.34)),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 3px) !important;
+}
+
+body:not(.reader-body).video-autoplay-blocked .home-backdrop-video,
+body:not(.reader-body).video-playing .home-backdrop-video {
+  visibility: visible !important;
+  opacity: 0.96 !important;
+}
+
+/* iOS-only fallback: preserve the working mobile behavior if autoplay is blocked. */
+@supports (-webkit-touch-callout: none) {
+  body:not(.reader-body).video-autoplay-blocked:not(.video-playing) .home-video-backdrop {
+    background: #050509 url('/media/backdrop-poster.jpg') center / cover no-repeat !important;
+  }
+
+  body:not(.reader-body).video-autoplay-blocked:not(.video-playing) .home-backdrop-video {
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}

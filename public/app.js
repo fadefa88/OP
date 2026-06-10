@@ -28,10 +28,7 @@ function setupHomeVideo() {
   const video = document.querySelector('.home-backdrop-video');
   if (!video) return;
 
-  // The desktop background is decorative. Keep it visible even while play() is being negotiated.
-  // On iPhone we still hide it if autoplay is blocked, to avoid the native play overlay.
-
-  const isCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   video.muted = true;
@@ -42,11 +39,12 @@ function setupHomeVideo() {
   video.controls = false;
   video.disablePictureInPicture = true;
   video.setAttribute('muted', '');
-  video.setAttribute('playsinline', '');
-  video.setAttribute('webkit-playsinline', '');
   video.setAttribute('autoplay', '');
   video.setAttribute('loop', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
   video.removeAttribute('controls');
+  video.removeAttribute('poster');
 
   const markPlaying = () => {
     document.body.classList.add('video-playing');
@@ -55,22 +53,9 @@ function setupHomeVideo() {
 
   const markBlocked = () => {
     document.body.classList.add('video-autoplay-blocked');
-    if (isIosLike()) {
-      document.body.classList.remove('video-playing');
-    } else {
-      // Muted autoplay should work on desktop, but if the browser delays it, keep the animated background visible.
+    if (!isIos) {
+      // Desktop must never fall back to a static poster: keep the video layer visible.
       document.body.classList.add('video-playing');
-    }
-  };
-
-  const keepLooping = () => {
-    // The source loop is intentionally very short. Do not jump too early,
-    // otherwise desktop browsers can look like they are showing a poster.
-    if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-    if (video.currentTime >= video.duration - 0.025) {
-      video.currentTime = 0.001;
-      const replay = video.play();
-      if (replay?.catch) replay.catch(markBlocked);
     }
   };
 
@@ -85,40 +70,27 @@ function setupHomeVideo() {
     video.loop = true;
     video.autoplay = true;
     video.playsInline = true;
-    video.setAttribute('muted', '');
-    video.setAttribute('loop', '');
-    video.setAttribute('autoplay', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('webkit-playsinline', '');
 
     if (video.readyState === 0) video.load();
-
     const promise = video.play();
     if (promise?.then) {
       promise.then(markPlaying).catch(markBlocked);
     } else if (!video.paused) {
       markPlaying();
+    } else {
+      markBlocked();
     }
   };
 
   video.addEventListener('playing', markPlaying);
-  video.addEventListener('loadedmetadata', () => {
-    if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-    // Start from the first frame; avoiding poster on desktop is handled by removing
-    // the poster attribute and keeping the video layer visible.
-    video.currentTime = 0;
-    tryPlay();
-  }, { once: true });
+  video.addEventListener('play', markPlaying);
   video.addEventListener('canplay', tryPlay, { once: true });
-  video.addEventListener('timeupdate', keepLooping);
+  video.addEventListener('loadeddata', tryPlay, { once: true });
   video.addEventListener('ended', () => {
     video.currentTime = 0;
     tryPlay();
   });
-  video.addEventListener('pause', () => {
-    if (!document.hidden && !isCoarse) window.setTimeout(tryPlay, 250);
-  });
-  video.addEventListener('stalled', () => window.setTimeout(tryPlay, 700));
+  video.addEventListener('error', markBlocked);
 
   window.addEventListener('load', tryPlay, { once: true });
   document.addEventListener('visibilitychange', () => {

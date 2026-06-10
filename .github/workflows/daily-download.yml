@@ -54,6 +54,8 @@ jobs:
       STOP_AFTER_MISSING: "3"
       IMPORT_DELAY: "0.25"
       IMPORT_TIMEOUT: "15"
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC || 'ldf-op-reader-cagnettoasd123' }}
+      READER_BASE_URL: ${{ vars.READER_BASE_URL || 'https://manga.lucahome.uk' }}
 
     steps:
       - name: Checkout repository
@@ -124,7 +126,36 @@ jobs:
             --i-confirm-rights \
             "${EXTRA_ARGS[@]}"
 
+      - name: Detect imported chapter
+        id: imported
+        if: steps.config.outputs.skip != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ ! -f reports/new-chapter-result.json ]; then
+            echo "No import report found."
+            echo "imported=false" >> "$GITHUB_OUTPUT"
+            echo "chapter=" >> "$GITHUB_OUTPUT"
+            echo "volume=" >> "$GITHUB_OUTPUT"
+            echo "pages=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("reports/new-chapter-result.json").read_text(encoding="utf-8"))
+          imported = bool(report.get("imported"))
+          print(f"imported={'true' if imported else 'false'}")
+          print(f"chapter={report.get('chapter') or ''}")
+          print(f"volume={report.get('volume') or ''}")
+          print(f"pages={report.get('pages') or ''}")
+          PY
+
       - name: Commit JSON manifest changes only
+        id: commit_json
         if: steps.config.outputs.skip != 'true'
         shell: bash
         run: |
@@ -132,6 +163,7 @@ jobs:
 
           if git diff --quiet -- public/content; then
             echo "No JSON manifest changes. No commit and no Cloudflare deploy."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -143,14 +175,21 @@ jobs:
 
           if git diff --cached --quiet; then
             echo "No staged JSON changes."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          git commit -m "Import new manga chapter manifest"
+          CHAPTER="${{ steps.imported.outputs.chapter }}"
+          if [ -n "$CHAPTER" ]; then
+            git commit -m "Import manga chapter ${CHAPTER} manifest"
+          else
+            git commit -m "Import new manga chapter manifest"
+          fi
 
           for attempt in 1 2 3; do
             echo "Push attempt $attempt"
             if git push; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
@@ -158,4 +197,29 @@ jobs:
           done
 
           echo "Failed to push after retries."
+          echo "pushed=false" >> "$GITHUB_OUTPUT"
           exit 1
+
+      - name: Notify ntfy
+        if: steps.config.outputs.skip != 'true' && steps.imported.outputs.imported == 'true' && steps.commit_json.outputs.pushed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          CHAPTER="${{ steps.imported.outputs.chapter }}"
+          VOLUME="${{ steps.imported.outputs.volume }}"
+          PAGES="${{ steps.imported.outputs.pages }}"
+          BASE_URL="${READER_BASE_URL%/}"
+          URL="${BASE_URL}/reader.html?series=op&chapter=chapter-${CHAPTER}&page=1"
+
+          MESSAGE="Capitolo ${CHAPTER} appena caricato. Volume ${VOLUME}. Pagine: ${PAGES}. Tocca per leggerlo."
+
+          curl -sS \
+            -H "Title: Nuovo capitolo disponibile" \
+            -H "Priority: high" \
+            -H "Tags: pirate,book" \
+            -H "Click: ${URL}" \
+            -d "${MESSAGE}" \
+            "https://ntfy.sh/${NTFY_TOPIC}"
+
+          echo "ntfy notification sent for chapter ${CHAPTER}."

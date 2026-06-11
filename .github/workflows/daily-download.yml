@@ -200,14 +200,6 @@ jobs:
           echo "pushed=false" >> "$GITHUB_OUTPUT"
           exit 1
 
-      - name: Deploy updated site to Cloudflare
-        if: steps.config.outputs.skip != 'true' && steps.imported.outputs.imported == 'true' && steps.commit_json.outputs.pushed == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
-
       - name: Notify ntfy
         if: steps.config.outputs.skip != 'true' && steps.imported.outputs.imported == 'true' && steps.commit_json.outputs.pushed == 'true'
         shell: bash

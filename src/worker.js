@@ -202,7 +202,7 @@ async function cachedR2Manifest(request, env, ctx) {
   const url = new URL(request.url);
   const refresh = url.searchParams.get("refresh") === "1";
   const ttl = Number(env.R2_MANIFEST_CACHE_SECONDS || 600);
-  const cacheKey = new Request(`${url.origin}/api/manifest:r2:${env.R2_PUBLIC_PREFIX || "op"}:v3`);
+  const cacheKey = new Request(`${url.origin}/api/manifest:r2:${env.R2_PUBLIC_PREFIX || "op"}:v4`);
   const cache = caches.default;
 
   if (!refresh) {
@@ -256,14 +256,32 @@ async function fetchSplitManifest(request, env) {
   return json({ ok: true, source: "split-manifest", data: assembled });
 }
 
-async function fetchManifest(request, env, ctx) {
-  const mode = String(env.R2_LIBRARY_MODE || "dynamic").toLowerCase();
+async function fetchCombinedManifest(request, env) {
+  const legacyManifestPath = env.MANIFEST_PATH || "/content/manifest.json";
+  const legacy = await fetchAssetJson(request, env, legacyManifestPath);
+  if (!legacy) return null;
+  return json({ ok: true, source: "combined-static-manifest", data: legacy });
+}
 
-  if (mode === "dynamic" || mode === "r2") {
+async function fetchManifest(request, env, ctx) {
+  const url = new URL(request.url);
+  const source = String(url.searchParams.get("source") || "").toLowerCase();
+  const mode = String(env.R2_LIBRARY_MODE || "split").toLowerCase();
+
+  if (source === "combined" || source === "static") {
+    const combined = await fetchCombinedManifest(request, env);
+    if (combined) return combined;
+  }
+
+  if (source === "split") return fetchSplitManifest(request, env);
+
+  if (source === "r2" || mode === "dynamic" || mode === "r2") {
     const r2Response = await cachedR2Manifest(request, env, ctx);
     if (r2Response) return r2Response;
   }
 
+  const combined = await fetchCombinedManifest(request, env);
+  if (combined) return combined;
   return fetchSplitManifest(request, env);
 }
 

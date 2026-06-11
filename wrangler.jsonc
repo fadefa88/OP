@@ -15,7 +15,7 @@
     "SITE_NAME": "© LDF",
     "SERIES_ID": "op",
     "SERIES_TITLE": "© LDF",
-    "R2_LIBRARY_MODE": "dynamic",
+    "R2_LIBRARY_MODE": "split",
     "R2_PUBLIC_PREFIX": "op",
     "R2_PUBLIC_BASE_URL": "https://static.lucahome.uk",
     "R2_MANIFEST_CACHE_SECONDS": "600",

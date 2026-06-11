@@ -16,22 +16,35 @@ const state = {
   manifest: null,
   series: null,
   volume: null,
-  search: ''
+  search: '',
+  selectedChapterId: null
 };
+
+function isIosLike() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
 
 function setupHomeVideo() {
   const video = document.querySelector('.home-backdrop-video');
   if (!video) return;
 
+  const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   video.muted = true;
   video.defaultMuted = true;
+  video.loop = true;
+  video.autoplay = true;
   video.playsInline = true;
+  video.controls = false;
+  video.disablePictureInPicture = true;
   video.setAttribute('muted', '');
-  video.setAttribute('playsinline', '');
-  video.setAttribute('webkit-playsinline', '');
   video.setAttribute('autoplay', '');
   video.setAttribute('loop', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
   video.removeAttribute('controls');
+  video.removeAttribute('poster');
 
   const markPlaying = () => {
     document.body.classList.add('video-playing');
@@ -40,24 +53,44 @@ function setupHomeVideo() {
 
   const markBlocked = () => {
     document.body.classList.add('video-autoplay-blocked');
-    document.body.classList.remove('video-playing');
+    if (!isIos) {
+      // Desktop must never fall back to a static poster: keep the video layer visible.
+      document.body.classList.add('video-playing');
+    }
   };
 
   const tryPlay = () => {
+    if (prefersReducedMotion) {
+      markBlocked();
+      return;
+    }
+
     video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.autoplay = true;
     video.playsInline = true;
+
+    if (video.readyState === 0) video.load();
     const promise = video.play();
     if (promise?.then) {
       promise.then(markPlaying).catch(markBlocked);
     } else if (!video.paused) {
       markPlaying();
+    } else {
+      markBlocked();
     }
   };
 
   video.addEventListener('playing', markPlaying);
-  video.addEventListener('pause', () => {
-    if (!document.hidden) markBlocked();
+  video.addEventListener('play', markPlaying);
+  video.addEventListener('canplay', tryPlay, { once: true });
+  video.addEventListener('loadeddata', tryPlay, { once: true });
+  video.addEventListener('ended', () => {
+    video.currentTime = 0;
+    tryPlay();
   });
+  video.addEventListener('error', markBlocked);
 
   window.addEventListener('load', tryPlay, { once: true });
   document.addEventListener('visibilitychange', () => {
@@ -72,10 +105,11 @@ function setupHomeVideo() {
 }
 
 async function loadManifest() {
-  const response = await fetch('/api/manifest', { headers: { accept: 'application/json' } });
+  // Fast path: the importers keep this combined manifest updated.
+  // Avoid a full R2 bucket scan on normal page loads, otherwise the homepage waits too long before filling menus.
+  const response = await fetch('/content/manifest.json', { headers: { accept: 'application/json' }, cache: 'no-cache' });
   if (!response.ok) throw new Error('Archivio non disponibile');
-  const payload = await response.json();
-  return payload.data;
+  return response.json();
 }
 
 function naturalNumber(value, fallback = 0) {
@@ -156,16 +190,20 @@ function getVisibleChapters() {
 
 function renderChapterSelect() {
   const chapters = getVisibleChapters();
-  const previousValue = els.chapterSelect.value;
   els.chapterSelect.innerHTML = '';
+
+  const preferredId = state.selectedChapterId && chapters.some((chapter) => chapter.id === state.selectedChapterId)
+    ? state.selectedChapterId
+    : chapters.at(-1)?.id;
 
   chapters.forEach((chapter) => {
     const label = `Cap. ${chapter.number ?? chapter.id}`;
-    els.chapterSelect.appendChild(option(label, chapter.id, chapter.id === previousValue));
+    els.chapterSelect.appendChild(option(label, chapter.id, chapter.id === preferredId));
   });
 
-  if (chapters.length && !chapters.some((chapter) => chapter.id === els.chapterSelect.value)) {
-    els.chapterSelect.value = chapters[0].id;
+  if (preferredId) {
+    els.chapterSelect.value = preferredId;
+    state.selectedChapterId = preferredId;
   }
 }
 
@@ -203,32 +241,22 @@ function renderChapterGrid() {
 }
 
 function renderStats() {
-  const volumes = getVolumes(state.series);
-  const totalChapters = getChapters(state.series).length;
-  const visibleCount = getVisibleChapters().length;
-  els.libraryStats.textContent = `${volumes.length} volumi · ${totalChapters} capitoli · ${visibleCount} mostrati`;
+  els.libraryStats.textContent = '';
+  els.libraryStats.hidden = true;
   els.volumeTitle.textContent = state.search ? 'Risultati ricerca' : `Volume ${state.volume}`;
 }
 
 function renderQuickLinks() {
   const chapters = getChapters(state.series);
   const latest = chapters.at(-1);
-  if (latest) {
-    els.latestChapter.href = chapterHref(state.series.id, latest.id);
-    els.latestChapter.textContent = `Ultimo capitolo: ${latest.number ?? latest.id}`;
-  }
+  if (!latest) return;
 
-  const last = getLastReading();
-  const lastSeries = state.manifest.series.find((series) => series.id === last?.seriesId);
-  const lastChapter = lastSeries?.chapters?.find((chapter) => chapter.id === last?.chapterId);
-
-  if (lastSeries && lastChapter) {
-    els.continueReading.href = chapterHref(lastSeries.id, lastChapter.id, last.page || 1);
-    els.continueReading.textContent = `Continua: cap. ${lastChapter.number ?? lastChapter.id}, pag. ${last.page || 1}`;
-  } else if (latest) {
-    els.continueReading.href = chapterHref(state.series.id, latest.id);
-    els.continueReading.textContent = 'Apri ultimo capitolo';
-  }
+  const latestNumber = latest.number ?? latest.id;
+  const latestText = `Ultimo capitolo ${latestNumber} appena uscito!`;
+  els.latestChapter.href = chapterHref(state.series.id, latest.id);
+  els.latestChapter.textContent = latestText;
+  els.continueReading.href = chapterHref(state.series.id, latest.id);
+  els.continueReading.textContent = latestText;
 }
 
 function formatItalianDate(value) {
@@ -262,34 +290,42 @@ function renderAll() {
 
 function selectDefaultState(manifest) {
   const firstSeries = manifest.series[0];
-  const lastReading = getLastReading();
-  const rememberedSeries = manifest.series.find((series) => series.id === lastReading?.seriesId);
-  state.series = rememberedSeries || firstSeries;
+  state.series = firstSeries;
 
+  const chapters = getChapters(state.series);
+  const latestNumber = Number(state.series?.latestChapter);
+  const latestChapter = chapters.find((chapter) => Number(chapter.number) === latestNumber) || chapters.at(-1);
   const volumes = getVolumes(state.series);
-  const rememberedChapter = getChapters(state.series).find((chapter) => chapter.id === lastReading?.chapterId);
-  state.volume = rememberedChapter?.volume ?? volumes.at(-1)?.[0] ?? null;
+  state.volume = latestChapter?.volume ?? volumes.at(-1)?.[0] ?? null;
+  state.selectedChapterId = latestChapter?.id ?? null;
 }
 
 function bindEvents() {
   els.volumeSelect.addEventListener('change', () => {
     state.volume = els.volumeSelect.value;
     state.search = '';
+    state.selectedChapterId = null;
     els.chapterSearch.value = '';
     renderAll();
   });
 
   els.chapterSearch.addEventListener('input', () => {
     state.search = els.chapterSearch.value;
+    state.selectedChapterId = null;
     renderChapterSelect();
     renderChapterGrid();
     renderStats();
+  });
+
+  els.chapterSelect.addEventListener('change', () => {
+    state.selectedChapterId = els.chapterSelect.value;
   });
 
   els.form.addEventListener('submit', (event) => {
     event.preventDefault();
     const chapterId = els.chapterSelect.value;
     if (!chapterId) return;
+    state.selectedChapterId = chapterId;
     window.location.href = chapterHref(state.series.id, chapterId);
   });
 }

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-15T18:50:37.003955+00:00",
+  "generatedAt": "2026-06-15T18:51:38.442464+00:00",
   "seriesId": "naruto",
   "volume": 8,
   "fromChapter": 64,
-  "toChapter": 70,
+  "toChapter": 72,
   "chapters": [
     {
       "id": "chapter-64",
@@ -1046,6 +1046,289 @@
           "width": 658,
           "height": 1100,
           "bytes": 146456
+        }
+      ]
+    },
+    {
+      "id": "chapter-71",
+      "number": 71,
+      "displayNumber": "71",
+      "volume": 8,
+      "title": "Naruto · Capitolo 71",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 8,
+      "sourceChapter": 71,
+      "pages": [
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-001.jpg",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-001.jpg",
+          "width": 517,
+          "height": 760,
+          "bytes": 101406
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-002.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-002.webp",
+          "width": 657,
+          "height": 1039,
+          "bytes": 107978
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-003.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-003.webp",
+          "width": 652,
+          "height": 1100,
+          "bytes": 136528
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-004.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-004.webp",
+          "width": 663,
+          "height": 1100,
+          "bytes": 204700
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-005.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-005.webp",
+          "width": 654,
+          "height": 1100,
+          "bytes": 153342
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-006.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-006.webp",
+          "width": 651,
+          "height": 1100,
+          "bytes": 153270
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-007.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-007.webp",
+          "width": 665,
+          "height": 1100,
+          "bytes": 188598
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-008.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-008.webp",
+          "width": 658,
+          "height": 1100,
+          "bytes": 160184
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-009.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-009.webp",
+          "width": 660,
+          "height": 1100,
+          "bytes": 103626
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-010.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-010.webp",
+          "width": 652,
+          "height": 1100,
+          "bytes": 162924
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-011.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-011.webp",
+          "width": 648,
+          "height": 1100,
+          "bytes": 152746
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-012.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-012.webp",
+          "width": 652,
+          "height": 1100,
+          "bytes": 126736
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-013.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-013.webp",
+          "width": 656,
+          "height": 1100,
+          "bytes": 141080
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-014.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-014.webp",
+          "width": 664,
+          "height": 1100,
+          "bytes": 156084
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-015.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-015.webp",
+          "width": 653,
+          "height": 1100,
+          "bytes": 132074
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-016.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-016.webp",
+          "width": 658,
+          "height": 1100,
+          "bytes": 138296
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-017.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-017.webp",
+          "width": 661,
+          "height": 1100,
+          "bytes": 174962
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0071/page-018.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0071/page-018.webp",
+          "width": 666,
+          "height": 1100,
+          "bytes": 111042
+        }
+      ]
+    },
+    {
+      "id": "chapter-72",
+      "number": 72,
+      "displayNumber": "72",
+      "volume": 8,
+      "title": "Naruto · Capitolo 72",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 8,
+      "sourceChapter": 72,
+      "pages": [
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-001.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-001.webp",
+          "width": 659,
+          "height": 1100,
+          "bytes": 122220
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-002.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-002.webp",
+          "width": 667,
+          "height": 1100,
+          "bytes": 109736
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-003.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-003.webp",
+          "width": 664,
+          "height": 1100,
+          "bytes": 131474
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-004.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-004.webp",
+          "width": 674,
+          "height": 1100,
+          "bytes": 169240
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-005.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-005.webp",
+          "width": 669,
+          "height": 1100,
+          "bytes": 159156
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-006.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-006.webp",
+          "width": 671,
+          "height": 1100,
+          "bytes": 126732
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-007.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-007.webp",
+          "width": 668,
+          "height": 1100,
+          "bytes": 138952
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-008.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-008.webp",
+          "width": 670,
+          "height": 1100,
+          "bytes": 172238
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-009.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-009.webp",
+          "width": 668,
+          "height": 1100,
+          "bytes": 130778
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-010.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-010.webp",
+          "width": 665,
+          "height": 1100,
+          "bytes": 145346
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-011.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-011.webp",
+          "width": 657,
+          "height": 1100,
+          "bytes": 148420
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-012.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-012.webp",
+          "width": 663,
+          "height": 1100,
+          "bytes": 154540
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-013.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-013.webp",
+          "width": 668,
+          "height": 1100,
+          "bytes": 162606
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-014.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-014.webp",
+          "width": 659,
+          "height": 1100,
+          "bytes": 153032
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-015.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-015.webp",
+          "width": 665,
+          "height": 1100,
+          "bytes": 121794
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-016.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-016.webp",
+          "width": 680,
+          "height": 1100,
+          "bytes": 111390
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-017.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-017.webp",
+          "width": 674,
+          "height": 1100,
+          "bytes": 144846
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-018.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-018.webp",
+          "width": 659,
+          "height": 1100,
+          "bytes": 151572
+        },
+        {
+          "src": "/manga-local/naruto/vol-008/chapter-0072/page-019.webp",
+          "key": "manga-local/naruto/vol-008/chapter-0072/page-019.webp",
+          "width": 674,
+          "height": 1100,
+          "bytes": 136934
         }
       ]
     }

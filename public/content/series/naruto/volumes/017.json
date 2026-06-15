@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-15T19:24:27.939879+00:00",
+  "generatedAt": "2026-06-15T19:25:43.262634+00:00",
   "seriesId": "naruto",
   "volume": 17,
   "fromChapter": 145,
-  "toChapter": 150,
+  "toChapter": 153,
   "chapters": [
     {
       "id": "chapter-145",
@@ -908,6 +908,427 @@
           "width": 761,
           "height": 1100,
           "bytes": 113068
+        }
+      ]
+    },
+    {
+      "id": "chapter-151",
+      "number": 151,
+      "displayNumber": "151",
+      "volume": 17,
+      "title": "Naruto · Capitolo 151",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 17,
+      "sourceChapter": 151,
+      "pages": [
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-001.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-001.webp",
+          "width": 750,
+          "height": 1172,
+          "bytes": 261184
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-002.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-002.webp",
+          "width": 1280,
+          "height": 915,
+          "bytes": 320244
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-003.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-003.webp",
+          "width": 750,
+          "height": 1128,
+          "bytes": 148172
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-004.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-004.webp",
+          "width": 750,
+          "height": 1105,
+          "bytes": 146812
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-005.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-005.webp",
+          "width": 746,
+          "height": 1099,
+          "bytes": 191922
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-006.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-006.webp",
+          "width": 750,
+          "height": 1177,
+          "bytes": 155634
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-007.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-007.webp",
+          "width": 750,
+          "height": 1106,
+          "bytes": 134114
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-008.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-008.webp",
+          "width": 750,
+          "height": 1238,
+          "bytes": 176952
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-009.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-009.webp",
+          "width": 731,
+          "height": 1031,
+          "bytes": 149978
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-010.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-010.webp",
+          "width": 750,
+          "height": 1175,
+          "bytes": 159814
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-011.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-011.webp",
+          "width": 750,
+          "height": 1140,
+          "bytes": 166260
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-012.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-012.webp",
+          "width": 750,
+          "height": 1084,
+          "bytes": 135502
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-013.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-013.webp",
+          "width": 750,
+          "height": 1066,
+          "bytes": 99802
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-014.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-014.webp",
+          "width": 750,
+          "height": 1136,
+          "bytes": 181140
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-015.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-015.webp",
+          "width": 750,
+          "height": 1142,
+          "bytes": 166484
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-016.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-016.webp",
+          "width": 750,
+          "height": 1141,
+          "bytes": 159454
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0151/page-017.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0151/page-017.webp",
+          "width": 1184,
+          "height": 832,
+          "bytes": 232842
+        }
+      ]
+    },
+    {
+      "id": "chapter-152",
+      "number": 152,
+      "displayNumber": "152",
+      "volume": 17,
+      "title": "Naruto · Capitolo 152",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 17,
+      "sourceChapter": 152,
+      "pages": [
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-001.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-001.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 150934
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-002.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-002.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 181520
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-003.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-003.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 233556
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-004.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-004.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 141564
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-005.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-005.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 149426
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-006.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-006.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 134964
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-007.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-007.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 165556
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-008.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-008.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 167330
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-009.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-009.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 185680
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-010.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-010.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 188450
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-011.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-011.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 118490
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-012.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-012.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 131466
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-013.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-013.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 173048
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-014.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-014.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 172910
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-015.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-015.webp",
+          "width": 722,
+          "height": 1102,
+          "bytes": 164348
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-016.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-016.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 120104
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-017.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-017.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 191648
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-018.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-018.webp",
+          "width": 720,
+          "height": 1100,
+          "bytes": 160588
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0152/page-019.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0152/page-019.webp",
+          "width": 724,
+          "height": 1103,
+          "bytes": 126144
+        }
+      ]
+    },
+    {
+      "id": "chapter-153",
+      "number": 153,
+      "displayNumber": "153",
+      "volume": 17,
+      "title": "Naruto · Capitolo 153",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 17,
+      "sourceChapter": 153,
+      "pages": [
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-001.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-001.webp",
+          "width": 751,
+          "height": 1100,
+          "bytes": 170944
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-002.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-002.webp",
+          "width": 697,
+          "height": 1000,
+          "bytes": 151606
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-003.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-003.webp",
+          "width": 693,
+          "height": 1000,
+          "bytes": 132126
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-004.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-004.webp",
+          "width": 704,
+          "height": 1000,
+          "bytes": 136392
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-005.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-005.webp",
+          "width": 679,
+          "height": 1000,
+          "bytes": 123798
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-006.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-006.webp",
+          "width": 695,
+          "height": 1000,
+          "bytes": 166208
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-007.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-007.webp",
+          "width": 685,
+          "height": 1000,
+          "bytes": 131744
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-008.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-008.webp",
+          "width": 689,
+          "height": 1000,
+          "bytes": 149670
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-009.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-009.webp",
+          "width": 697,
+          "height": 1000,
+          "bytes": 154672
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-010.jpg",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-010.jpg",
+          "width": 704,
+          "height": 1000,
+          "bytes": 221541
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-011.jpg",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-011.jpg",
+          "width": 697,
+          "height": 1000,
+          "bytes": 206588
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-012.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-012.webp",
+          "width": 705,
+          "height": 1004,
+          "bytes": 156464
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-013.jpg",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-013.jpg",
+          "width": 697,
+          "height": 1000,
+          "bytes": 173265
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-014.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-014.webp",
+          "width": 699,
+          "height": 1000,
+          "bytes": 135762
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-015.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-015.webp",
+          "width": 697,
+          "height": 1000,
+          "bytes": 111920
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-016.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-016.webp",
+          "width": 704,
+          "height": 1000,
+          "bytes": 158212
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-017.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-017.webp",
+          "width": 697,
+          "height": 1000,
+          "bytes": 156024
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-018.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-018.webp",
+          "width": 699,
+          "height": 1000,
+          "bytes": 146200
+        },
+        {
+          "src": "/manga-local/naruto/vol-017/chapter-0153/page-019.webp",
+          "key": "manga-local/naruto/vol-017/chapter-0153/page-019.webp",
+          "width": 694,
+          "height": 1000,
+          "bytes": 161876
         }
       ]
     }

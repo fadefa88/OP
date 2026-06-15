@@ -1,0 +1,59 @@
+name: Test OPM Selenium Download
+
+on:
+  workflow_dispatch:
+    inputs:
+      chapter:
+        description: "Capitolo OPM da scaricare"
+        required: true
+        default: "001"
+      wait_seconds:
+        description: "Secondi di attesa caricamento pagina"
+        required: true
+        default: "10"
+
+permissions:
+  contents: read
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install seleniumbase requests tqdm
+
+      - name: Install Chrome dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
+      - name: Run Selenium downloader
+        env:
+          HEADLESS: "true"
+          OPM_URL: "https://onepiecepower.com/manga8/one-punch-man/reader/${{ inputs.chapter }}"
+          OUTPUT_DIR: "opm_chapter_${{ inputs.chapter }}"
+        run: |
+          python scripts/download_opm_selenium.py
+
+      - name: List downloaded files
+        run: |
+          find "opm_chapter_${{ inputs.chapter }}" -type f -maxdepth 1 | sort || true
+
+      - name: Upload downloaded chapter as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: opm-chapter-${{ inputs.chapter }}
+          path: opm_chapter_${{ inputs.chapter }}/
+          if-no-files-found: error

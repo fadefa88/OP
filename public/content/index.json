@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-15T15:27:14.987241+00:00",
+  "generatedAt": "2026-06-15T17:20:02.276682+00:00",
   "series": [
     {
       "id": "op",
@@ -820,12 +820,90 @@
     },
     {
       "id": "opm",
-      "title": "One Man Punch",
+      "title": "One Punch Man",
       "description": "Archivio ordinato per volume, capitolo e pagina.",
-      "cover": "",
-      "latestChapter": 0,
-      "chaptersCount": 0,
-      "volumes": []
+      "cover": "https://static.lucahome.uk/opm/vol-001/chapter-0001/page-001.webp",
+      "latestChapter": 60,
+      "chaptersCount": 60,
+      "volumes": [
+        {
+          "volume": 1,
+          "fromChapter": 1,
+          "toChapter": 8,
+          "chaptersCount": 8,
+          "manifest": "/content/series/opm/volumes/001.json"
+        },
+        {
+          "volume": 2,
+          "fromChapter": 9,
+          "toChapter": 15,
+          "chaptersCount": 7,
+          "manifest": "/content/series/opm/volumes/002.json"
+        },
+        {
+          "volume": 3,
+          "fromChapter": 16,
+          "toChapter": 20,
+          "chaptersCount": 5,
+          "manifest": "/content/series/opm/volumes/003.json"
+        },
+        {
+          "volume": 4,
+          "fromChapter": 21,
+          "toChapter": 23,
+          "chaptersCount": 3,
+          "manifest": "/content/series/opm/volumes/004.json"
+        },
+        {
+          "volume": 5,
+          "fromChapter": 24,
+          "toChapter": 28,
+          "chaptersCount": 5,
+          "manifest": "/content/series/opm/volumes/005.json"
+        },
+        {
+          "volume": 6,
+          "fromChapter": 29,
+          "toChapter": 33,
+          "chaptersCount": 5,
+          "manifest": "/content/series/opm/volumes/006.json"
+        },
+        {
+          "volume": 7,
+          "fromChapter": 34,
+          "toChapter": 36,
+          "chaptersCount": 3,
+          "manifest": "/content/series/opm/volumes/007.json"
+        },
+        {
+          "volume": 8,
+          "fromChapter": 37,
+          "toChapter": 39,
+          "chaptersCount": 3,
+          "manifest": "/content/series/opm/volumes/008.json"
+        },
+        {
+          "volume": 9,
+          "fromChapter": 40,
+          "toChapter": 46,
+          "chaptersCount": 7,
+          "manifest": "/content/series/opm/volumes/009.json"
+        },
+        {
+          "volume": 10,
+          "fromChapter": 47,
+          "toChapter": 54,
+          "chaptersCount": 8,
+          "manifest": "/content/series/opm/volumes/010.json"
+        },
+        {
+          "volume": 11,
+          "fromChapter": 55,
+          "toChapter": 60,
+          "chaptersCount": 6,
+          "manifest": "/content/series/opm/volumes/011.json"
+        }
+      ]
     }
   ],
   "lastUpdatedAt": "2026-06-09T10:07:37.291334+00:00"

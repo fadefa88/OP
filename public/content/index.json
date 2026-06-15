@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-15T20:47:47.399613+00:00",
+  "generatedAt": "2026-06-15T20:51:37.946758+00:00",
   "series": [
     {
       "id": "op",
@@ -910,8 +910,8 @@
       "title": "Naruto",
       "description": "Archivio completo ordinato per volume, capitolo e pagina.",
       "cover": "/manga-local/naruto/vol-001/chapter-0001/page-001.jpg",
-      "latestChapter": 360,
-      "chaptersCount": 360,
+      "latestChapter": 370,
+      "chaptersCount": 370,
       "volumes": [
         {
           "volume": 1,
@@ -1189,9 +1189,16 @@
         {
           "volume": 40,
           "fromChapter": 360,
-          "toChapter": 360,
-          "chaptersCount": 1,
+          "toChapter": 369,
+          "chaptersCount": 10,
           "manifest": "/content/series/naruto/volumes/040.json"
+        },
+        {
+          "volume": 41,
+          "fromChapter": 370,
+          "toChapter": 370,
+          "chaptersCount": 1,
+          "manifest": "/content/series/naruto/volumes/041.json"
         }
       ]
     }

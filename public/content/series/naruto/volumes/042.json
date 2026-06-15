@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-15T20:55:30.295441+00:00",
+  "seriesId": "naruto",
+  "volume": 42,
+  "fromChapter": 380,
+  "toChapter": 380,
+  "chapters": [
+    {
+      "id": "chapter-380",
+      "number": 380,
+      "displayNumber": "380",
+      "volume": 42,
+      "title": "Naruto · Capitolo 380",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 42,
+      "sourceChapter": 380,
+      "pages": [
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-001.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-001.webp",
+          "width": 821,
+          "height": 1200,
+          "bytes": 119496
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-002.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-002.webp",
+          "width": 828,
+          "height": 1200,
+          "bytes": 183226
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-003.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-003.webp",
+          "width": 829,
+          "height": 1200,
+          "bytes": 157950
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-004.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-004.webp",
+          "width": 829,
+          "height": 1200,
+          "bytes": 214354
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-005.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-005.webp",
+          "width": 827,
+          "height": 1200,
+          "bytes": 225146
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-006.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-006.webp",
+          "width": 833,
+          "height": 1200,
+          "bytes": 226452
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-007.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-007.webp",
+          "width": 825,
+          "height": 1200,
+          "bytes": 256120
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-008.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-008.webp",
+          "width": 829,
+          "height": 1200,
+          "bytes": 181374
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-009.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-009.webp",
+          "width": 827,
+          "height": 1200,
+          "bytes": 184168
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-010.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-010.webp",
+          "width": 825,
+          "height": 1200,
+          "bytes": 178270
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-011.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-011.webp",
+          "width": 827,
+          "height": 1200,
+          "bytes": 182560
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-012.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-012.webp",
+          "width": 827,
+          "height": 1200,
+          "bytes": 208056
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-013.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-013.webp",
+          "width": 825,
+          "height": 1200,
+          "bytes": 214536
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-014.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-014.webp",
+          "width": 827,
+          "height": 1200,
+          "bytes": 258158
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-015.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-015.webp",
+          "width": 823,
+          "height": 1200,
+          "bytes": 186720
+        },
+        {
+          "src": "/manga-local/naruto/vol-042/chapter-0380/page-016.webp",
+          "key": "manga-local/naruto/vol-042/chapter-0380/page-016.webp",
+          "width": 1628,
+          "height": 1200,
+          "bytes": 291786
+        }
+      ]
+    }
+  ]
+}

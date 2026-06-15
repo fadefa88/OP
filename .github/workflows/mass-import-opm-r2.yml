@@ -1,27 +1,32 @@
-name: Mass Import One Man Punch Archive to R2
+name: Mass Import One Punch Man Archive to R2
 
 on:
   workflow_dispatch:
     inputs:
-      from_chapter:
-        description: "First One Man Punch chapter to import."
+      from_source_volume:
+        description: "First source volume to scan."
         required: true
         default: "1"
         type: string
-      to_chapter:
-        description: "Last One Man Punch chapter to import."
+      to_source_volume:
+        description: "Last source volume to scan."
         required: true
-        default: "1"
+        default: "37"
         type: string
-      batch_size:
-        description: "Commit JSON every N chapters."
+      total_chapters:
+        description: "Target total OPM chapters to import."
+        required: true
+        default: "236"
+        type: string
+      max_source_chapters_per_volume:
+        description: "Max /capitoloXX/ numbers to probe inside each volume."
         required: false
-        default: "20"
+        default: "30"
         type: string
       max_pages:
-        description: "Maximum pages to try per chapter. Same direct-image logic as One Piece."
+        description: "Maximum pages to try per source chapter."
         required: false
-        default: "45"
+        default: "80"
         type: string
       min_pages:
         description: "Minimum valid pages required before accepting a chapter."
@@ -43,13 +48,13 @@ concurrency:
 
 jobs:
   import:
-    name: Mass import One Man Punch chapters to R2
+    name: Mass import One Punch Man source volumes to R2
     runs-on: ubuntu-latest
     timeout-minutes: 360
 
     env:
       OPM_AUTHORIZED_MANGA_BASE_URL: ${{ vars.OPM_AUTHORIZED_MANGA_BASE_URL || 'https://onepiecepower.com/manga8/one-punch-man' }}
-      OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE: ${{ vars.OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE }}
+      OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE: ${{ vars.OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE || '{base_url}/volume{volume_2}/capitolo{source_chapter_2}/{page_padded}.{extension}' }}
       I_CONFIRM_RIGHTS: ${{ vars.I_CONFIRM_RIGHTS }}
       R2_BUCKET_NAME: ${{ vars.R2_BUCKET_NAME }}
       R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
@@ -78,57 +83,55 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Mass import by batches using One Piece direct-image logic
+      - name: Mass import One Punch Man archive using source volume/capitolo paths
         shell: bash
         run: |
           set -euo pipefail
-          FROM=${{ github.event.inputs.from_chapter }}
-          TO=${{ github.event.inputs.to_chapter }}
-          BATCH=${{ github.event.inputs.batch_size }}
-          MAX_PAGES=${{ github.event.inputs.max_pages }}
-          MIN_PAGES=${{ github.event.inputs.min_pages }}
-          OVERWRITE=${{ github.event.inputs.overwrite }}
-          current=$FROM
-          while [ "$current" -le "$TO" ]; do
-            end=$((current + BATCH - 1))
-            if [ "$end" -gt "$TO" ]; then end=$TO; fi
-            EXTRA_ARGS=()
-            if [ "$OVERWRITE" = "true" ]; then EXTRA_ARGS+=(--overwrite); fi
-            TEMPLATE_ARGS=()
-            if [ -n "${OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE:-}" ]; then
-              TEMPLATE_ARGS+=(--source-template "$OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE")
+          EXTRA_ARGS=()
+          if [ "${{ github.event.inputs.overwrite }}" = "true" ]; then
+            EXTRA_ARGS+=(--overwrite)
+          fi
+          python scripts/import_opm_archive_to_r2.py \
+            --source-base-url "$OPM_AUTHORIZED_MANGA_BASE_URL" \
+            --source-template "$OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE" \
+            --from-source-volume "${{ github.event.inputs.from_source_volume }}" \
+            --to-source-volume "${{ github.event.inputs.to_source_volume }}" \
+            --total-chapters "${{ github.event.inputs.total_chapters }}" \
+            --max-source-chapters-per-volume "${{ github.event.inputs.max_source_chapters_per_volume }}" \
+            --extensions "$IMAGE_EXTENSIONS" \
+            --max-pages "${{ github.event.inputs.max_pages }}" \
+            --min-pages "${{ github.event.inputs.min_pages }}" \
+            --stop-after-missing "$STOP_AFTER_MISSING" \
+            --webp-quality "$WEBP_QUALITY" \
+            --image-strategy "$IMAGE_STRATEGY" \
+            --i-confirm-rights \
+            "${EXTRA_ARGS[@]}"
+
+      - name: Commit JSON manifest changes only
+        id: commit_json
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- public/content; then
+            echo "No JSON manifest changes."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add public/content
+          git commit -m "Mass import One Punch Man archive manifest"
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              exit 0
             fi
-            python scripts/import_history_to_r2.py \
-              --source-base-url "$OPM_AUTHORIZED_MANGA_BASE_URL" \
-              "${TEMPLATE_ARGS[@]}" \
-              --series-id opm \
-              --series-title "One Man Punch" \
-              --series-description "Archivio ordinato per volume, capitolo e pagina." \
-              --from-chapter "$current" \
-              --to-chapter "$end" \
-              --extensions "$IMAGE_EXTENSIONS" \
-              --max-pages "$MAX_PAGES" \
-              --min-pages "$MIN_PAGES" \
-              --stop-after-missing "$STOP_AFTER_MISSING" \
-              --webp-quality "$WEBP_QUALITY" \
-              --image-strategy "$IMAGE_STRATEGY" \
-              --i-confirm-rights \
-              "${EXTRA_ARGS[@]}"
-            if ! git diff --quiet -- public/content; then
-              git config user.name "github-actions"
-              git config user.email "github-actions@github.com"
-              git add public/content
-              git commit -m "Import One Man Punch chapters ${current}-${end} manifest"
-              for attempt in 1 2 3; do
-                if git push; then break; fi
-                git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
-                sleep $((attempt * 5))
-              done
-            else
-              echo "No manifest changes for ${current}-${end}."
-            fi
-            current=$((end + 1))
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            sleep $((attempt * 5))
           done
+          echo "pushed=false" >> "$GITHUB_OUTPUT"
+          exit 1
 
       - name: Deploy Cloudflare Worker after mass import
+        if: steps.commit_json.outputs.pushed == 'true'
         run: npx wrangler deploy

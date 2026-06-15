@@ -237,6 +237,14 @@ def pad_page(page: int) -> str:
     return f"{page:02d}"
 
 
+def pad2(value: int) -> str:
+    return f"{value:02d}"
+
+
+def pad3(value: int) -> str:
+    return f"{value:03d}"
+
+
 def future_volume_for_chapter(chapter: int) -> int:
     if chapter < FUTURE_CHAPTER_BASE:
         raise ValueError(f"Chapter {chapter} is before the future mapping base")
@@ -308,23 +316,42 @@ def iter_chapters_from_args(
     raise ValueError("Specify chapter, volume, or from/to chapter range")
 
 
-def build_source_url(base_url: str, volume: int, chapter: int, page: int, extension: str, template: str | None = None) -> str:
+def build_source_url(
+    base_url: str,
+    volume: int,
+    chapter: int,
+    page: int,
+    extension: str,
+    template: str | None = None,
+    source_chapter: int | None = None,
+) -> str:
     base = base_url.rstrip("/") + "/"
+    effective_chapter = source_chapter if source_chapter is not None else chapter
     values = {
         "base_url": base.rstrip("/"),
         "volume": volume,
         "volume_padded": pad_volume(volume),
-        "chapter": chapter,
-        "chapter_padded": pad_source_chapter(chapter),
-        "chapter_4": pad_chapter(chapter),
+        "volume_2": pad2(volume),
+        "volume_3": pad3(volume),
+        "chapter": effective_chapter,
+        "chapter_padded": pad_source_chapter(effective_chapter),
+        "chapter_2": pad2(effective_chapter),
+        "chapter_3": pad3(effective_chapter),
+        "chapter_4": pad_chapter(effective_chapter),
+        "source_chapter": effective_chapter,
+        "source_chapter_2": pad2(effective_chapter),
+        "source_chapter_3": pad3(effective_chapter),
+        "global_chapter": chapter,
+        "global_chapter_4": pad_chapter(chapter),
         "page": page,
         "page_padded": pad_page(page),
+        "page_2": pad2(page),
         "page_3": f"{page:03d}",
         "extension": extension.lstrip("."),
     }
     if template:
         return template.format(**values)
-    return urljoin(base, f"volumi/volume{pad_volume(volume)}/{pad_source_chapter(chapter)}/{pad_page(page)}.{extension.lstrip('.')}")
+    return urljoin(base, f"volumi/volume{pad_volume(volume)}/{pad_source_chapter(effective_chapter)}/{pad_page(page)}.{extension.lstrip('.')}")
 
 
 def r2_key_for_page(series_id: str, volume: int, chapter: int, page: int, extension: str = "webp") -> str:
@@ -576,8 +603,16 @@ def load_volume_manifest(content_dir: Path, series_id: str, volume: int) -> dict
     })
 
 
-def chapter_payload(series_title: str, chapter: int, volume: int, pages: Sequence[UploadedPage]) -> dict:
-    return {
+def chapter_payload(
+    series_title: str,
+    chapter: int,
+    volume: int,
+    pages: Sequence[UploadedPage],
+    *,
+    source_volume: int | None = None,
+    source_chapter: int | None = None,
+) -> dict:
+    payload = {
         "id": f"chapter-{chapter}",
         "number": chapter,
         "volume": volume,
@@ -594,6 +629,11 @@ def chapter_payload(series_title: str, chapter: int, volume: int, pages: Sequenc
             for page in sorted(pages, key=lambda item: item.page)
         ],
     }
+    if source_volume is not None:
+        payload["sourceVolume"] = source_volume
+    if source_chapter is not None:
+        payload["sourceChapter"] = source_chapter
+    return payload
 
 
 def upsert_chapter_in_volume(
@@ -603,6 +643,9 @@ def upsert_chapter_in_volume(
     chapter: int,
     volume: int,
     pages: Sequence[UploadedPage],
+    *,
+    source_volume: int | None = None,
+    source_chapter: int | None = None,
 ) -> None:
     manifest = load_volume_manifest(content_dir, series_id, volume)
     manifest["schemaVersion"] = 2
@@ -612,7 +655,14 @@ def upsert_chapter_in_volume(
     manifest["fromChapter"], manifest["toChapter"] = chapter_range_for_volume(volume, series_id)
     manifest.setdefault("chapters", [])
 
-    payload = chapter_payload(series_title, chapter, volume, pages)
+    payload = chapter_payload(
+        series_title,
+        chapter,
+        volume,
+        pages,
+        source_volume=source_volume,
+        source_chapter=source_chapter,
+    )
     idx = next((i for i, item in enumerate(manifest["chapters"]) if int(item.get("number", -1)) == chapter), None)
     if idx is None:
         manifest["chapters"].append(payload)
@@ -643,7 +693,12 @@ def rebuild_index_from_volumes(
         if not chapters:
             continue
         volume = int(data.get("volume"))
-        start, end = chapter_range_for_volume(volume, series_id)
+        if normalized_id == DEFAULT_SERIES_ID:
+            start, end = chapter_range_for_volume(volume, series_id)
+        else:
+            chapter_numbers = [int(item.get("number", 0)) for item in chapters if item.get("number") is not None]
+            start = min(chapter_numbers) if chapter_numbers else int(data.get("fromChapter") or 0)
+            end = max(chapter_numbers) if chapter_numbers else int(data.get("toChapter") or 0)
         volume_entries.append({
             "volume": volume,
             "fromChapter": start,
@@ -695,12 +750,24 @@ def latest_chapter_from_index(content_dir: Path, series_id: str = DEFAULT_SERIES
 
 
 def get_manifest_chapter(content_dir: Path, series_id: str, chapter: int) -> dict | None:
+    normalized_id = slugify(series_id)
+    if normalized_id != DEFAULT_SERIES_ID:
+        # Non-One-Piece series can use source-volume manifests that do not map
+        # cleanly from the global reader chapter number. Search all manifests.
+        for path in volume_manifests_glob(content_dir, series_id):
+            data = read_json(path, {})
+            if data.get("seriesId") != normalized_id:
+                continue
+            found = next((item for item in data.get("chapters", []) if int(item.get("number", -1)) == chapter), None)
+            if found:
+                return found
+        return None
+
     try:
         volume = find_volume_for_chapter(chapter, series_id)
     except ValueError:
         return None
     data = load_volume_manifest(content_dir, series_id, volume)
-    normalized_id = slugify(series_id)
     if data.get("seriesId") != normalized_id:
         return None
     return next((item for item in data.get("chapters", []) if int(item.get("number", -1)) == chapter), None)
@@ -725,7 +792,8 @@ def import_single_chapter_to_r2(
     series_description: str,
     chapter: int,
     volume_override: int | None,
-    max_pages: int,
+    source_chapter_override: int | None = None,
+    max_pages: int = 45,
     min_pages: int,
     stop_after_missing: int,
     timeout: float,
@@ -736,6 +804,7 @@ def import_single_chapter_to_r2(
     dry_run: bool = False,
 ) -> ChapterImportResult:
     volume = volume_override if volume_override is not None else find_volume_for_chapter(chapter, series_id)
+    source_chapter = source_chapter_override if source_chapter_override is not None else chapter
     existing_chapter = get_manifest_chapter(content_dir, series_id, chapter)
     if not overwrite and existing_chapter:
         existing_pages = existing_chapter.get("pages", [])
@@ -755,7 +824,7 @@ def import_single_chapter_to_r2(
         used_extension = ""
 
         for extension in source_extensions:
-            candidate_url = build_source_url(source_base_url, volume, chapter, page, extension, source_template)
+            candidate_url = build_source_url(source_base_url, volume, chapter, page, extension, source_template, source_chapter=source_chapter)
             data, content_type, http_status, status = fetch_image_bytes(session, candidate_url, timeout)
             page_statuses.append(f"{extension}:{status}:{http_status or '-'}")
             if status == "ok" and data:
@@ -827,7 +896,16 @@ def import_single_chapter_to_r2(
         )
 
     if not dry_run:
-        upsert_chapter_in_volume(content_dir, series_id, series_title, chapter, volume, found_pages)
+        upsert_chapter_in_volume(
+            content_dir,
+            series_id,
+            series_title,
+            chapter,
+            volume,
+            found_pages,
+            source_volume=volume,
+            source_chapter=source_chapter,
+        )
         index = rebuild_index_from_volumes(content_dir, series_id, series_title, series_description)
         write_legacy_combined_manifest(content_dir, index)
 

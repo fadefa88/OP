@@ -1,23 +1,31 @@
-name: Scan New One Man Punch Chapter to R2 Hourly
+name: Scan New One Punch Man Chapter to R2 Hourly
 
 on:
   schedule:
     - cron: "15 * * * *"
   workflow_dispatch:
     inputs:
-      chapter:
-        description: "Optional One Man Punch chapter number to force-check. Empty = latest manifest chapter + 1."
+      source_volume:
+        description: "Optional source volume to force-check. Empty = latest source volume from manifest."
         required: false
         type: string
-      scan_ahead:
-        description: "How many future chapters to probe starting from latest+1."
+      source_chapter:
+        description: "Optional source-local chapter to force-check. Empty = latest source chapter + 1."
+        required: false
+        type: string
+      global_chapter:
+        description: "Optional reader/global chapter number. Empty = latest OPM chapter + 1."
+        required: false
+        type: string
+      scan_ahead_volumes:
+        description: "If next local chapter is missing, also try first chapter of next N volumes."
         required: false
         default: "3"
         type: string
       max_pages:
-        description: "Maximum pages to try per chapter. Same direct-image logic as One Piece."
+        description: "Maximum pages to try per source chapter."
         required: false
-        default: "45"
+        default: "80"
         type: string
       min_pages:
         description: "Minimum pages required before accepting a chapter."
@@ -34,14 +42,13 @@ concurrency:
 
 jobs:
   scan:
-    name: Check next One Man Punch chapter, upload to R2, commit JSON only
+    name: Check next One Punch Man chapter, upload to R2, commit JSON only
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
     env:
-      # Same direct-image importer used for One Piece; only the source base URL and series metadata change.
       OPM_AUTHORIZED_MANGA_BASE_URL: ${{ vars.OPM_AUTHORIZED_MANGA_BASE_URL || 'https://onepiecepower.com/manga8/one-punch-man' }}
-      OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE: ${{ vars.OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE }}
+      OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE: ${{ vars.OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE || '{base_url}/volume{volume_2}/capitolo{source_chapter_2}/{page_padded}.{extension}' }}
       I_CONFIRM_RIGHTS: ${{ vars.I_CONFIRM_RIGHTS }}
       R2_BUCKET_NAME: ${{ vars.R2_BUCKET_NAME }}
       R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
@@ -101,44 +108,34 @@ jobs:
           fi
           echo "skip=false" >> "$GITHUB_OUTPUT"
 
-      - name: Import next One Man Punch chapter to R2
+      - name: Import next One Punch Man chapter to R2
         if: steps.config.outputs.skip != 'true'
         shell: bash
         run: |
           set -euo pipefail
-
-          CHAPTER_INPUT="${{ github.event.inputs.chapter || '' }}"
-          SCAN_AHEAD_INPUT="${{ github.event.inputs.scan_ahead || '3' }}"
-          MAX_PAGES_INPUT="${{ github.event.inputs.max_pages || '45' }}"
-          MIN_PAGES_INPUT="${{ github.event.inputs.min_pages || '3' }}"
-
           EXTRA_ARGS=()
-          if [ -n "$CHAPTER_INPUT" ]; then
-            EXTRA_ARGS+=(--chapter "$CHAPTER_INPUT")
-          else
-            EXTRA_ARGS+=(--scan-ahead "$SCAN_AHEAD_INPUT")
+          if [ -n "${{ github.event.inputs.source_volume || '' }}" ]; then
+            EXTRA_ARGS+=(--source-volume "${{ github.event.inputs.source_volume }}")
           fi
-
-          TEMPLATE_ARGS=()
-          if [ -n "${OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE:-}" ]; then
-            TEMPLATE_ARGS+=(--source-template "$OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE")
+          if [ -n "${{ github.event.inputs.source_chapter || '' }}" ]; then
+            EXTRA_ARGS+=(--source-chapter "${{ github.event.inputs.source_chapter }}")
           fi
-
-          python scripts/import_new_chapter_to_r2.py \
+          if [ -n "${{ github.event.inputs.global_chapter || '' }}" ]; then
+            EXTRA_ARGS+=(--global-chapter "${{ github.event.inputs.global_chapter }}")
+          fi
+          python scripts/import_new_opm_to_r2.py \
             --source-base-url "$OPM_AUTHORIZED_MANGA_BASE_URL" \
-            "${TEMPLATE_ARGS[@]}" \
-            --series-id opm \
-            --series-title "One Man Punch" \
-            --series-description "Archivio ordinato per volume, capitolo e pagina." \
+            --source-template "$OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE" \
             --report reports/opm-new-chapter-result.json \
-            --max-pages "$MAX_PAGES_INPUT" \
-            --min-pages "$MIN_PAGES_INPUT" \
+            --scan-ahead-volumes "${{ github.event.inputs.scan_ahead_volumes || '3' }}" \
+            --max-pages "${{ github.event.inputs.max_pages || '80' }}" \
+            --min-pages "${{ github.event.inputs.min_pages || '3' }}" \
             --webp-quality "$WEBP_QUALITY" \
             --image-strategy "$IMAGE_STRATEGY" \
             --i-confirm-rights \
             "${EXTRA_ARGS[@]}"
 
-      - name: Detect imported One Man Punch chapter
+      - name: Detect imported One Punch Man chapter
         id: imported
         if: steps.config.outputs.skip != 'true'
         shell: bash
@@ -161,6 +158,8 @@ jobs:
           print(f"chapter={report.get('chapter') or ''}")
           print(f"volume={report.get('volume') or ''}")
           print(f"pages={report.get('pages') or ''}")
+          print(f"source_volume={report.get('sourceVolume') or ''}")
+          print(f"source_chapter={report.get('sourceChapter') or ''}")
           PY
 
       - name: Commit JSON manifest changes only
@@ -177,16 +176,11 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add public/content
-          if git diff --cached --quiet; then
-            echo "No staged JSON changes."
-            echo "pushed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
           CHAPTER="${{ steps.imported.outputs.chapter }}"
           if [ -n "$CHAPTER" ]; then
-            git commit -m "Import One Man Punch chapter ${CHAPTER} manifest"
+            git commit -m "Import One Punch Man chapter ${CHAPTER} manifest"
           else
-            git commit -m "Import One Man Punch chapter manifest"
+            git commit -m "Import One Punch Man chapter manifest"
           fi
           for attempt in 1 2 3; do
             if git push; then
@@ -213,9 +207,9 @@ jobs:
           PAGES="${{ steps.imported.outputs.pages }}"
           BASE_URL="${READER_BASE_URL%/}"
           URL="${BASE_URL}/reader.html?series=opm&chapter=chapter-${CHAPTER}&page=1"
-          MESSAGE="One Man Punch capitolo ${CHAPTER} appena caricato. Volume ${VOLUME}. Pagine: ${PAGES}. Tocca per leggerlo."
+          MESSAGE="One Punch Man capitolo ${CHAPTER} appena caricato. Volume ${VOLUME}. Pagine: ${PAGES}. Tocca per leggerlo."
           curl -sS \
-            -H "Title: Nuovo One Man Punch disponibile" \
+            -H "Title: Nuovo One Punch Man disponibile" \
             -H "Priority: high" \
             -H "Tags: punch,book" \
             -H "Click: ${URL}" \

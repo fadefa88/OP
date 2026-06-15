@@ -70,3 +70,64 @@ CLOUDFLARE_ACCOUNT_ID
 CLOUDFLARE_API_TOKEN
 NTFY_TOPIC
 ```
+
+## One Punch Man import logic
+
+One Punch Man uses a different direct-image source path from One Piece:
+
+```text
+https://onepiecepower.com/manga8/one-punch-man/volume01/capitolo01/01.jpg
+```
+
+The importer does not require a fixed chapter-per-volume map. It scans source volumes and local chapter folders, then assigns sequential reader/global chapter numbers:
+
+```text
+source volume01/capitolo01 -> reader chapter 1
+source volume01/capitolo02 -> reader chapter 2
+...
+source volume02/capitolo01 -> next reader chapter
+```
+
+Each imported chapter stores both values in the manifest:
+
+```json
+"sourceVolume": 1,
+"sourceChapter": 1
+```
+
+R2 paths remain normalized:
+
+```text
+opm/vol-001/chapter-0001/page-001.webp
+opm/vol-001/chapter-0001/page-001.jpg
+```
+
+Workflows:
+
+```text
+Manual Import One Punch Man Chapter to R2
+Mass Import One Punch Man Archive to R2
+Scan New One Punch Man Chapter to R2 Hourly
+```
+
+Recommended first test:
+
+```text
+source_volume: 1
+source_chapter: 1
+max_pages: 80
+min_pages: 3
+overwrite: false
+```
+
+Recommended mass import:
+
+```text
+from_source_volume: 1
+to_source_volume: 37
+total_chapters: 236
+max_source_chapters_per_volume: 30
+max_pages: 80
+min_pages: 3
+overwrite: false
+```

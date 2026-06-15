@@ -150,3 +150,56 @@ volume01/capitolo10, 11 and 12 are missing
 ```
 
 The value is configurable in GitHub Actions with `missing_chapters_to_next_volume`, default `3`.
+
+## Import manga terminati nel repository GitHub
+
+Per Naruto, Solo Leveling e Attack on Titan le immagini vengono salvate nel repository, non su R2.
+
+Percorso immagini nel repo/deploy:
+
+```text
+public/manga-local/<series>/vol-XXX/chapter-XXXX/page-XXX.webp
+public/manga-local/<series>/vol-XXX/chapter-XXXX/page-XXX.jpg
+```
+
+Serie configurate:
+
+| Serie | ID | Sorgente | Capitoli | Volumi |
+|---|---|---|---:|---:|
+| Naruto | `naruto` | `https://onepiecepower.com/manga8/naruto-a/volume01/capitolo01/01.jpg` | 700 | 72 |
+| Solo Leveling | `solo-leveling` | `https://onepiecepower.com/manga8/solo-leveling-a/volume01/capitolo00/01.jpg` | 200 | 3 |
+| Attack on Titan | `aot` | `https://onepiecepower.com/manga8/attack-on-titan-d/volume01/capitolo01/01.jpg` | 139 + extra | 34 + 6 extra |
+
+Workflow:
+
+```text
+Actions → Mass Import Finished Manga to GitHub Repo
+```
+
+Logica volume/capitolo:
+
+```text
+1. Lo script prova il capitolo sorgente successivo nello stesso volume.
+2. Se trova immagini valide, salva il capitolo e incrementa il capitolo globale del reader.
+3. Se trova 3 capitoli sorgente consecutivi assenti, passa al volume successivo.
+4. Quando passa al volume successivo, non riparte da capitolo01: riparte dall’ultimo capitolo sorgente valido scansionato.
+5. Per Solo Leveling il primo capitolo sorgente è capitolo00.
+6. Per Attack on Titan, dopo il capitolo 139 importa gli extra 139-1, 139-2, 139-3, 139-4, 139-5 e 139-6.
+```
+
+Parametri consigliati:
+
+```text
+series: naruto / solo-leveling / aot
+batch_size: 10
+max_batches: 3
+max_pages: 0
+min_pages: 3
+missing_chapters_to_next_volume: 3
+webp_quality: 82
+image_strategy: best-size
+overwrite: false
+deploy_after: true
+```
+
+Nota operativa: GitHub e Cloudflare Static Assets non sono storage pensati per archivi manga molto grandi. Se il deploy fallisce per numero/dimensione asset, riduci il batch oppure sposta nuovamente le immagini su object storage.

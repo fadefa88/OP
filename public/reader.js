@@ -144,7 +144,7 @@ function renderSelectors() {
   getChapters(state.series)
     .filter((chapter) => String(chapter.volume ?? 'speciali') === String(currentVolume))
     .forEach((chapter) => {
-      els.chapterSelect.appendChild(option(`Cap. ${chapter.number ?? chapter.id}`, chapter.id, chapter.id === state.chapter.id));
+      els.chapterSelect.appendChild(option(`Cap. ${chapter.displayNumber || chapter.number || chapter.id}`, chapter.id, chapter.id === state.chapter.id));
     });
 
   if (els.pageSelect) {
@@ -177,9 +177,9 @@ function renderPage() {
   const page = pages[state.pageIndex];
   const totalPages = pages.length;
 
-  document.title = `${state.chapter.title} · Pagina ${state.pageIndex + 1} - ${state.series.title}`;
+  document.title = `${state.chapter.title || `Capitolo ${state.chapter.displayNumber || state.chapter.number}`} · Pagina ${state.pageIndex + 1} - ${state.series.title}`;
   els.seriesTitle.textContent = state.series.title;
-  els.chapterTitle.textContent = `${state.chapter.title} · pagina ${state.pageIndex + 1}/${totalPages}`;
+  els.chapterTitle.textContent = `${state.chapter.title || `Capitolo ${state.chapter.displayNumber || state.chapter.number}`} · pagina ${state.pageIndex + 1}/${totalPages}`;
   els.pageCounter.textContent = `${state.pageIndex + 1} / ${totalPages}`;
 
   if (!page) {
@@ -194,7 +194,7 @@ function renderPage() {
   els.loading.hidden = false;
   els.image.classList.remove('is-loaded');
   els.singleView.scrollTop = 0;
-  els.image.alt = `${state.chapter.title}, pagina ${state.pageIndex + 1}`;
+  els.image.alt = `${state.chapter.title || `Capitolo ${state.chapter.displayNumber || state.chapter.number}`}, pagina ${state.pageIndex + 1}`;
   els.image.src = page.src;
   if (els.pageSelect) els.pageSelect.value = String(state.pageIndex + 1);
 

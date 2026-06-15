@@ -169,7 +169,7 @@ function renderSeriesGrid() {
     card.innerHTML = `
       <span class="series-card-kicker">${series.id === 'opm' ? 'Nuova serie' : 'Serie principale'}</span>
       <strong>${series.title || series.id}</strong>
-      <small>${latest ? `Ultimo capitolo ${latest.number}` : 'Pronta per importazione'}</small>
+      <small>${latest ? `Ultimo capitolo ${latest.displayNumber || latest.number}` : 'Pronta per importazione'}</small>
     `;
     card.addEventListener('click', () => {
       setSeries(series.id);
@@ -203,7 +203,7 @@ function getVisibleChapters() {
 
   if (query) {
     return getChapters(state.series).filter((chapter) => {
-      const haystack = [chapter.title, chapter.number, chapter.volume, chapter.id, state.series?.title]
+      const haystack = [chapter.title, chapter.displayNumber, chapter.number, chapter.volume, chapter.id, state.series?.title]
         .filter(Boolean)
         .join(' ')
         .toLowerCase();
@@ -223,7 +223,7 @@ function renderChapterSelect() {
     : chapters.at(-1)?.id;
 
   chapters.forEach((chapter) => {
-    const label = `Cap. ${chapter.number ?? chapter.id}`;
+    const label = `Cap. ${chapter.displayNumber || chapter.number || chapter.id}`;
     els.chapterSelect.appendChild(option(label, chapter.id, chapter.id === preferredId));
   });
 
@@ -260,9 +260,9 @@ function renderChapterGrid() {
     link.className = 'chapter-card-link';
     link.href = chapterHref(state.series.id, chapter.id);
     link.innerHTML = `
-      <span class="chapter-number">${chapter.number ?? chapter.id}</span>
+      <span class="chapter-number">${chapter.displayNumber || chapter.number || chapter.id}</span>
       <span class="chapter-meta">
-        <strong>${state.series.title || 'Reader'} · ${chapter.title || `Capitolo ${chapter.number}`}</strong>
+        <strong>${state.series.title || 'Reader'} · ${chapter.title || `Capitolo ${chapter.displayNumber || chapter.number}`}</strong>
         <small>Volume ${chapter.volume ?? 'speciali'}</small>
       </span>
       <span aria-hidden="true">›</span>
@@ -289,7 +289,7 @@ function renderQuickLinks() {
     return;
   }
 
-  const latestNumber = latest.number ?? latest.id;
+  const latestNumber = latest.displayNumber || latest.number || latest.id;
   const latestText = `Ultimo capitolo ${latestNumber} appena uscito!`;
   els.latestChapter.href = chapterHref(state.series.id, latest.id);
   els.latestChapter.textContent = latestText;

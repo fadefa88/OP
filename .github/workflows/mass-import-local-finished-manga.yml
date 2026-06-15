@@ -1,0 +1,155 @@
+name: Mass Import Finished Manga to GitHub Repo
+
+on:
+  workflow_dispatch:
+    inputs:
+      series:
+        description: "Series to import"
+        required: true
+        default: "naruto"
+        type: choice
+        options:
+          - naruto
+          - solo-leveling
+          - aot
+          - all
+      batch_size:
+        description: "New chapters to import before each commit"
+        required: true
+        default: "10"
+      max_batches:
+        description: "Maximum batches in this workflow run"
+        required: true
+        default: "3"
+      max_pages:
+        description: "Maximum pages to test per chapter. Use 0 for per-series default."
+        required: true
+        default: "0"
+      min_pages:
+        description: "Minimum valid pages required to accept a chapter"
+        required: true
+        default: "3"
+      missing_chapters_to_next_volume:
+        description: "Move to next source volume after this many missing source chapters"
+        required: true
+        default: "3"
+      webp_quality:
+        description: "WebP quality when image_strategy is best-size/webp"
+        required: true
+        default: "82"
+      image_strategy:
+        description: "Image strategy"
+        required: true
+        default: "best-size"
+        type: choice
+        options:
+          - best-size
+          - webp
+          - original
+      overwrite:
+        description: "Re-import chapters already present"
+        required: true
+        default: false
+        type: boolean
+      deploy_after:
+        description: "Deploy Cloudflare Worker after importing this batch run"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: local-finished-manga-import
+  cancel-in-progress: false
+
+jobs:
+  import-local-finished-manga:
+    name: Import finished manga images into repo
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Setup Node for optional Cloudflare deploy
+        if: ${{ inputs.deploy_after == true }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Node dependencies for optional Cloudflare deploy
+        if: ${{ inputs.deploy_after == true }}
+        run: npm install
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Import and commit batches
+        shell: bash
+        env:
+          I_CONFIRM_RIGHTS: "true"
+        run: |
+          set -euo pipefail
+          SERIES="${{ inputs.series }}"
+          BATCH_SIZE="${{ inputs.batch_size }}"
+          MAX_BATCHES="${{ inputs.max_batches }}"
+          MAX_PAGES="${{ inputs.max_pages }}"
+          MIN_PAGES="${{ inputs.min_pages }}"
+          MISSING_TO_NEXT_VOLUME="${{ inputs.missing_chapters_to_next_volume }}"
+          WEBP_QUALITY="${{ inputs.webp_quality }}"
+          IMAGE_STRATEGY="${{ inputs.image_strategy }}"
+          OVERWRITE_FLAG=""
+          if [[ "${{ inputs.overwrite }}" == "true" ]]; then
+            OVERWRITE_FLAG="--overwrite"
+          fi
+
+          for i in $(seq 1 "$MAX_BATCHES"); do
+            echo "=== Local finished manga import batch $i/$MAX_BATCHES for $SERIES ==="
+            git pull --rebase --autostash origin main
+
+            python scripts/import_local_finished_manga.py \
+              --series "$SERIES" \
+              --max-new-chapters "$BATCH_SIZE" \
+              --max-pages "$MAX_PAGES" \
+              --min-pages "$MIN_PAGES" \
+              --missing-chapters-to-next-volume "$MISSING_TO_NEXT_VOLUME" \
+              --webp-quality "$WEBP_QUALITY" \
+              --image-strategy "$IMAGE_STRATEGY" \
+              --i-confirm-rights \
+              $OVERWRITE_FLAG
+
+            if git diff --quiet -- public/content public/manga-local; then
+              echo "No new local manga files or manifests to commit. Stopping."
+              break
+            fi
+
+            git add public/content public/manga-local
+            git commit -m "Import finished manga local assets ($SERIES batch $i)"
+            git pull --rebase --autostash origin main
+            git push
+          done
+
+      - name: Deploy Cloudflare Worker
+        if: ${{ inputs.deploy_after == true }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy

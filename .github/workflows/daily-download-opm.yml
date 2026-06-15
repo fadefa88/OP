@@ -18,7 +18,12 @@ on:
         required: false
         type: string
       scan_ahead_volumes:
-        description: "If next local chapter is missing, also try first chapter of next N volumes."
+        description: "After trying missing local chapters, also try capitolo01 of the next N volumes."
+        required: false
+        default: "3"
+        type: string
+      missing_chapters_to_next_volume:
+        description: "How many consecutive missing local chapters before moving to the next volume."
         required: false
         default: "3"
         type: string
@@ -60,6 +65,7 @@ jobs:
       WEBP_QUALITY: "82"
       IMAGE_STRATEGY: "best-size"
       STOP_AFTER_MISSING: "3"
+      OPM_MISSING_CHAPTERS_TO_NEXT_VOLUME: "3"
       IMPORT_DELAY: "0.25"
       IMPORT_TIMEOUT: "15"
       NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC || 'ldf-op-reader-cagnettoasd123' }}
@@ -128,6 +134,7 @@ jobs:
             --source-template "$OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE" \
             --report reports/opm-new-chapter-result.json \
             --scan-ahead-volumes "${{ github.event.inputs.scan_ahead_volumes || '3' }}" \
+            --missing-chapters-to-next-volume "${{ github.event.inputs.missing_chapters_to_next_volume || '3' }}" \
             --max-pages "${{ github.event.inputs.max_pages || '80' }}" \
             --min-pages "${{ github.event.inputs.min_pages || '3' }}" \
             --webp-quality "$WEBP_QUALITY" \

@@ -131,3 +131,16 @@ max_pages: 80
 min_pages: 3
 overwrite: false
 ```
+
+
+### One Punch Man volume transition rule
+
+For OPM, source paths use `volumeXX/capitoloYY/page.jpg`. Because the number of source-local chapters per volume is not fixed, the importer now uses this rule:
+
+```text
+try next local chapter in the current source volume
+if 3 consecutive source-local chapters are missing/invalid
+→ move to capitolo01 of the next source volume
+```
+
+The value is configurable in GitHub Actions with `missing_chapters_to_next_volume`, default `3`.

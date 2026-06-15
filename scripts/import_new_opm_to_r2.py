@@ -34,6 +34,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--source-chapter", type=int, help="Force source-local chapter, e.g. 6.")
     parser.add_argument("--global-chapter", type=int, help="Force reader/global chapter number.")
     parser.add_argument("--scan-ahead-volumes", type=int, default=int(os.environ.get("OPM_SCAN_AHEAD_VOLUMES", "3")))
+    parser.add_argument("--missing-chapters-to-next-volume", type=int, default=int(os.environ.get("OPM_MISSING_CHAPTERS_TO_NEXT_VOLUME", "3")), help="Try this many consecutive source-local chapters before moving to the next volume.")
     parser.add_argument("--extensions", default=os.environ.get("IMAGE_EXTENSIONS", "jpg,jpeg"))
     parser.add_argument("--max-pages", type=int, default=int(os.environ.get("MAX_PAGES", "80")))
     parser.add_argument("--min-pages", type=int, default=int(os.environ.get("MIN_PAGES", "3")))
@@ -78,7 +79,15 @@ def main(argv: list[str]) -> int:
         elif latest:
             latest_global, latest_source_volume, latest_source_chapter = latest
             next_global = (args.global_chapter or latest_global + 1)
-            candidates.append((next_global, latest_source_volume, latest_source_chapter + 1))
+
+            # OPM does not have a reliable chapter-per-volume map.
+            # Rule: try the next N local chapters in the current source volume;
+            # if N consecutive source chapters are missing/invalid, move to capitolo01
+            # of the next source volume. Default N = 3.
+            missing_before_next_volume = max(1, args.missing_chapters_to_next_volume)
+            for offset in range(1, missing_before_next_volume + 1):
+                candidates.append((next_global, latest_source_volume, latest_source_chapter + offset))
+
             for offset in range(1, max(1, args.scan_ahead_volumes) + 1):
                 candidates.append((next_global, latest_source_volume + offset, 1))
         else:

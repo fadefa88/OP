@@ -23,6 +23,11 @@ on:
         required: false
         default: "30"
         type: string
+      missing_chapters_to_next_volume:
+        description: "After this many consecutive missing chapters, move to the next source volume."
+        required: false
+        default: "3"
+        type: string
       max_pages:
         description: "Maximum pages to try per source chapter."
         required: false
@@ -66,6 +71,7 @@ jobs:
       WEBP_QUALITY: "82"
       IMAGE_STRATEGY: "best-size"
       STOP_AFTER_MISSING: "3"
+      OPM_MISSING_CHAPTERS_TO_NEXT_VOLUME: "3"
       IMPORT_DELAY: "0.25"
       IMPORT_TIMEOUT: "15"
 
@@ -98,6 +104,7 @@ jobs:
             --to-source-volume "${{ github.event.inputs.to_source_volume }}" \
             --total-chapters "${{ github.event.inputs.total_chapters }}" \
             --max-source-chapters-per-volume "${{ github.event.inputs.max_source_chapters_per_volume }}" \
+            --missing-chapters-to-next-volume "${{ github.event.inputs.missing_chapters_to_next_volume || '3' }}" \
             --extensions "$IMAGE_EXTENSIONS" \
             --max-pages "${{ github.event.inputs.max_pages }}" \
             --min-pages "${{ github.event.inputs.min_pages }}" \

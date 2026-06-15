@@ -40,7 +40,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--to-source-volume", type=int, default=37)
     parser.add_argument("--total-chapters", type=int, default=236)
     parser.add_argument("--max-source-chapters-per-volume", type=int, default=30)
-    parser.add_argument("--missing-chapters-to-next-volume", type=int, default=2)
+    parser.add_argument("--missing-chapters-to-next-volume", type=int, default=int(os.environ.get("OPM_MISSING_CHAPTERS_TO_NEXT_VOLUME", "3")))
     parser.add_argument("--extensions", default=os.environ.get("IMAGE_EXTENSIONS", "jpg,jpeg"))
     parser.add_argument("--max-pages", type=int, default=int(os.environ.get("MAX_PAGES", "80")))
     parser.add_argument("--min-pages", type=int, default=int(os.environ.get("MIN_PAGES", "3")))

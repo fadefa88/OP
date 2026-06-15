@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-15T23:12:47.976030+00:00",
+  "generatedAt": "2026-06-15T23:17:36.009224+00:00",
   "seriesId": "solo-leveling",
   "volume": 1,
   "fromChapter": 1,
-  "toChapter": 10,
+  "toChapter": 20,
   "chapters": [
     {
       "id": "chapter-1",
@@ -1180,6 +1180,1365 @@
           "width": 720,
           "height": 7160,
           "bytes": 308898
+        }
+      ]
+    },
+    {
+      "id": "chapter-11",
+      "number": 11,
+      "displayNumber": "11",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 11",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 10,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-001.webp",
+          "width": 720,
+          "height": 5432,
+          "bytes": 240340
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-002.webp",
+          "width": 720,
+          "height": 3550,
+          "bytes": 158976
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-003.webp",
+          "width": 720,
+          "height": 4692,
+          "bytes": 254170
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-004.webp",
+          "width": 720,
+          "height": 3963,
+          "bytes": 161942
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-005.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 353800
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-006.webp",
+          "width": 720,
+          "height": 4941,
+          "bytes": 268238
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-007.webp",
+          "width": 720,
+          "height": 4919,
+          "bytes": 283210
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-008.webp",
+          "width": 720,
+          "height": 5129,
+          "bytes": 249604
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-009.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-009.webp",
+          "width": 720,
+          "height": 4328,
+          "bytes": 249056
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-010.webp",
+          "width": 720,
+          "height": 6641,
+          "bytes": 277646
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-011.webp",
+          "width": 720,
+          "height": 6419,
+          "bytes": 444924
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-012.webp",
+          "width": 720,
+          "height": 4212,
+          "bytes": 224410
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-013.webp",
+          "width": 720,
+          "height": 5994,
+          "bytes": 353832
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-014.webp",
+          "width": 720,
+          "height": 3220,
+          "bytes": 161498
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-015.webp",
+          "width": 720,
+          "height": 7270,
+          "bytes": 275986
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-016.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-016.webp",
+          "width": 720,
+          "height": 5312,
+          "bytes": 218434
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-017.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-017.webp",
+          "width": 720,
+          "height": 4109,
+          "bytes": 167926
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-018.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-018.webp",
+          "width": 706,
+          "height": 5639,
+          "bytes": 159616
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0011/page-019.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0011/page-019.webp",
+          "width": 720,
+          "height": 4896,
+          "bytes": 202180
+        }
+      ]
+    },
+    {
+      "id": "chapter-12",
+      "number": 12,
+      "displayNumber": "12",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 12",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 11,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-001.webp",
+          "width": 720,
+          "height": 5998,
+          "bytes": 228876
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-002.webp",
+          "width": 720,
+          "height": 4504,
+          "bytes": 132740
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-003.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 152092
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-004.webp",
+          "width": 720,
+          "height": 6642,
+          "bytes": 248628
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-005.webp",
+          "width": 720,
+          "height": 6478,
+          "bytes": 372658
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-006.webp",
+          "width": 720,
+          "height": 6860,
+          "bytes": 299624
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-007.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 319634
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-008.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 252266
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-009.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-009.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 192162
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-010.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 297992
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-011.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 204054
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-012.webp",
+          "width": 720,
+          "height": 6641,
+          "bytes": 293762
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-013.webp",
+          "width": 720,
+          "height": 6294,
+          "bytes": 257972
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-014.webp",
+          "width": 720,
+          "height": 7641,
+          "bytes": 271262
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-015.webp",
+          "width": 720,
+          "height": 4797,
+          "bytes": 220118
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-016.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-016.webp",
+          "width": 720,
+          "height": 5502,
+          "bytes": 460030
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0012/page-017.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0012/page-017.webp",
+          "width": 720,
+          "height": 6502,
+          "bytes": 223956
+        }
+      ]
+    },
+    {
+      "id": "chapter-13",
+      "number": 13,
+      "displayNumber": "13",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 13",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 12,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-001.webp",
+          "width": 720,
+          "height": 3539,
+          "bytes": 160628
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-002.webp",
+          "width": 720,
+          "height": 5284,
+          "bytes": 589906
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-003.webp",
+          "width": 720,
+          "height": 5289,
+          "bytes": 229050
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-004.webp",
+          "width": 720,
+          "height": 6556,
+          "bytes": 291940
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-005.webp",
+          "width": 720,
+          "height": 5446,
+          "bytes": 196632
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-006.webp",
+          "width": 720,
+          "height": 6290,
+          "bytes": 342958
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-007.webp",
+          "width": 720,
+          "height": 5680,
+          "bytes": 281782
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-008.webp",
+          "width": 720,
+          "height": 5298,
+          "bytes": 254894
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-009.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-009.webp",
+          "width": 720,
+          "height": 5000,
+          "bytes": 282234
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-010.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 246476
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-011.webp",
+          "width": 720,
+          "height": 6641,
+          "bytes": 279960
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-012.webp",
+          "width": 720,
+          "height": 6640,
+          "bytes": 334248
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-013.webp",
+          "width": 720,
+          "height": 5339,
+          "bytes": 357540
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-014.webp",
+          "width": 720,
+          "height": 5266,
+          "bytes": 298412
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0013/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0013/page-015.webp",
+          "width": 720,
+          "height": 4142,
+          "bytes": 247920
+        }
+      ]
+    },
+    {
+      "id": "chapter-14",
+      "number": 14,
+      "displayNumber": "14",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 14",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 13,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-001.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 336190
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-002.webp",
+          "width": 720,
+          "height": 6070,
+          "bytes": 310714
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-003.webp",
+          "width": 720,
+          "height": 5170,
+          "bytes": 326842
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-004.webp",
+          "width": 720,
+          "height": 5000,
+          "bytes": 346120
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-005.webp",
+          "width": 720,
+          "height": 5804,
+          "bytes": 292222
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-006.webp",
+          "width": 720,
+          "height": 6995,
+          "bytes": 537268
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-007.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 365908
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-008.webp",
+          "width": 720,
+          "height": 6993,
+          "bytes": 473656
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-009.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-009.webp",
+          "width": 720,
+          "height": 5807,
+          "bytes": 397816
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-010.webp",
+          "width": 720,
+          "height": 7134,
+          "bytes": 564896
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-011.webp",
+          "width": 720,
+          "height": 5305,
+          "bytes": 342136
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-012.webp",
+          "width": 720,
+          "height": 5330,
+          "bytes": 340134
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-013.webp",
+          "width": 720,
+          "height": 6641,
+          "bytes": 475028
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-014.webp",
+          "width": 720,
+          "height": 5369,
+          "bytes": 275996
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-015.webp",
+          "width": 720,
+          "height": 7094,
+          "bytes": 385546
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-016.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-016.webp",
+          "width": 720,
+          "height": 4847,
+          "bytes": 420060
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-017.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-017.webp",
+          "width": 720,
+          "height": 5000,
+          "bytes": 270784
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0014/page-018.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0014/page-018.webp",
+          "width": 720,
+          "height": 4598,
+          "bytes": 132376
+        }
+      ]
+    },
+    {
+      "id": "chapter-15",
+      "number": 15,
+      "displayNumber": "15",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 15",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 14,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-001.webp",
+          "width": 720,
+          "height": 6337,
+          "bytes": 287124
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-002.webp",
+          "width": 720,
+          "height": 5361,
+          "bytes": 246732
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-003.webp",
+          "width": 720,
+          "height": 6104,
+          "bytes": 309466
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-004.webp",
+          "width": 720,
+          "height": 5352,
+          "bytes": 207500
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-005.webp",
+          "width": 720,
+          "height": 6641,
+          "bytes": 288394
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-006.webp",
+          "width": 720,
+          "height": 5682,
+          "bytes": 365786
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-007.webp",
+          "width": 720,
+          "height": 6020,
+          "bytes": 311774
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-008.webp",
+          "width": 720,
+          "height": 4418,
+          "bytes": 318828
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-009.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-009.webp",
+          "width": 720,
+          "height": 4827,
+          "bytes": 298994
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-010.webp",
+          "width": 720,
+          "height": 7993,
+          "bytes": 366808
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-011.webp",
+          "width": 720,
+          "height": 5382,
+          "bytes": 268784
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-012.webp",
+          "width": 720,
+          "height": 5824,
+          "bytes": 355190
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-013.webp",
+          "width": 720,
+          "height": 5158,
+          "bytes": 240384
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-014.webp",
+          "width": 720,
+          "height": 5788,
+          "bytes": 229000
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0015/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0015/page-015.webp",
+          "width": 720,
+          "height": 5814,
+          "bytes": 164010
+        }
+      ]
+    },
+    {
+      "id": "chapter-16",
+      "number": 16,
+      "displayNumber": "16",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 16",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 15,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-001.webp",
+          "width": 720,
+          "height": 5000,
+          "bytes": 165880
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-002.webp",
+          "width": 720,
+          "height": 4641,
+          "bytes": 193794
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-003.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 328902
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-004.webp",
+          "width": 720,
+          "height": 6237,
+          "bytes": 244718
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-005.webp",
+          "width": 720,
+          "height": 6026,
+          "bytes": 213990
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-006.webp",
+          "width": 720,
+          "height": 6641,
+          "bytes": 276334
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-007.webp",
+          "width": 720,
+          "height": 5345,
+          "bytes": 306530
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-008.webp",
+          "width": 720,
+          "height": 7271,
+          "bytes": 390278
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-009.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-009.webp",
+          "width": 720,
+          "height": 4641,
+          "bytes": 286816
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-010.webp",
+          "width": 720,
+          "height": 5000,
+          "bytes": 213900
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-011.webp",
+          "width": 720,
+          "height": 5973,
+          "bytes": 308082
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-012.webp",
+          "width": 720,
+          "height": 5435,
+          "bytes": 313818
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-013.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 292122
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-014.webp",
+          "width": 720,
+          "height": 5772,
+          "bytes": 234700
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-015.webp",
+          "width": 720,
+          "height": 4797,
+          "bytes": 293932
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-016.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-016.webp",
+          "width": 720,
+          "height": 5166,
+          "bytes": 371184
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-017.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-017.webp",
+          "width": 720,
+          "height": 4470,
+          "bytes": 181324
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-018.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-018.webp",
+          "width": 720,
+          "height": 5491,
+          "bytes": 195400
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0016/page-019.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0016/page-019.webp",
+          "width": 720,
+          "height": 4527,
+          "bytes": 169910
+        }
+      ]
+    },
+    {
+      "id": "chapter-17",
+      "number": 17,
+      "displayNumber": "17",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 17",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 16,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-001.webp",
+          "width": 720,
+          "height": 5211,
+          "bytes": 230770
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-002.webp",
+          "width": 720,
+          "height": 5864,
+          "bytes": 228168
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-003.webp",
+          "width": 720,
+          "height": 6196,
+          "bytes": 495394
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-004.webp",
+          "width": 720,
+          "height": 4000,
+          "bytes": 299202
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-005.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 340016
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-006.webp",
+          "width": 720,
+          "height": 7000,
+          "bytes": 476042
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-007.webp",
+          "width": 720,
+          "height": 7641,
+          "bytes": 445882
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-008.webp",
+          "width": 720,
+          "height": 5953,
+          "bytes": 333306
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-009.jpg",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-009.jpg",
+          "width": 720,
+          "height": 4335,
+          "bytes": 657893
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-010.webp",
+          "width": 720,
+          "height": 7707,
+          "bytes": 657154
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-011.webp",
+          "width": 720,
+          "height": 7531,
+          "bytes": 586754
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-012.webp",
+          "width": 720,
+          "height": 5839,
+          "bytes": 236272
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-013.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 330394
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-014.webp",
+          "width": 720,
+          "height": 6421,
+          "bytes": 800766
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-015.webp",
+          "width": 720,
+          "height": 6350,
+          "bytes": 399518
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-016.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-016.webp",
+          "width": 720,
+          "height": 7096,
+          "bytes": 402162
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-017.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-017.webp",
+          "width": 720,
+          "height": 6087,
+          "bytes": 258020
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-018.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-018.webp",
+          "width": 720,
+          "height": 6109,
+          "bytes": 227586
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-019.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-019.webp",
+          "width": 720,
+          "height": 5533,
+          "bytes": 176210
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-020.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-020.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 155458
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0017/page-021.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0017/page-021.webp",
+          "width": 720,
+          "height": 4700,
+          "bytes": 202508
+        }
+      ]
+    },
+    {
+      "id": "chapter-18",
+      "number": 18,
+      "displayNumber": "18",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 18",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 17,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-001.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 203784
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-002.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 261440
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-003.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 229324
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-004.webp",
+          "width": 720,
+          "height": 6773,
+          "bytes": 332254
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-005.webp",
+          "width": 720,
+          "height": 5288,
+          "bytes": 215610
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-006.webp",
+          "width": 720,
+          "height": 7353,
+          "bytes": 312598
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-007.webp",
+          "width": 720,
+          "height": 6641,
+          "bytes": 438804
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-008.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 487096
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-009.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-009.webp",
+          "width": 720,
+          "height": 5149,
+          "bytes": 274244
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-010.webp",
+          "width": 720,
+          "height": 6123,
+          "bytes": 303816
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-011.webp",
+          "width": 720,
+          "height": 5000,
+          "bytes": 321582
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-012.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 216374
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-013.webp",
+          "width": 720,
+          "height": 6641,
+          "bytes": 397916
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-014.webp",
+          "width": 720,
+          "height": 5702,
+          "bytes": 458620
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-015.webp",
+          "width": 720,
+          "height": 6798,
+          "bytes": 353014
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-016.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-016.webp",
+          "width": 720,
+          "height": 4743,
+          "bytes": 286584
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-017.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-017.webp",
+          "width": 720,
+          "height": 6448,
+          "bytes": 395250
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-018.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-018.webp",
+          "width": 720,
+          "height": 5894,
+          "bytes": 289554
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0018/page-019.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0018/page-019.webp",
+          "width": 720,
+          "height": 4034,
+          "bytes": 120548
+        }
+      ]
+    },
+    {
+      "id": "chapter-19",
+      "number": 19,
+      "displayNumber": "19",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 19",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 18,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-001.webp",
+          "width": 720,
+          "height": 5000,
+          "bytes": 249256
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-002.webp",
+          "width": 720,
+          "height": 5498,
+          "bytes": 236946
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-003.webp",
+          "width": 720,
+          "height": 6184,
+          "bytes": 311240
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-004.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 264750
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-005.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 226762
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-006.webp",
+          "width": 720,
+          "height": 5462,
+          "bytes": 220186
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-007.webp",
+          "width": 720,
+          "height": 5506,
+          "bytes": 242874
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-008.webp",
+          "width": 720,
+          "height": 5566,
+          "bytes": 193514
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-009.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-009.webp",
+          "width": 720,
+          "height": 5901,
+          "bytes": 168654
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-010.webp",
+          "width": 720,
+          "height": 5565,
+          "bytes": 288492
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-011.webp",
+          "width": 720,
+          "height": 6110,
+          "bytes": 316036
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-012.webp",
+          "width": 720,
+          "height": 5641,
+          "bytes": 322690
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-013.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 332354
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-014.webp",
+          "width": 720,
+          "height": 6300,
+          "bytes": 280246
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-015.webp",
+          "width": 720,
+          "height": 5962,
+          "bytes": 336138
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-016.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-016.webp",
+          "width": 720,
+          "height": 7000,
+          "bytes": 338586
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0019/page-017.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0019/page-017.webp",
+          "width": 720,
+          "height": 5999,
+          "bytes": 255942
+        }
+      ]
+    },
+    {
+      "id": "chapter-20",
+      "number": 20,
+      "displayNumber": "20",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 20",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 1,
+      "sourceChapter": 19,
+      "pages": [
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-001.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-001.webp",
+          "width": 720,
+          "height": 7000,
+          "bytes": 288430
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-002.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-002.webp",
+          "width": 720,
+          "height": 5742,
+          "bytes": 400326
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-003.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-003.webp",
+          "width": 720,
+          "height": 5415,
+          "bytes": 380828
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-004.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-004.webp",
+          "width": 720,
+          "height": 5446,
+          "bytes": 314186
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-005.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-005.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 276850
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-006.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-006.webp",
+          "width": 720,
+          "height": 5883,
+          "bytes": 353322
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-007.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-007.webp",
+          "width": 720,
+          "height": 5510,
+          "bytes": 316558
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-008.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-008.webp",
+          "width": 720,
+          "height": 5681,
+          "bytes": 330542
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-009.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-009.webp",
+          "width": 720,
+          "height": 6681,
+          "bytes": 527190
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-010.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-010.webp",
+          "width": 720,
+          "height": 6725,
+          "bytes": 399962
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-011.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-011.webp",
+          "width": 720,
+          "height": 5949,
+          "bytes": 369978
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-012.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-012.webp",
+          "width": 720,
+          "height": 6681,
+          "bytes": 506136
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-013.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-013.webp",
+          "width": 720,
+          "height": 5872,
+          "bytes": 276366
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-014.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-014.webp",
+          "width": 720,
+          "height": 5479,
+          "bytes": 315416
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-015.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-015.webp",
+          "width": 720,
+          "height": 6000,
+          "bytes": 378814
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-016.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-016.webp",
+          "width": 720,
+          "height": 5042,
+          "bytes": 197910
+        },
+        {
+          "src": "/manga-local/solo-leveling/vol-001/chapter-0020/page-017.webp",
+          "key": "manga-local/solo-leveling/vol-001/chapter-0020/page-017.webp",
+          "width": 720,
+          "height": 3301,
+          "bytes": 117744
         }
       ]
     }

@@ -100,7 +100,7 @@ def main(argv: list[str]) -> int:
 
         attempts = []
         for chapter in chapters_to_try:
-            volume = find_volume_for_chapter(chapter)
+            volume = find_volume_for_chapter(chapter, args.series_id)
             print(f"\n=== Probing Volume {volume} / Chapter {chapter} ===")
             result = import_single_chapter_to_r2(
                 session=session,

@@ -36,24 +36,25 @@ Default source base:
 https://onepiecepower.com/manga8/one-punch-man
 ```
 
-Default reader URL pattern:
+Default direct image URL pattern:
 
 ```text
-{base_url}/reader/{chapter_padded}
+{base_url}/volumi/volume{volume_padded}/{chapter_padded}/{page_padded}.{extension}
 ```
 
-For chapter 1, this becomes:
+For chapter 1 page 1, this becomes:
 
 ```text
-https://onepiecepower.com/manga8/one-punch-man/reader/001
+https://onepiecepower.com/manga8/one-punch-man/volumi/volume001/001/01.jpg
 ```
+
+This is the same direct-image importer and path convention used for One Piece; only the source base URL and the R2 prefix change.
 
 Optional repository variables:
 
 ```text
 OPM_AUTHORIZED_MANGA_BASE_URL
 OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE
-OPM_READER_PAD
 OPM_SERIES_TITLE
 ```
 

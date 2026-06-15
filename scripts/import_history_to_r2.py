@@ -113,7 +113,7 @@ def main(argv: list[str]) -> int:
         secret_access_key = args.secret_access_key or require_env("R2_SECRET_ACCESS_KEY")
         public_base_url = args.public_base_url.rstrip("/")
 
-        chapters = iter_chapters_from_args(args.chapter, args.volume, args.from_chapter, args.to_chapter)
+        chapters = iter_chapters_from_args(args.chapter, args.volume, args.from_chapter, args.to_chapter, args.series_id)
         print(f"Historical import plan: {chapters[0]}-{chapters[-1]} ({len(chapters)} chapter(s))")
         print(f"Source base URL: {args.source_base_url}")
         print(f"R2 bucket: {bucket}")
@@ -132,7 +132,7 @@ def main(argv: list[str]) -> int:
         results = []
 
         for chapter in chapters:
-            volume = find_volume_for_chapter(chapter)
+            volume = find_volume_for_chapter(chapter, args.series_id)
             print(f"\n=== Volume {volume} / Chapter {chapter} ===")
             result = import_single_chapter_to_r2(
                 session=session,

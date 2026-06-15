@@ -19,12 +19,12 @@ on:
         default: "20"
         type: string
       max_pages:
-        description: "Maximum image pages to keep per chapter."
+        description: "Maximum pages to try per chapter. Same direct-image logic as One Piece."
         required: false
-        default: "80"
+        default: "45"
         type: string
       min_pages:
-        description: "Minimum valid manga pages required before accepting a chapter."
+        description: "Minimum valid pages required before accepting a chapter."
         required: false
         default: "3"
         type: string
@@ -50,8 +50,6 @@ jobs:
     env:
       OPM_AUTHORIZED_MANGA_BASE_URL: ${{ vars.OPM_AUTHORIZED_MANGA_BASE_URL || 'https://onepiecepower.com/manga8/one-punch-man' }}
       OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE: ${{ vars.OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE }}
-      OPM_SERIES_ID: "opm"
-      OPM_SERIES_TITLE: "One Man Punch"
       I_CONFIRM_RIGHTS: ${{ vars.I_CONFIRM_RIGHTS }}
       R2_BUCKET_NAME: ${{ vars.R2_BUCKET_NAME }}
       R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
@@ -59,19 +57,28 @@ jobs:
       R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      IMAGE_EXTENSIONS: "jpg,jpeg"
+      WEBP_QUALITY: "82"
+      IMAGE_STRATEGY: "best-size"
+      STOP_AFTER_MISSING: "3"
+      IMPORT_DELAY: "0.25"
+      IMPORT_TIMEOUT: "15"
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Mass import by batches
+
+      - name: Mass import by batches using One Piece direct-image logic
         shell: bash
         run: |
           set -euo pipefail
@@ -87,13 +94,24 @@ jobs:
             if [ "$end" -gt "$TO" ]; then end=$TO; fi
             EXTRA_ARGS=()
             if [ "$OVERWRITE" = "true" ]; then EXTRA_ARGS+=(--overwrite); fi
-            python scripts/import_reader_series_to_r2.py \
+            TEMPLATE_ARGS=()
+            if [ -n "${OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE:-}" ]; then
+              TEMPLATE_ARGS+=(--source-template "$OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE")
+            fi
+            python scripts/import_history_to_r2.py \
+              --source-base-url "$OPM_AUTHORIZED_MANGA_BASE_URL" \
+              "${TEMPLATE_ARGS[@]}" \
+              --series-id opm \
+              --series-title "One Man Punch" \
+              --series-description "Archivio ordinato per volume, capitolo e pagina." \
               --from-chapter "$current" \
               --to-chapter "$end" \
+              --extensions "$IMAGE_EXTENSIONS" \
               --max-pages "$MAX_PAGES" \
               --min-pages "$MIN_PAGES" \
-              --webp-quality 82 \
-              --image-strategy best-size \
+              --stop-after-missing "$STOP_AFTER_MISSING" \
+              --webp-quality "$WEBP_QUALITY" \
+              --image-strategy "$IMAGE_STRATEGY" \
               --i-confirm-rights \
               "${EXTRA_ARGS[@]}"
             if ! git diff --quiet -- public/content; then
@@ -111,5 +129,6 @@ jobs:
             fi
             current=$((end + 1))
           done
+
       - name: Deploy Cloudflare Worker after mass import
         run: npx wrangler deploy

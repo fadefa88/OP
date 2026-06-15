@@ -289,7 +289,13 @@ def chapter_range_for_volume(volume: int, series_id: str = DEFAULT_SERIES_ID) ->
     raise ValueError(f"No chapter mapping for volume {volume}")
 
 
-def iter_chapters_from_args(chapter: int | None, volume: int | None, from_chapter: int | None, to_chapter: int | None) -> list[int]:
+def iter_chapters_from_args(
+    chapter: int | None,
+    volume: int | None,
+    from_chapter: int | None,
+    to_chapter: int | None,
+    series_id: str = DEFAULT_SERIES_ID,
+) -> list[int]:
     if chapter is not None:
         return [chapter]
     if volume is not None:

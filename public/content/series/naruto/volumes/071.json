@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-15T23:00:24.568435+00:00",
+  "seriesId": "naruto",
+  "volume": 71,
+  "fromChapter": 680,
+  "toChapter": 680,
+  "chapters": [
+    {
+      "id": "chapter-680",
+      "number": 680,
+      "displayNumber": "680",
+      "volume": 71,
+      "title": "Naruto · Capitolo 680",
+      "publishedAt": "2026-06-15",
+      "sourceVolume": 71,
+      "sourceChapter": 680,
+      "pages": [
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-001.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-001.webp",
+          "width": 914,
+          "height": 1300,
+          "bytes": 315554
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-002.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-002.webp",
+          "width": 904,
+          "height": 1300,
+          "bytes": 224438
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-003.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-003.webp",
+          "width": 912,
+          "height": 1300,
+          "bytes": 260188
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-004.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-004.webp",
+          "width": 900,
+          "height": 1300,
+          "bytes": 248236
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-005.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-005.webp",
+          "width": 898,
+          "height": 1300,
+          "bytes": 161694
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-006.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-006.webp",
+          "width": 900,
+          "height": 1300,
+          "bytes": 264910
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-007.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-007.webp",
+          "width": 908,
+          "height": 1300,
+          "bytes": 208074
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-008.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-008.webp",
+          "width": 895,
+          "height": 1300,
+          "bytes": 372146
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-009.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-009.webp",
+          "width": 900,
+          "height": 1300,
+          "bytes": 288786
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-010.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-010.webp",
+          "width": 913,
+          "height": 1300,
+          "bytes": 275904
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-011.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-011.webp",
+          "width": 910,
+          "height": 1300,
+          "bytes": 245364
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-012.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-012.webp",
+          "width": 899,
+          "height": 1300,
+          "bytes": 292572
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-013.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-013.webp",
+          "width": 907,
+          "height": 1300,
+          "bytes": 289228
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-014.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-014.webp",
+          "width": 1816,
+          "height": 1300,
+          "bytes": 572706
+        },
+        {
+          "src": "/manga-local/naruto/vol-071/chapter-0680/page-015.webp",
+          "key": "manga-local/naruto/vol-071/chapter-0680/page-015.webp",
+          "width": 1825,
+          "height": 1300,
+          "bytes": 593360
+        }
+      ]
+    }
+  ]
+}

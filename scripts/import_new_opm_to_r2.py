@@ -80,16 +80,24 @@ def main(argv: list[str]) -> int:
             latest_global, latest_source_volume, latest_source_chapter = latest
             next_global = (args.global_chapter or latest_global + 1)
 
-            # OPM does not have a reliable chapter-per-volume map.
-            # Rule: try the next N local chapters in the current source volume;
-            # if N consecutive source chapters are missing/invalid, move to capitolo01
-            # of the next source volume. Default N = 3.
+            # OPM source paths do not reset capitoloYY reliably when moving to a
+            # new source volume. Example: if volume01 reaches capitolo09 and
+            # capitolo10/11/12 are missing, the next volume must start scanning
+            # again from capitolo09, not capitolo01.
+            #
+            # Rule:
+            # 1. First try the next N source chapters in the current volume.
+            # 2. If those are missing, try the next source volume starting from
+            #    the last valid/scanned source chapter number, then move forward.
             missing_before_next_volume = max(1, args.missing_chapters_to_next_volume)
+
             for offset in range(1, missing_before_next_volume + 1):
                 candidates.append((next_global, latest_source_volume, latest_source_chapter + offset))
 
-            for offset in range(1, max(1, args.scan_ahead_volumes) + 1):
-                candidates.append((next_global, latest_source_volume + offset, 1))
+            for volume_offset in range(1, max(1, args.scan_ahead_volumes) + 1):
+                candidate_volume = latest_source_volume + volume_offset
+                for chapter_offset in range(0, missing_before_next_volume):
+                    candidates.append((next_global, candidate_volume, latest_source_chapter + chapter_offset))
         else:
             candidates.append((args.global_chapter or 1, args.source_volume or 1, args.source_chapter or 1))
 

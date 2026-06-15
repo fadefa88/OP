@@ -140,7 +140,13 @@ For OPM, source paths use `volumeXX/capitoloYY/page.jpg`. Because the number of 
 ```text
 try next local chapter in the current source volume
 if 3 consecutive source-local chapters are missing/invalid
-→ move to capitolo01 of the next source volume
+→ move to the next source volume
+→ resume from the last valid source chapter number, not from capitolo01
+
+Example:
+volume01/capitolo09 is the last valid chapter
+volume01/capitolo10, 11 and 12 are missing
+→ next scan starts from volume02/capitolo09
 ```
 
 The value is configurable in GitHub Actions with `missing_chapters_to_next_volume`, default `3`.

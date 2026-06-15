@@ -86,14 +86,26 @@ def main(argv: list[str]) -> int:
         print(f"Scanning source volumes {args.from_source_volume}-{args.to_source_volume}, target total {args.total_chapters} chapters")
         print(f"Source template: {args.source_template}")
 
+        # OPM source capitoloYY numbering is effectively continuous across
+        # source volumes in some areas. When a volume ends after three missing
+        # chapters, the next source volume must resume from the last valid
+        # source chapter number, not from capitolo01.
+        next_volume_start_chapter = 1
+
         for source_volume in range(args.from_source_volume, args.to_source_volume + 1):
             consecutive_missing_chapters = 0
-            for source_chapter in range(1, args.max_source_chapters_per_volume + 1):
+            last_valid_source_chapter = max(1, next_volume_start_chapter)
+            start_source_chapter = max(1, next_volume_start_chapter)
+            print(f"\n--- Scanning OPM source volume {source_volume:02d} from capitolo {start_source_chapter:02d} ---")
+
+            for source_chapter in range(start_source_chapter, args.max_source_chapters_per_volume + 1):
                 if imported_or_existing_total >= args.total_chapters:
                     break
                 pair = (source_volume, source_chapter)
                 if pair in existing_pairs and not args.overwrite:
                     skipped_pairs += 1
+                    last_valid_source_chapter = source_chapter
+                    consecutive_missing_chapters = 0
                     continue
                 print(f"\n=== OPM source volume {source_volume:02d} / capitolo {source_chapter:02d} → reader chapter {global_chapter} ===")
                 result = import_opm_source_chapter_to_r2(
@@ -131,17 +143,27 @@ def main(argv: list[str]) -> int:
                     imported_or_existing_total += 1
                     existing_pairs.add(pair)
                     global_chapter += 1
+                    last_valid_source_chapter = source_chapter
                     consecutive_missing_chapters = 0
                 elif result.skipped:
                     skipped_pairs += 1
+                    last_valid_source_chapter = source_chapter
                     consecutive_missing_chapters = 0
                 else:
                     failed += 1
                     consecutive_missing_chapters += 1
                     print(f"  source chapter not accepted: {result.reason}")
                     if consecutive_missing_chapters >= args.missing_chapters_to_next_volume:
-                        print(f"  {consecutive_missing_chapters} consecutive missing source chapters. Moving to next source volume.")
+                        next_volume_start_chapter = max(1, last_valid_source_chapter)
+                        print(
+                            f"  {consecutive_missing_chapters} consecutive missing source chapters. "
+                            f"Moving to next source volume from capitolo {next_volume_start_chapter:02d}."
+                        )
                         break
+            else:
+                # Reached max_source_chapters_per_volume without hitting the missing threshold.
+                next_volume_start_chapter = max(1, last_valid_source_chapter)
+
             if imported_or_existing_total >= args.total_chapters:
                 break
 

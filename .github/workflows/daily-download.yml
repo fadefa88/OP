@@ -48,6 +48,7 @@ jobs:
       R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
       R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       IMAGE_EXTENSIONS: "jpg,jpeg"
       WEBP_QUALITY: "82"
       IMAGE_STRATEGY: "best-size"
@@ -200,13 +201,9 @@ jobs:
           echo "pushed=false" >> "$GITHUB_OUTPUT"
           exit 1
 
-      - name: Deploy updated site to Cloudflare
-        if: steps.config.outputs.skip != 'true' && steps.imported.outputs.imported == 'true' && steps.commit_json.outputs.pushed == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+      - name: Deploy Cloudflare Worker after import
+        if: steps.config.outputs.skip != 'true' && steps.commit_json.outputs.pushed == 'true'
+        run: npx wrangler deploy
 
       - name: Notify ntfy
         if: steps.config.outputs.skip != 'true' && steps.imported.outputs.imported == 'true' && steps.commit_json.outputs.pushed == 'true'

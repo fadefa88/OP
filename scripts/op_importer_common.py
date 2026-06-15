@@ -162,6 +162,11 @@ DEFAULT_SERIES_TITLE = "OP Reader"
 DEFAULT_SERIES_DESCRIPTION = "Archivio ordinato per volume, capitolo e pagina."
 DEFAULT_CONTENT_DIR = Path("public/content")
 
+ONE_MAN_PUNCH_SERIES_ID = "opm"
+ONE_MAN_PUNCH_SERIES_TITLE = "One Man Punch"
+ONE_MAN_PUNCH_DESCRIPTION = "Archivio ordinato per volume, capitolo e pagina."
+GENERIC_CHAPTERS_PER_VOLUME = 10
+
 
 @dataclass(frozen=True)
 class PageCandidate:
@@ -245,7 +250,26 @@ def future_chapter_range_for_volume(volume: int) -> tuple[int, int]:
     return start, start + FUTURE_CHAPTERS_PER_VOLUME - 1
 
 
-def find_volume_for_chapter(chapter: int) -> int:
+def generic_volume_for_chapter(chapter: int, chapters_per_volume: int = GENERIC_CHAPTERS_PER_VOLUME) -> int:
+    if chapter < 1:
+        raise ValueError(f"Chapter must be >= 1, got {chapter}")
+    return ((chapter - 1) // chapters_per_volume) + 1
+
+
+def generic_chapter_range_for_volume(volume: int, chapters_per_volume: int = GENERIC_CHAPTERS_PER_VOLUME) -> tuple[int, int]:
+    if volume < 1:
+        raise ValueError(f"Volume must be >= 1, got {volume}")
+    start = ((volume - 1) * chapters_per_volume) + 1
+    return start, start + chapters_per_volume - 1
+
+
+def uses_generic_volume_mapping(series_id: str) -> bool:
+    return slugify(series_id) not in {DEFAULT_SERIES_ID}
+
+
+def find_volume_for_chapter(chapter: int, series_id: str = DEFAULT_SERIES_ID) -> int:
+    if uses_generic_volume_mapping(series_id):
+        return generic_volume_for_chapter(chapter)
     for volume, start, end in VOLUME_CHAPTER_RANGES:
         if start <= chapter <= end:
             return volume
@@ -254,7 +278,9 @@ def find_volume_for_chapter(chapter: int) -> int:
     raise ValueError(f"No volume mapping for chapter {chapter}")
 
 
-def chapter_range_for_volume(volume: int) -> tuple[int, int]:
+def chapter_range_for_volume(volume: int, series_id: str = DEFAULT_SERIES_ID) -> tuple[int, int]:
+    if uses_generic_volume_mapping(series_id):
+        return generic_chapter_range_for_volume(volume)
     for current_volume, start, end in VOLUME_CHAPTER_RANGES:
         if current_volume == volume:
             return start, end
@@ -267,7 +293,7 @@ def iter_chapters_from_args(chapter: int | None, volume: int | None, from_chapte
     if chapter is not None:
         return [chapter]
     if volume is not None:
-        start, end = chapter_range_for_volume(volume)
+        start, end = chapter_range_for_volume(volume, series_id)
         return list(range(start, end + 1))
     if from_chapter is not None and to_chapter is not None:
         if from_chapter > to_chapter:
@@ -477,8 +503,19 @@ def write_json_if_changed(path: Path, data: dict) -> bool:
     return True
 
 
-def volume_manifest_path(content_dir: Path, volume: int) -> Path:
-    return content_dir / "volumes" / f"{pad_volume(volume)}.json"
+def volume_manifest_path(content_dir: Path, series_id: str, volume: int) -> Path:
+    normalized_id = slugify(series_id)
+    legacy_path = content_dir / "volumes" / f"{pad_volume(volume)}.json"
+    if normalized_id == DEFAULT_SERIES_ID:
+        return legacy_path
+    return content_dir / "series" / normalized_id / "volumes" / f"{pad_volume(volume)}.json"
+
+
+def volume_manifests_glob(content_dir: Path, series_id: str) -> list[Path]:
+    normalized_id = slugify(series_id)
+    if normalized_id == DEFAULT_SERIES_ID:
+        return sorted((content_dir / "volumes").glob("*.json"))
+    return sorted((content_dir / "series" / normalized_id / "volumes").glob("*.json"))
 
 
 def index_manifest_path(content_dir: Path) -> Path:
@@ -521,8 +558,8 @@ def load_index(content_dir: Path, series_id: str, series_title: str, series_desc
 
 
 def load_volume_manifest(content_dir: Path, series_id: str, volume: int) -> dict:
-    start, end = chapter_range_for_volume(volume)
-    return read_json(volume_manifest_path(content_dir, volume), {
+    start, end = chapter_range_for_volume(volume, series_id)
+    return read_json(volume_manifest_path(content_dir, series_id, volume), {
         "schemaVersion": 2,
         "generatedAt": None,
         "seriesId": slugify(series_id),
@@ -566,7 +603,7 @@ def upsert_chapter_in_volume(
     manifest["generatedAt"] = now_iso()
     manifest["seriesId"] = slugify(series_id)
     manifest["volume"] = volume
-    manifest["fromChapter"], manifest["toChapter"] = chapter_range_for_volume(volume)
+    manifest["fromChapter"], manifest["toChapter"] = chapter_range_for_volume(volume, series_id)
     manifest.setdefault("chapters", [])
 
     payload = chapter_payload(series_title, chapter, volume, pages)
@@ -577,7 +614,7 @@ def upsert_chapter_in_volume(
         manifest["chapters"][idx] = payload
 
     manifest["chapters"].sort(key=lambda item: int(item.get("number", 0)))
-    write_json_if_changed(volume_manifest_path(content_dir, volume), manifest)
+    write_json_if_changed(volume_manifest_path(content_dir, series_id, volume), manifest)
 
 
 def rebuild_index_from_volumes(
@@ -592,8 +629,7 @@ def rebuild_index_from_volumes(
 
     volume_entries = []
     all_chapters = []
-    volumes_dir = content_dir / "volumes"
-    for path in sorted(volumes_dir.glob("*.json")):
+    for path in volume_manifests_glob(content_dir, series_id):
         data = read_json(path, {})
         if data.get("seriesId") != normalized_id:
             continue
@@ -601,13 +637,13 @@ def rebuild_index_from_volumes(
         if not chapters:
             continue
         volume = int(data.get("volume"))
-        start, end = chapter_range_for_volume(volume)
+        start, end = chapter_range_for_volume(volume, series_id)
         volume_entries.append({
             "volume": volume,
             "fromChapter": start,
             "toChapter": end,
             "chaptersCount": len(chapters),
-            "manifest": f"/content/volumes/{pad_volume(volume)}.json",
+            "manifest": (f"/content/volumes/{pad_volume(volume)}.json" if normalized_id == DEFAULT_SERIES_ID else f"/content/series/{normalized_id}/volumes/{pad_volume(volume)}.json"),
         })
         all_chapters.extend(chapters)
 
@@ -654,7 +690,7 @@ def latest_chapter_from_index(content_dir: Path, series_id: str = DEFAULT_SERIES
 
 def get_manifest_chapter(content_dir: Path, series_id: str, chapter: int) -> dict | None:
     try:
-        volume = find_volume_for_chapter(chapter)
+        volume = find_volume_for_chapter(chapter, series_id)
     except ValueError:
         return None
     data = load_volume_manifest(content_dir, series_id, volume)
@@ -693,7 +729,7 @@ def import_single_chapter_to_r2(
     overwrite: bool,
     dry_run: bool = False,
 ) -> ChapterImportResult:
-    volume = volume_override if volume_override is not None else find_volume_for_chapter(chapter)
+    volume = volume_override if volume_override is not None else find_volume_for_chapter(chapter, series_id)
     existing_chapter = get_manifest_chapter(content_dir, series_id, chapter)
     if not overwrite and existing_chapter:
         existing_pages = existing_chapter.get("pages", [])

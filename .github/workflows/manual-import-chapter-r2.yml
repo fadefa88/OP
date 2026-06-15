@@ -129,14 +129,12 @@ jobs:
             "${EXTRA_ARGS[@]}"
 
       - name: Commit JSON manifest changes only
-        id: commit_json
         shell: bash
         run: |
           set -euo pipefail
 
           if git diff --quiet -- public/content; then
             echo "No JSON manifest changes. No commit and no Cloudflare deploy."
-            echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -148,7 +146,6 @@ jobs:
 
           if git diff --cached --quiet; then
             echo "No staged JSON changes."
-            echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -157,7 +154,6 @@ jobs:
           for attempt in 1 2 3; do
             echo "Push attempt $attempt"
             if git push; then
-              echo "pushed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
@@ -165,13 +161,4 @@ jobs:
           done
 
           echo "Failed to push after retries."
-          echo "pushed=false" >> "$GITHUB_OUTPUT"
           exit 1
-
-      - name: Deploy updated site to Cloudflare
-        if: steps.commit_json.outputs.pushed == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy

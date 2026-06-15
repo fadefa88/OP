@@ -1,0 +1,208 @@
+name: Scan New One Man Punch Chapter to R2 Hourly
+
+on:
+  schedule:
+    - cron: "15 * * * *"
+  workflow_dispatch:
+    inputs:
+      chapter:
+        description: "Optional One Man Punch chapter number to force-check. Empty = latest manifest chapter + 1."
+        required: false
+        type: string
+      scan_ahead:
+        description: "How many future chapters to probe starting from latest+1."
+        required: false
+        default: "3"
+        type: string
+      max_pages:
+        description: "Maximum image pages to keep per chapter."
+        required: false
+        default: "80"
+        type: string
+      min_pages:
+        description: "Minimum valid manga pages required before accepting a chapter."
+        required: false
+        default: "3"
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: r2-import-runs
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    name: Check next One Man Punch chapter, upload to R2, commit JSON only
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      OPM_AUTHORIZED_MANGA_BASE_URL: ${{ vars.OPM_AUTHORIZED_MANGA_BASE_URL || 'https://onepiecepower.com/manga8/one-punch-man' }}
+      OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE: ${{ vars.OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE }}
+      OPM_SERIES_ID: "opm"
+      OPM_SERIES_TITLE: "One Man Punch"
+      I_CONFIRM_RIGHTS: ${{ vars.I_CONFIRM_RIGHTS }}
+      R2_BUCKET_NAME: ${{ vars.R2_BUCKET_NAME }}
+      R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
+      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      WEBP_QUALITY: "82"
+      IMAGE_STRATEGY: "best-size"
+      IMPORT_DELAY: "0.25"
+      IMPORT_TIMEOUT: "15"
+      MIN_IMAGE_WIDTH: "400"
+      MIN_IMAGE_HEIGHT: "550"
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC || 'ldf-op-reader-cagnettoasd123' }}
+      READER_BASE_URL: ${{ vars.READER_BASE_URL || 'https://manga.lucahome.uk' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Validate configuration
+        id: config
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${OPM_AUTHORIZED_MANGA_BASE_URL:-}" ]; then
+            echo "Missing OPM_AUTHORIZED_MANGA_BASE_URL. Skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "${I_CONFIRM_RIGHTS:-}" != "true" ]; then
+            echo "I_CONFIRM_RIGHTS is not true. Skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ -z "${R2_BUCKET_NAME:-}" ] || [ -z "${R2_PUBLIC_BASE_URL:-}" ]; then
+            echo "Missing R2_BUCKET_NAME or R2_PUBLIC_BASE_URL. Skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ -z "${R2_ACCESS_KEY_ID:-}" ] || [ -z "${R2_SECRET_ACCESS_KEY:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            echo "Missing R2/CLOUDFLARE secrets. Skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+
+      - name: Import next One Man Punch chapter to R2
+        if: steps.config.outputs.skip != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHAPTER_INPUT="${{ github.event.inputs.chapter || '' }}"
+          SCAN_AHEAD_INPUT="${{ github.event.inputs.scan_ahead || '3' }}"
+          MAX_PAGES_INPUT="${{ github.event.inputs.max_pages || '80' }}"
+          MIN_PAGES_INPUT="${{ github.event.inputs.min_pages || '3' }}"
+
+          EXTRA_ARGS=()
+          if [ -n "$CHAPTER_INPUT" ]; then
+            EXTRA_ARGS+=(--chapter "$CHAPTER_INPUT")
+          else
+            EXTRA_ARGS+=(--scan-ahead "$SCAN_AHEAD_INPUT")
+          fi
+
+          python scripts/import_reader_series_to_r2.py \
+            --max-pages "$MAX_PAGES_INPUT" \
+            --min-pages "$MIN_PAGES_INPUT" \
+            --webp-quality "$WEBP_QUALITY" \
+            --image-strategy "$IMAGE_STRATEGY" \
+            --i-confirm-rights \
+            "${EXTRA_ARGS[@]}"
+
+      - name: Detect imported One Man Punch chapter
+        id: imported
+        if: steps.config.outputs.skip != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          REPORT="reports/opm-new-chapter-result.json"
+          if [ ! -f "$REPORT" ]; then
+            echo "imported=false" >> "$GITHUB_OUTPUT"
+            echo "chapter=" >> "$GITHUB_OUTPUT"
+            echo "volume=" >> "$GITHUB_OUTPUT"
+            echo "pages=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          report = json.loads(Path('reports/opm-new-chapter-result.json').read_text(encoding='utf-8'))
+          imported = bool(report.get('imported'))
+          print(f"imported={'true' if imported else 'false'}")
+          print(f"chapter={report.get('chapter') or ''}")
+          print(f"volume={report.get('volume') or ''}")
+          print(f"pages={report.get('pages') or ''}")
+          PY
+
+      - name: Commit JSON manifest changes only
+        id: commit_json
+        if: steps.config.outputs.skip != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- public/content; then
+            echo "No JSON manifest changes."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add public/content
+          if git diff --cached --quiet; then
+            echo "No staged JSON changes."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          CHAPTER="${{ steps.imported.outputs.chapter }}"
+          git commit -m "Import One Man Punch chapter ${CHAPTER} manifest"
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            sleep $((attempt * 5))
+          done
+          echo "pushed=false" >> "$GITHUB_OUTPUT"
+          exit 1
+
+      - name: Deploy Cloudflare Worker after import
+        if: steps.config.outputs.skip != 'true' && steps.commit_json.outputs.pushed == 'true'
+        run: npx wrangler deploy
+
+      - name: Notify ntfy
+        if: steps.config.outputs.skip != 'true' && steps.imported.outputs.imported == 'true' && steps.commit_json.outputs.pushed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHAPTER="${{ steps.imported.outputs.chapter }}"
+          VOLUME="${{ steps.imported.outputs.volume }}"
+          PAGES="${{ steps.imported.outputs.pages }}"
+          BASE_URL="${READER_BASE_URL%/}"
+          URL="${BASE_URL}/reader.html?series=opm&chapter=chapter-${CHAPTER}&page=1"
+          MESSAGE="One Man Punch capitolo ${CHAPTER} appena caricato. Volume ${VOLUME}. Pagine: ${PAGES}. Tocca per leggerlo."
+          curl -sS \
+            -H "Title: Nuovo One Man Punch disponibile" \
+            -H "Priority: high" \
+            -H "Tags: punch,book" \
+            -H "Click: ${URL}" \
+            -d "${MESSAGE}" \
+            "https://ntfy.sh/${NTFY_TOPIC}"

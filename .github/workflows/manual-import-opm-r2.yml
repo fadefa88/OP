@@ -1,0 +1,98 @@
+name: Manual Import One Man Punch Chapter to R2
+
+on:
+  workflow_dispatch:
+    inputs:
+      chapter:
+        description: "One Man Punch chapter number to import, for example 1."
+        required: true
+        type: string
+      max_pages:
+        description: "Maximum image pages to keep."
+        required: false
+        default: "80"
+        type: string
+      min_pages:
+        description: "Minimum valid manga pages required before accepting the chapter."
+        required: false
+        default: "3"
+        type: string
+      overwrite:
+        description: "Overwrite manifest/R2 objects if the chapter already exists."
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: r2-import-runs
+  cancel-in-progress: false
+
+jobs:
+  import:
+    name: Import One Man Punch chapter, upload to R2, commit JSON only
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      OPM_AUTHORIZED_MANGA_BASE_URL: ${{ vars.OPM_AUTHORIZED_MANGA_BASE_URL || 'https://onepiecepower.com/manga8/one-punch-man' }}
+      OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE: ${{ vars.OPM_AUTHORIZED_MANGA_SOURCE_TEMPLATE }}
+      OPM_SERIES_ID: "opm"
+      OPM_SERIES_TITLE: "One Man Punch"
+      I_CONFIRM_RIGHTS: ${{ vars.I_CONFIRM_RIGHTS }}
+      R2_BUCKET_NAME: ${{ vars.R2_BUCKET_NAME }}
+      R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
+      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Import requested One Man Punch chapter
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXTRA_ARGS=()
+          if [ "${{ github.event.inputs.overwrite }}" = "true" ]; then
+            EXTRA_ARGS+=(--overwrite)
+          fi
+          python scripts/import_reader_series_to_r2.py \
+            --chapter "${{ github.event.inputs.chapter }}" \
+            --max-pages "${{ github.event.inputs.max_pages }}" \
+            --min-pages "${{ github.event.inputs.min_pages }}" \
+            --webp-quality 82 \
+            --image-strategy best-size \
+            --i-confirm-rights \
+            "${EXTRA_ARGS[@]}"
+      - name: Commit JSON manifest changes only
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- public/content; then
+            echo "No JSON manifest changes."
+            exit 0
+          fi
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add public/content
+          git commit -m "Import One Man Punch chapter ${{ github.event.inputs.chapter }} manifest"
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            sleep $((attempt * 5))
+          done
+          exit 1
+      - name: Deploy Cloudflare Worker after import
+        run: npx wrangler deploy

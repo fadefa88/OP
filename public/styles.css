@@ -2129,3 +2129,62 @@ body:not(.reader-body).video-playing .home-backdrop-video {
     opacity: 0 !important;
   }
 }
+
+/* --- Multi-series home: One Piece + One Man Punch --- */
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 18px;
+}
+
+.series-card {
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 22px;
+  padding: 18px;
+  background: linear-gradient(145deg, rgba(15,23,42,0.78), rgba(2,6,23,0.66));
+  box-shadow: 0 18px 50px rgba(0,0,0,0.22);
+  color: #f8fafc;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.series-card:hover,
+.series-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(248,113,113,0.55);
+  outline: none;
+}
+
+.series-card.is-active {
+  border-color: rgba(248,113,113,0.9);
+  background: linear-gradient(145deg, rgba(127,29,29,0.42), rgba(15,23,42,0.78));
+}
+
+.series-card-kicker {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(226,232,240,0.66);
+}
+
+.series-card strong {
+  display: block;
+  font-size: clamp(1.15rem, 3vw, 1.65rem);
+  line-height: 1.05;
+}
+
+.series-card small {
+  display: block;
+  margin-top: 10px;
+  color: rgba(226,232,240,0.78);
+}
+
+@media (max-width: 720px) {
+  .series-grid {
+    grid-template-columns: 1fr;
+  }
+}

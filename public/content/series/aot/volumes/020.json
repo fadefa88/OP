@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-16T13:00:45.650640+00:00",
+  "generatedAt": "2026-06-16T13:04:08.668162+00:00",
   "seriesId": "aot",
   "volume": 20,
   "fromChapter": 79,
-  "toChapter": 80,
+  "toChapter": 82,
   "chapters": [
     {
       "id": "chapter-79",
@@ -657,6 +657,625 @@
           "width": 904,
           "height": 1300,
           "bytes": 383554
+        }
+      ]
+    },
+    {
+      "id": "chapter-81",
+      "number": 81,
+      "displayNumber": "81",
+      "volume": 20,
+      "title": "Attack on Titan · Capitolo 81",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 20,
+      "sourceChapter": 81,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-001.jpg",
+          "key": "aot/vol-020/chapter-0081/page-001.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 352691
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-002.jpg",
+          "key": "aot/vol-020/chapter-0081/page-002.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 417107
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-003.jpg",
+          "key": "aot/vol-020/chapter-0081/page-003.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 434507
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-004.jpg",
+          "key": "aot/vol-020/chapter-0081/page-004.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 345583
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-005.jpg",
+          "key": "aot/vol-020/chapter-0081/page-005.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 355715
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-006.webp",
+          "key": "aot/vol-020/chapter-0081/page-006.webp",
+          "width": 900,
+          "height": 1300,
+          "bytes": 330848
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-007.webp",
+          "key": "aot/vol-020/chapter-0081/page-007.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 288500
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-008.jpg",
+          "key": "aot/vol-020/chapter-0081/page-008.jpg",
+          "width": 900,
+          "height": 1300,
+          "bytes": 358339
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-009.jpg",
+          "key": "aot/vol-020/chapter-0081/page-009.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 331048
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-010.jpg",
+          "key": "aot/vol-020/chapter-0081/page-010.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 384707
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-011.jpg",
+          "key": "aot/vol-020/chapter-0081/page-011.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 303257
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-012.jpg",
+          "key": "aot/vol-020/chapter-0081/page-012.jpg",
+          "width": 900,
+          "height": 1300,
+          "bytes": 385083
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-013.webp",
+          "key": "aot/vol-020/chapter-0081/page-013.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 342304
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-014.jpg",
+          "key": "aot/vol-020/chapter-0081/page-014.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 350983
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-015.jpg",
+          "key": "aot/vol-020/chapter-0081/page-015.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 367240
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-016.jpg",
+          "key": "aot/vol-020/chapter-0081/page-016.jpg",
+          "width": 1815,
+          "height": 1300,
+          "bytes": 717130
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-017.jpg",
+          "key": "aot/vol-020/chapter-0081/page-017.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 428606
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-018.jpg",
+          "key": "aot/vol-020/chapter-0081/page-018.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 319070
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-019.jpg",
+          "key": "aot/vol-020/chapter-0081/page-019.jpg",
+          "width": 900,
+          "height": 1300,
+          "bytes": 378943
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-020.jpg",
+          "key": "aot/vol-020/chapter-0081/page-020.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 379674
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-021.jpg",
+          "key": "aot/vol-020/chapter-0081/page-021.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 342270
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-022.jpg",
+          "key": "aot/vol-020/chapter-0081/page-022.jpg",
+          "width": 900,
+          "height": 1300,
+          "bytes": 398611
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-023.webp",
+          "key": "aot/vol-020/chapter-0081/page-023.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 352712
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-024.webp",
+          "key": "aot/vol-020/chapter-0081/page-024.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 390940
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-025.jpg",
+          "key": "aot/vol-020/chapter-0081/page-025.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 415590
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-026.jpg",
+          "key": "aot/vol-020/chapter-0081/page-026.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 392784
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-027.jpg",
+          "key": "aot/vol-020/chapter-0081/page-027.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 363941
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-028.jpg",
+          "key": "aot/vol-020/chapter-0081/page-028.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 376542
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-029.jpg",
+          "key": "aot/vol-020/chapter-0081/page-029.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 419867
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-030.jpg",
+          "key": "aot/vol-020/chapter-0081/page-030.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 357230
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-031.webp",
+          "key": "aot/vol-020/chapter-0081/page-031.webp",
+          "width": 904,
+          "height": 1300,
+          "bytes": 346458
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-032.webp",
+          "key": "aot/vol-020/chapter-0081/page-032.webp",
+          "width": 904,
+          "height": 1300,
+          "bytes": 291164
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-033.jpg",
+          "key": "aot/vol-020/chapter-0081/page-033.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 386738
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-034.jpg",
+          "key": "aot/vol-020/chapter-0081/page-034.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 389062
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-035.webp",
+          "key": "aot/vol-020/chapter-0081/page-035.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 285284
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-036.webp",
+          "key": "aot/vol-020/chapter-0081/page-036.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 327238
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-037.webp",
+          "key": "aot/vol-020/chapter-0081/page-037.webp",
+          "width": 900,
+          "height": 1300,
+          "bytes": 318066
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-038.webp",
+          "key": "aot/vol-020/chapter-0081/page-038.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 322832
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-039.webp",
+          "key": "aot/vol-020/chapter-0081/page-039.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 315604
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-040.webp",
+          "key": "aot/vol-020/chapter-0081/page-040.webp",
+          "width": 904,
+          "height": 1300,
+          "bytes": 304194
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-041.webp",
+          "key": "aot/vol-020/chapter-0081/page-041.webp",
+          "width": 904,
+          "height": 1300,
+          "bytes": 308276
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-042.jpg",
+          "key": "aot/vol-020/chapter-0081/page-042.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 350900
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-043.webp",
+          "key": "aot/vol-020/chapter-0081/page-043.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 284714
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0081/page-044.jpg",
+          "key": "aot/vol-020/chapter-0081/page-044.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 348706
+        }
+      ]
+    },
+    {
+      "id": "chapter-82",
+      "number": 82,
+      "displayNumber": "82",
+      "volume": 20,
+      "title": "Attack on Titan · Capitolo 82",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 20,
+      "sourceChapter": 82,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-001.jpg",
+          "key": "aot/vol-020/chapter-0082/page-001.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 296088
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-002.jpg",
+          "key": "aot/vol-020/chapter-0082/page-002.jpg",
+          "width": 1817,
+          "height": 1300,
+          "bytes": 653687
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-003.jpg",
+          "key": "aot/vol-020/chapter-0082/page-003.jpg",
+          "width": 900,
+          "height": 1300,
+          "bytes": 385413
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-004.jpg",
+          "key": "aot/vol-020/chapter-0082/page-004.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 388136
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-005.webp",
+          "key": "aot/vol-020/chapter-0082/page-005.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 390702
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-006.jpg",
+          "key": "aot/vol-020/chapter-0082/page-006.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 419593
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-007.jpg",
+          "key": "aot/vol-020/chapter-0082/page-007.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 391749
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-008.webp",
+          "key": "aot/vol-020/chapter-0082/page-008.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 303524
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-009.jpg",
+          "key": "aot/vol-020/chapter-0082/page-009.jpg",
+          "width": 900,
+          "height": 1300,
+          "bytes": 370158
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-010.jpg",
+          "key": "aot/vol-020/chapter-0082/page-010.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 324275
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-011.webp",
+          "key": "aot/vol-020/chapter-0082/page-011.webp",
+          "width": 900,
+          "height": 1300,
+          "bytes": 271190
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-012.webp",
+          "key": "aot/vol-020/chapter-0082/page-012.webp",
+          "width": 904,
+          "height": 1300,
+          "bytes": 333056
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-013.webp",
+          "key": "aot/vol-020/chapter-0082/page-013.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 330728
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-014.jpg",
+          "key": "aot/vol-020/chapter-0082/page-014.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 362226
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-015.jpg",
+          "key": "aot/vol-020/chapter-0082/page-015.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 372448
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-016.jpg",
+          "key": "aot/vol-020/chapter-0082/page-016.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 375200
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-017.jpg",
+          "key": "aot/vol-020/chapter-0082/page-017.jpg",
+          "width": 898,
+          "height": 1300,
+          "bytes": 381258
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-018.jpg",
+          "key": "aot/vol-020/chapter-0082/page-018.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 372680
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-019.webp",
+          "key": "aot/vol-020/chapter-0082/page-019.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 322808
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-020.jpg",
+          "key": "aot/vol-020/chapter-0082/page-020.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 400983
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-021.jpg",
+          "key": "aot/vol-020/chapter-0082/page-021.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 374402
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-022.jpg",
+          "key": "aot/vol-020/chapter-0082/page-022.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 409233
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-023.webp",
+          "key": "aot/vol-020/chapter-0082/page-023.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 389988
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-024.webp",
+          "key": "aot/vol-020/chapter-0082/page-024.webp",
+          "width": 904,
+          "height": 1300,
+          "bytes": 367766
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-025.jpg",
+          "key": "aot/vol-020/chapter-0082/page-025.jpg",
+          "width": 900,
+          "height": 1300,
+          "bytes": 386584
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-026.webp",
+          "key": "aot/vol-020/chapter-0082/page-026.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 362366
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-027.jpg",
+          "key": "aot/vol-020/chapter-0082/page-027.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 399159
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-028.webp",
+          "key": "aot/vol-020/chapter-0082/page-028.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 386008
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-029.jpg",
+          "key": "aot/vol-020/chapter-0082/page-029.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 391850
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-030.jpg",
+          "key": "aot/vol-020/chapter-0082/page-030.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 362793
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-031.jpg",
+          "key": "aot/vol-020/chapter-0082/page-031.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 370933
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-032.jpg",
+          "key": "aot/vol-020/chapter-0082/page-032.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 406498
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-033.webp",
+          "key": "aot/vol-020/chapter-0082/page-033.webp",
+          "width": 900,
+          "height": 1300,
+          "bytes": 373514
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-034.jpg",
+          "key": "aot/vol-020/chapter-0082/page-034.jpg",
+          "width": 902,
+          "height": 1300,
+          "bytes": 407742
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-035.jpg",
+          "key": "aot/vol-020/chapter-0082/page-035.jpg",
+          "width": 1814,
+          "height": 1300,
+          "bytes": 772707
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-036.jpg",
+          "key": "aot/vol-020/chapter-0082/page-036.jpg",
+          "width": 900,
+          "height": 1300,
+          "bytes": 340807
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-037.jpg",
+          "key": "aot/vol-020/chapter-0082/page-037.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 396700
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-038.jpg",
+          "key": "aot/vol-020/chapter-0082/page-038.jpg",
+          "width": 1819,
+          "height": 1300,
+          "bytes": 685952
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-039.jpg",
+          "key": "aot/vol-020/chapter-0082/page-039.jpg",
+          "width": 1819,
+          "height": 1300,
+          "bytes": 673736
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-040.webp",
+          "key": "aot/vol-020/chapter-0082/page-040.webp",
+          "width": 902,
+          "height": 1300,
+          "bytes": 310228
+        },
+        {
+          "src": "https://static.lucahome.uk/aot/vol-020/chapter-0082/page-041.jpg",
+          "key": "aot/vol-020/chapter-0082/page-041.jpg",
+          "width": 904,
+          "height": 1300,
+          "bytes": 393503
         }
       ]
     }

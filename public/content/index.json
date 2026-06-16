@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-16T13:00:45.656590+00:00",
+  "generatedAt": "2026-06-16T13:18:32.218336+00:00",
   "series": [
     {
       "id": "op",
@@ -1455,8 +1455,8 @@
       "title": "Attack on Titan",
       "description": "Archivio completo ordinato per volume, capitolo e pagina.",
       "cover": "https://static.lucahome.uk/aot/vol-001/chapter-0001/page-001.jpg",
-      "latestChapter": 80,
-      "chaptersCount": 80,
+      "latestChapter": 90,
+      "chaptersCount": 90,
       "volumes": [
         {
           "volume": 1,
@@ -1594,9 +1594,23 @@
         {
           "volume": 20,
           "fromChapter": 79,
-          "toChapter": 80,
-          "chaptersCount": 2,
+          "toChapter": 82,
+          "chaptersCount": 4,
           "manifest": "/content/series/aot/volumes/020.json"
+        },
+        {
+          "volume": 21,
+          "fromChapter": 83,
+          "toChapter": 86,
+          "chaptersCount": 4,
+          "manifest": "/content/series/aot/volumes/021.json"
+        },
+        {
+          "volume": 22,
+          "fromChapter": 87,
+          "toChapter": 90,
+          "chaptersCount": 4,
+          "manifest": "/content/series/aot/volumes/022.json"
         }
       ]
     }

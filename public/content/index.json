@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-16T08:37:00.622844+00:00",
+  "generatedAt": "2026-06-16T08:56:36.568149+00:00",
   "series": [
     {
       "id": "op",
@@ -1424,8 +1424,8 @@
       "title": "Solo Leveling",
       "description": "Archivio completo ordinato per volume, capitolo e pagina.",
       "cover": "/manga-local/solo-leveling/vol-001/chapter-0001/page-001.webp",
-      "latestChapter": 150,
-      "chaptersCount": 150,
+      "latestChapter": 160,
+      "chaptersCount": 160,
       "volumes": [
         {
           "volume": 1,
@@ -1437,8 +1437,8 @@
         {
           "volume": 2,
           "fromChapter": 112,
-          "toChapter": 150,
-          "chaptersCount": 39,
+          "toChapter": 160,
+          "chaptersCount": 49,
           "manifest": "/content/series/solo-leveling/volumes/002.json"
         }
       ]

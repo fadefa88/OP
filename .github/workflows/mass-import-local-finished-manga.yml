@@ -1,4 +1,4 @@
-name: Mass Import Finished Manga to GitHub Repo
+name: Mass Import Finished Manga Hybrid
 
 on:
   workflow_dispatch:
@@ -6,13 +6,21 @@ on:
       series:
         description: "Series to import"
         required: true
-        default: "naruto"
+        default: "all"
         type: choice
         options:
           - naruto
           - solo-leveling
           - aot
           - all
+      storage_backend:
+        description: "Where to store newly imported scans"
+        required: true
+        default: "r2"
+        type: choice
+        options:
+          - r2
+          - local
       batch_size:
         description: "New chapters to import before each commit"
         required: true
@@ -20,7 +28,7 @@ on:
       max_batches:
         description: "Maximum batches in this workflow run"
         required: true
-        default: "3"
+        default: "20"
       max_pages:
         description: "Maximum pages to test per chapter. Use 0 for per-series default."
         required: true
@@ -61,12 +69,12 @@ permissions:
   contents: write
 
 concurrency:
-  group: local-finished-manga-import
+  group: finished-manga-hybrid-import
   cancel-in-progress: false
 
 jobs:
-  import-local-finished-manga:
-    name: Import finished manga images into repo
+  import-finished-manga:
+    name: Import finished manga scans
     runs-on: ubuntu-latest
     timeout-minutes: 360
 
@@ -105,9 +113,15 @@ jobs:
         shell: bash
         env:
           I_CONFIRM_RIGHTS: "true"
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ vars.R2_BUCKET_NAME }}
+          R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
         run: |
           set -euo pipefail
           SERIES="${{ inputs.series }}"
+          STORAGE_BACKEND="${{ inputs.storage_backend }}"
           BATCH_SIZE="${{ inputs.batch_size }}"
           MAX_BATCHES="${{ inputs.max_batches }}"
           MAX_PAGES="${{ inputs.max_pages }}"
@@ -120,12 +134,21 @@ jobs:
             OVERWRITE_FLAG="--overwrite"
           fi
 
+          if [[ "$STORAGE_BACKEND" == "r2" ]]; then
+            : "${CLOUDFLARE_ACCOUNT_ID:?CLOUDFLARE_ACCOUNT_ID secret is required for R2 mode}"
+            : "${R2_ACCESS_KEY_ID:?R2_ACCESS_KEY_ID secret is required for R2 mode}"
+            : "${R2_SECRET_ACCESS_KEY:?R2_SECRET_ACCESS_KEY secret is required for R2 mode}"
+            : "${R2_BUCKET_NAME:?R2_BUCKET_NAME variable is required for R2 mode}"
+            : "${R2_PUBLIC_BASE_URL:?R2_PUBLIC_BASE_URL variable is required for R2 mode}"
+          fi
+
           for i in $(seq 1 "$MAX_BATCHES"); do
-            echo "=== Local finished manga import batch $i/$MAX_BATCHES for $SERIES ==="
+            echo "=== Finished manga import batch $i/$MAX_BATCHES for $SERIES to $STORAGE_BACKEND ==="
             git pull --rebase --autostash origin main
 
-            python scripts/import_local_finished_manga.py \
+            python scripts/import_finished_manga_hybrid.py \
               --series "$SERIES" \
+              --storage-backend "$STORAGE_BACKEND" \
               --max-new-chapters "$BATCH_SIZE" \
               --max-pages "$MAX_PAGES" \
               --min-pages "$MIN_PAGES" \
@@ -135,13 +158,21 @@ jobs:
               --i-confirm-rights \
               $OVERWRITE_FLAG
 
-            if git diff --quiet -- public/content public/manga-local; then
-              echo "No new local manga files or manifests to commit. Stopping."
+            if [[ "$STORAGE_BACKEND" == "r2" ]]; then
+              DIFF_PATHS="public/content"
+              ADD_PATHS="public/content"
+            else
+              DIFF_PATHS="public/content public/manga-local"
+              ADD_PATHS="public/content public/manga-local"
+            fi
+
+            if git diff --quiet -- $DIFF_PATHS; then
+              echo "No new manga manifests/assets to commit. Stopping."
               break
             fi
 
-            git add public/content public/manga-local
-            git commit -m "Import finished manga local assets ($SERIES batch $i)"
+            git add $ADD_PATHS
+            git commit -m "Import finished manga assets ($SERIES $STORAGE_BACKEND batch $i)"
             git pull --rebase --autostash origin main
             git push
           done

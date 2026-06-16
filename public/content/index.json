@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-16T10:26:59.040832+00:00",
+  "generatedAt": "2026-06-16T11:03:39.878612+00:00",
   "series": [
     {
       "id": "op",
@@ -1447,6 +1447,37 @@
           "toChapter": 200,
           "chaptersCount": 20,
           "manifest": "/content/series/solo-leveling/volumes/003.json"
+        }
+      ]
+    },
+    {
+      "id": "aot",
+      "title": "Attack on Titan",
+      "description": "Archivio completo ordinato per volume, capitolo e pagina.",
+      "cover": "https://static.lucahome.uk/aot/vol-001/chapter-0001/page-001.jpg",
+      "latestChapter": 10,
+      "chaptersCount": 10,
+      "volumes": [
+        {
+          "volume": 1,
+          "fromChapter": 1,
+          "toChapter": 4,
+          "chaptersCount": 4,
+          "manifest": "/content/series/aot/volumes/001.json"
+        },
+        {
+          "volume": 2,
+          "fromChapter": 5,
+          "toChapter": 9,
+          "chaptersCount": 5,
+          "manifest": "/content/series/aot/volumes/002.json"
+        },
+        {
+          "volume": 3,
+          "fromChapter": 10,
+          "toChapter": 10,
+          "chaptersCount": 1,
+          "manifest": "/content/series/aot/volumes/003.json"
         }
       ]
     }

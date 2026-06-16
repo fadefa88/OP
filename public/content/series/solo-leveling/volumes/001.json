@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-16T06:17:12.877192+00:00",
+  "generatedAt": "2026-06-16T06:29:30.422844+00:00",
   "seriesId": "solo-leveling",
   "volume": 1,
   "fromChapter": 1,
-  "toChapter": 70,
+  "toChapter": 80,
   "chapters": [
     {
       "id": "chapter-1",
@@ -10307,6 +10307,2163 @@
           "width": 720,
           "height": 2954,
           "bytes": 79670
+        }
+      ]
+    },
+    {
+      "id": "chapter-71",
+      "number": 71,
+      "displayNumber": "71",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 71",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 70,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-001.webp",
+          "width": 720,
+          "height": 3135,
+          "bytes": 84008
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-002.webp",
+          "width": 720,
+          "height": 3218,
+          "bytes": 124714
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-003.webp",
+          "width": 720,
+          "height": 2194,
+          "bytes": 71386
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-004.webp",
+          "width": 720,
+          "height": 2859,
+          "bytes": 157794
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-005.webp",
+          "width": 720,
+          "height": 3231,
+          "bytes": 94804
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-006.webp",
+          "width": 720,
+          "height": 3713,
+          "bytes": 149950
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-007.webp",
+          "width": 720,
+          "height": 3439,
+          "bytes": 177066
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-008.webp",
+          "width": 720,
+          "height": 4284,
+          "bytes": 177512
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-009.webp",
+          "width": 720,
+          "height": 5743,
+          "bytes": 323666
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-010.webp",
+          "width": 720,
+          "height": 2118,
+          "bytes": 105094
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-011.webp",
+          "width": 720,
+          "height": 2269,
+          "bytes": 116324
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-012.webp",
+          "width": 720,
+          "height": 4035,
+          "bytes": 222596
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-013.webp",
+          "width": 720,
+          "height": 3221,
+          "bytes": 154448
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-014.webp",
+          "width": 720,
+          "height": 3597,
+          "bytes": 139458
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-015.webp",
+          "width": 720,
+          "height": 2027,
+          "bytes": 111480
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-016.webp",
+          "width": 720,
+          "height": 2195,
+          "bytes": 99740
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-017.webp",
+          "width": 720,
+          "height": 3526,
+          "bytes": 170088
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-018.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-018.webp",
+          "width": 720,
+          "height": 4980,
+          "bytes": 252852
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-019.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-019.webp",
+          "width": 720,
+          "height": 3995,
+          "bytes": 192836
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-020.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-020.webp",
+          "width": 720,
+          "height": 2449,
+          "bytes": 123176
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-021.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-021.webp",
+          "width": 720,
+          "height": 2621,
+          "bytes": 72010
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-022.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-022.webp",
+          "width": 720,
+          "height": 2862,
+          "bytes": 70220
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-023.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-023.webp",
+          "width": 720,
+          "height": 3071,
+          "bytes": 100666
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-024.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-024.webp",
+          "width": 720,
+          "height": 2714,
+          "bytes": 94672
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-025.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-025.webp",
+          "width": 720,
+          "height": 3178,
+          "bytes": 112276
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-026.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-026.webp",
+          "width": 720,
+          "height": 3315,
+          "bytes": 145098
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-027.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-027.webp",
+          "width": 720,
+          "height": 3072,
+          "bytes": 193436
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-028.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-028.webp",
+          "width": 720,
+          "height": 2942,
+          "bytes": 167692
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-029.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-029.webp",
+          "width": 720,
+          "height": 3063,
+          "bytes": 116418
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-030.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-030.webp",
+          "width": 720,
+          "height": 3097,
+          "bytes": 184888
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-031.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-031.webp",
+          "width": 720,
+          "height": 2462,
+          "bytes": 161446
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-032.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-032.webp",
+          "width": 720,
+          "height": 3878,
+          "bytes": 258254
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-033.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-033.webp",
+          "width": 720,
+          "height": 3132,
+          "bytes": 162672
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-034.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-034.webp",
+          "width": 720,
+          "height": 2178,
+          "bytes": 126388
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0071/page-035.webp",
+          "key": "solo-leveling/vol-001/chapter-0071/page-035.webp",
+          "width": 720,
+          "height": 2953,
+          "bytes": 82498
+        }
+      ]
+    },
+    {
+      "id": "chapter-72",
+      "number": 72,
+      "displayNumber": "72",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 72",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 71,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-001.webp",
+          "width": 720,
+          "height": 2295,
+          "bytes": 128930
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-002.webp",
+          "width": 720,
+          "height": 2643,
+          "bytes": 79906
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-003.webp",
+          "width": 720,
+          "height": 2037,
+          "bytes": 66524
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-004.webp",
+          "width": 720,
+          "height": 2645,
+          "bytes": 206694
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-005.webp",
+          "width": 720,
+          "height": 2388,
+          "bytes": 91906
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-006.webp",
+          "width": 720,
+          "height": 2899,
+          "bytes": 101648
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-007.webp",
+          "width": 720,
+          "height": 3119,
+          "bytes": 127454
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-008.webp",
+          "width": 720,
+          "height": 4486,
+          "bytes": 220928
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-009.webp",
+          "width": 720,
+          "height": 2214,
+          "bytes": 68894
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-010.webp",
+          "width": 720,
+          "height": 2687,
+          "bytes": 85606
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-011.webp",
+          "width": 720,
+          "height": 2590,
+          "bytes": 60074
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-012.webp",
+          "width": 720,
+          "height": 2419,
+          "bytes": 78268
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-013.webp",
+          "width": 720,
+          "height": 3310,
+          "bytes": 89614
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-014.webp",
+          "width": 720,
+          "height": 2389,
+          "bytes": 48844
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-015.webp",
+          "width": 720,
+          "height": 2696,
+          "bytes": 81132
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-016.webp",
+          "width": 720,
+          "height": 3525,
+          "bytes": 89408
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-017.webp",
+          "width": 720,
+          "height": 3137,
+          "bytes": 132596
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-018.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-018.webp",
+          "width": 720,
+          "height": 2343,
+          "bytes": 52106
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-019.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-019.webp",
+          "width": 720,
+          "height": 3486,
+          "bytes": 102890
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-020.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-020.webp",
+          "width": 720,
+          "height": 4149,
+          "bytes": 151486
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-021.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-021.webp",
+          "width": 720,
+          "height": 3337,
+          "bytes": 104028
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-022.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-022.webp",
+          "width": 720,
+          "height": 3223,
+          "bytes": 114298
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-023.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-023.webp",
+          "width": 720,
+          "height": 2573,
+          "bytes": 122996
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-024.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-024.webp",
+          "width": 720,
+          "height": 4187,
+          "bytes": 153188
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-025.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-025.webp",
+          "width": 720,
+          "height": 2877,
+          "bytes": 70918
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-026.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-026.webp",
+          "width": 720,
+          "height": 2981,
+          "bytes": 113412
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-027.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-027.webp",
+          "width": 720,
+          "height": 3467,
+          "bytes": 187076
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-028.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-028.webp",
+          "width": 720,
+          "height": 3500,
+          "bytes": 162698
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-029.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-029.webp",
+          "width": 720,
+          "height": 3243,
+          "bytes": 122506
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-030.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-030.webp",
+          "width": 720,
+          "height": 2079,
+          "bytes": 115802
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-031.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-031.webp",
+          "width": 720,
+          "height": 2631,
+          "bytes": 82750
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-032.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-032.webp",
+          "width": 720,
+          "height": 3106,
+          "bytes": 114692
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-033.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-033.webp",
+          "width": 720,
+          "height": 2789,
+          "bytes": 109286
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-034.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-034.webp",
+          "width": 720,
+          "height": 3231,
+          "bytes": 77556
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-035.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-035.webp",
+          "width": 720,
+          "height": 2056,
+          "bytes": 50888
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-036.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-036.webp",
+          "width": 720,
+          "height": 2097,
+          "bytes": 80790
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-037.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-037.webp",
+          "width": 720,
+          "height": 2781,
+          "bytes": 59826
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-038.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-038.webp",
+          "width": 720,
+          "height": 3250,
+          "bytes": 198264
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-039.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-039.webp",
+          "width": 720,
+          "height": 3176,
+          "bytes": 307976
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-040.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-040.webp",
+          "width": 720,
+          "height": 4219,
+          "bytes": 230092
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0072/page-041.webp",
+          "key": "solo-leveling/vol-001/chapter-0072/page-041.webp",
+          "width": 720,
+          "height": 2929,
+          "bytes": 135564
+        }
+      ]
+    },
+    {
+      "id": "chapter-73",
+      "number": 73,
+      "displayNumber": "73",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 73",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 72,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-001.webp",
+          "width": 720,
+          "height": 3380,
+          "bytes": 239808
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-002.webp",
+          "width": 720,
+          "height": 2267,
+          "bytes": 115958
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-003.webp",
+          "width": 720,
+          "height": 2593,
+          "bytes": 63982
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-004.webp",
+          "width": 720,
+          "height": 2276,
+          "bytes": 110252
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-005.webp",
+          "width": 720,
+          "height": 2635,
+          "bytes": 167540
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-006.webp",
+          "width": 720,
+          "height": 2832,
+          "bytes": 106920
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-007.webp",
+          "width": 720,
+          "height": 2017,
+          "bytes": 61982
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-008.webp",
+          "width": 720,
+          "height": 2968,
+          "bytes": 99220
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-009.webp",
+          "width": 720,
+          "height": 3797,
+          "bytes": 164706
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-010.webp",
+          "width": 720,
+          "height": 3822,
+          "bytes": 190202
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-011.webp",
+          "width": 720,
+          "height": 3440,
+          "bytes": 230888
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-012.webp",
+          "width": 720,
+          "height": 3936,
+          "bytes": 182906
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-013.webp",
+          "width": 720,
+          "height": 2658,
+          "bytes": 66072
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-014.webp",
+          "width": 720,
+          "height": 2948,
+          "bytes": 151662
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-015.webp",
+          "width": 720,
+          "height": 2323,
+          "bytes": 100138
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-016.webp",
+          "width": 720,
+          "height": 2745,
+          "bytes": 109864
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-017.webp",
+          "width": 720,
+          "height": 2472,
+          "bytes": 40154
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-018.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-018.webp",
+          "width": 720,
+          "height": 2270,
+          "bytes": 77584
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-019.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-019.webp",
+          "width": 720,
+          "height": 6256,
+          "bytes": 372328
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-020.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-020.webp",
+          "width": 720,
+          "height": 3433,
+          "bytes": 139624
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-021.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-021.webp",
+          "width": 720,
+          "height": 3541,
+          "bytes": 107186
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-022.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-022.webp",
+          "width": 720,
+          "height": 5045,
+          "bytes": 298342
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-023.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-023.webp",
+          "width": 720,
+          "height": 4718,
+          "bytes": 268192
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-024.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-024.webp",
+          "width": 720,
+          "height": 4049,
+          "bytes": 129284
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-025.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-025.webp",
+          "width": 720,
+          "height": 3363,
+          "bytes": 141608
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-026.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-026.webp",
+          "width": 720,
+          "height": 3375,
+          "bytes": 142914
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-027.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-027.webp",
+          "width": 720,
+          "height": 2797,
+          "bytes": 139492
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-028.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-028.webp",
+          "width": 720,
+          "height": 3189,
+          "bytes": 116414
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-029.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-029.webp",
+          "width": 720,
+          "height": 3754,
+          "bytes": 197868
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-030.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-030.webp",
+          "width": 720,
+          "height": 2245,
+          "bytes": 96000
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-031.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-031.webp",
+          "width": 720,
+          "height": 2206,
+          "bytes": 75046
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-032.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-032.webp",
+          "width": 720,
+          "height": 4506,
+          "bytes": 160056
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-033.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-033.webp",
+          "width": 720,
+          "height": 3271,
+          "bytes": 215836
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-034.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-034.webp",
+          "width": 720,
+          "height": 3486,
+          "bytes": 100112
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-035.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-035.webp",
+          "width": 720,
+          "height": 3388,
+          "bytes": 72322
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-036.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-036.webp",
+          "width": 720,
+          "height": 4267,
+          "bytes": 126082
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-037.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-037.webp",
+          "width": 720,
+          "height": 3948,
+          "bytes": 104414
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0073/page-038.webp",
+          "key": "solo-leveling/vol-001/chapter-0073/page-038.webp",
+          "width": 720,
+          "height": 3947,
+          "bytes": 211382
+        }
+      ]
+    },
+    {
+      "id": "chapter-74",
+      "number": 74,
+      "displayNumber": "74",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 74",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 73,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-001.webp",
+          "width": 720,
+          "height": 5730,
+          "bytes": 262106
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-002.webp",
+          "width": 720,
+          "height": 5484,
+          "bytes": 319724
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-003.webp",
+          "width": 720,
+          "height": 6424,
+          "bytes": 312008
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-004.webp",
+          "width": 720,
+          "height": 4614,
+          "bytes": 271070
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-005.webp",
+          "width": 720,
+          "height": 5107,
+          "bytes": 244356
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-006.webp",
+          "width": 720,
+          "height": 5011,
+          "bytes": 299880
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-007.webp",
+          "width": 720,
+          "height": 5174,
+          "bytes": 314438
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-008.webp",
+          "width": 720,
+          "height": 5235,
+          "bytes": 246538
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-009.webp",
+          "width": 720,
+          "height": 4274,
+          "bytes": 253274
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-010.webp",
+          "width": 720,
+          "height": 5061,
+          "bytes": 288270
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-011.webp",
+          "width": 720,
+          "height": 5957,
+          "bytes": 288738
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-012.webp",
+          "width": 720,
+          "height": 5388,
+          "bytes": 247818
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-013.webp",
+          "width": 720,
+          "height": 4045,
+          "bytes": 238266
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-014.webp",
+          "width": 720,
+          "height": 4037,
+          "bytes": 236548
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-015.webp",
+          "width": 720,
+          "height": 5753,
+          "bytes": 246790
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-016.webp",
+          "width": 720,
+          "height": 4428,
+          "bytes": 316412
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-017.webp",
+          "width": 720,
+          "height": 4299,
+          "bytes": 193904
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-018.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-018.webp",
+          "width": 720,
+          "height": 4519,
+          "bytes": 181608
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-019.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-019.webp",
+          "width": 720,
+          "height": 4880,
+          "bytes": 305922
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-020.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-020.webp",
+          "width": 720,
+          "height": 4816,
+          "bytes": 228420
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-021.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-021.webp",
+          "width": 720,
+          "height": 4402,
+          "bytes": 259472
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-022.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-022.webp",
+          "width": 720,
+          "height": 4017,
+          "bytes": 170266
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-023.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-023.webp",
+          "width": 720,
+          "height": 6099,
+          "bytes": 275860
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-024.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-024.webp",
+          "width": 720,
+          "height": 5242,
+          "bytes": 288668
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-025.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-025.webp",
+          "width": 720,
+          "height": 4209,
+          "bytes": 321342
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-026.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-026.webp",
+          "width": 720,
+          "height": 4034,
+          "bytes": 168730
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-027.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-027.webp",
+          "width": 720,
+          "height": 4587,
+          "bytes": 186052
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-028.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-028.webp",
+          "width": 720,
+          "height": 5663,
+          "bytes": 256632
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0074/page-029.webp",
+          "key": "solo-leveling/vol-001/chapter-0074/page-029.webp",
+          "width": 720,
+          "height": 4137,
+          "bytes": 177302
+        }
+      ]
+    },
+    {
+      "id": "chapter-75",
+      "number": 75,
+      "displayNumber": "75",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 75",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 74,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-001.webp",
+          "width": 720,
+          "height": 7274,
+          "bytes": 364394
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-002.webp",
+          "width": 720,
+          "height": 7748,
+          "bytes": 637462
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-003.webp",
+          "width": 720,
+          "height": 7561,
+          "bytes": 401640
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-004.webp",
+          "width": 720,
+          "height": 6831,
+          "bytes": 369986
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-005.webp",
+          "width": 720,
+          "height": 7262,
+          "bytes": 389004
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-006.webp",
+          "width": 720,
+          "height": 6683,
+          "bytes": 297604
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-007.webp",
+          "width": 720,
+          "height": 7783,
+          "bytes": 368402
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-008.webp",
+          "width": 720,
+          "height": 7645,
+          "bytes": 352070
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-009.webp",
+          "width": 720,
+          "height": 7328,
+          "bytes": 527616
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-010.webp",
+          "width": 720,
+          "height": 7129,
+          "bytes": 251626
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-011.webp",
+          "width": 720,
+          "height": 7452,
+          "bytes": 400904
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-012.webp",
+          "width": 720,
+          "height": 6826,
+          "bytes": 440010
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-013.webp",
+          "width": 720,
+          "height": 7491,
+          "bytes": 428012
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-014.webp",
+          "width": 720,
+          "height": 6530,
+          "bytes": 382068
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-015.webp",
+          "width": 720,
+          "height": 8360,
+          "bytes": 464790
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-016.webp",
+          "width": 720,
+          "height": 7257,
+          "bytes": 299630
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0075/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0075/page-017.webp",
+          "width": 720,
+          "height": 5223,
+          "bytes": 351598
+        }
+      ]
+    },
+    {
+      "id": "chapter-76",
+      "number": 76,
+      "displayNumber": "76",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 76",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 75,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-001.webp",
+          "width": 720,
+          "height": 5162,
+          "bytes": 219940
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-002.webp",
+          "width": 720,
+          "height": 3667,
+          "bytes": 147208
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-003.webp",
+          "width": 720,
+          "height": 5800,
+          "bytes": 239292
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-004.webp",
+          "width": 720,
+          "height": 4595,
+          "bytes": 307092
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-005.webp",
+          "width": 720,
+          "height": 3870,
+          "bytes": 240654
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-006.webp",
+          "width": 720,
+          "height": 3320,
+          "bytes": 96910
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-007.webp",
+          "width": 720,
+          "height": 3833,
+          "bytes": 134210
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-008.webp",
+          "width": 720,
+          "height": 5802,
+          "bytes": 304084
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-009.webp",
+          "width": 720,
+          "height": 5016,
+          "bytes": 263196
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-010.webp",
+          "width": 720,
+          "height": 4556,
+          "bytes": 210124
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-011.webp",
+          "width": 720,
+          "height": 3002,
+          "bytes": 75492
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-012.webp",
+          "width": 720,
+          "height": 4171,
+          "bytes": 232578
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-013.webp",
+          "width": 720,
+          "height": 3850,
+          "bytes": 180658
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-014.webp",
+          "width": 720,
+          "height": 3023,
+          "bytes": 148572
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-015.webp",
+          "width": 720,
+          "height": 3947,
+          "bytes": 125198
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-016.webp",
+          "width": 720,
+          "height": 3630,
+          "bytes": 210046
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-017.webp",
+          "width": 720,
+          "height": 3043,
+          "bytes": 213652
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-018.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-018.webp",
+          "width": 720,
+          "height": 3354,
+          "bytes": 191634
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-019.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-019.webp",
+          "width": 720,
+          "height": 3476,
+          "bytes": 188406
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-020.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-020.webp",
+          "width": 720,
+          "height": 3282,
+          "bytes": 160928
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-021.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-021.webp",
+          "width": 720,
+          "height": 3375,
+          "bytes": 222148
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-022.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-022.webp",
+          "width": 720,
+          "height": 3752,
+          "bytes": 155738
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-023.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-023.webp",
+          "width": 720,
+          "height": 3177,
+          "bytes": 113574
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-024.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-024.webp",
+          "width": 720,
+          "height": 3942,
+          "bytes": 140752
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0076/page-025.webp",
+          "key": "solo-leveling/vol-001/chapter-0076/page-025.webp",
+          "width": 720,
+          "height": 2805,
+          "bytes": 113002
+        }
+      ]
+    },
+    {
+      "id": "chapter-77",
+      "number": 77,
+      "displayNumber": "77",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 77",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 76,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-001.webp",
+          "width": 720,
+          "height": 2209,
+          "bytes": 64864
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-002.webp",
+          "width": 720,
+          "height": 3100,
+          "bytes": 228014
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-003.webp",
+          "width": 720,
+          "height": 3492,
+          "bytes": 107770
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-004.webp",
+          "width": 720,
+          "height": 2567,
+          "bytes": 130326
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-005.webp",
+          "width": 720,
+          "height": 3503,
+          "bytes": 193488
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-006.webp",
+          "width": 720,
+          "height": 2953,
+          "bytes": 109672
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-007.webp",
+          "width": 720,
+          "height": 2591,
+          "bytes": 51122
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-008.webp",
+          "width": 720,
+          "height": 2160,
+          "bytes": 88784
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-009.webp",
+          "width": 720,
+          "height": 5140,
+          "bytes": 255194
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-010.webp",
+          "width": 720,
+          "height": 2683,
+          "bytes": 202478
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-011.webp",
+          "width": 720,
+          "height": 2154,
+          "bytes": 58538
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-012.webp",
+          "width": 720,
+          "height": 3156,
+          "bytes": 151832
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-013.webp",
+          "width": 720,
+          "height": 2754,
+          "bytes": 106654
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-014.webp",
+          "width": 720,
+          "height": 2497,
+          "bytes": 126342
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-015.webp",
+          "width": 720,
+          "height": 2506,
+          "bytes": 100826
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-016.webp",
+          "width": 720,
+          "height": 2825,
+          "bytes": 87166
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-017.webp",
+          "width": 720,
+          "height": 2075,
+          "bytes": 130302
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-018.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-018.webp",
+          "width": 720,
+          "height": 3562,
+          "bytes": 212942
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-019.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-019.webp",
+          "width": 720,
+          "height": 3738,
+          "bytes": 198326
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-020.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-020.webp",
+          "width": 720,
+          "height": 3206,
+          "bytes": 245770
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-021.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-021.webp",
+          "width": 720,
+          "height": 5542,
+          "bytes": 304532
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-022.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-022.webp",
+          "width": 720,
+          "height": 3327,
+          "bytes": 184722
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-023.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-023.webp",
+          "width": 720,
+          "height": 3852,
+          "bytes": 219010
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-024.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-024.webp",
+          "width": 720,
+          "height": 2908,
+          "bytes": 79350
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-025.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-025.webp",
+          "width": 720,
+          "height": 2612,
+          "bytes": 123676
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-026.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-026.webp",
+          "width": 720,
+          "height": 2300,
+          "bytes": 85164
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-027.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-027.webp",
+          "width": 720,
+          "height": 2778,
+          "bytes": 134034
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0077/page-028.webp",
+          "key": "solo-leveling/vol-001/chapter-0077/page-028.webp",
+          "width": 720,
+          "height": 2994,
+          "bytes": 78106
+        }
+      ]
+    },
+    {
+      "id": "chapter-78",
+      "number": 78,
+      "displayNumber": "78",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 78",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 77,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-001.webp",
+          "width": 720,
+          "height": 3817,
+          "bytes": 121436
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-002.webp",
+          "width": 720,
+          "height": 2429,
+          "bytes": 148622
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-003.webp",
+          "width": 720,
+          "height": 3130,
+          "bytes": 159646
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-004.webp",
+          "width": 720,
+          "height": 4564,
+          "bytes": 196024
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-005.webp",
+          "width": 720,
+          "height": 3094,
+          "bytes": 109554
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-006.webp",
+          "width": 720,
+          "height": 6041,
+          "bytes": 333908
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-007.webp",
+          "width": 720,
+          "height": 3128,
+          "bytes": 85932
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-008.webp",
+          "width": 720,
+          "height": 3503,
+          "bytes": 183396
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-009.webp",
+          "width": 720,
+          "height": 3096,
+          "bytes": 144434
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-010.webp",
+          "width": 720,
+          "height": 3033,
+          "bytes": 152958
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-011.webp",
+          "width": 720,
+          "height": 3209,
+          "bytes": 105562
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-012.webp",
+          "width": 720,
+          "height": 4331,
+          "bytes": 203030
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-013.webp",
+          "width": 720,
+          "height": 3052,
+          "bytes": 77972
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-014.webp",
+          "width": 720,
+          "height": 3841,
+          "bytes": 130608
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-015.webp",
+          "width": 720,
+          "height": 3992,
+          "bytes": 158476
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-016.webp",
+          "width": 720,
+          "height": 4301,
+          "bytes": 151572
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-017.webp",
+          "width": 720,
+          "height": 3014,
+          "bytes": 135890
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-018.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-018.webp",
+          "width": 720,
+          "height": 3652,
+          "bytes": 192776
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-019.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-019.webp",
+          "width": 720,
+          "height": 5162,
+          "bytes": 287146
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-020.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-020.webp",
+          "width": 720,
+          "height": 4896,
+          "bytes": 248302
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-021.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-021.webp",
+          "width": 720,
+          "height": 3262,
+          "bytes": 165436
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-022.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-022.webp",
+          "width": 720,
+          "height": 3700,
+          "bytes": 127308
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-023.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-023.webp",
+          "width": 720,
+          "height": 3087,
+          "bytes": 192152
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0078/page-024.webp",
+          "key": "solo-leveling/vol-001/chapter-0078/page-024.webp",
+          "width": 720,
+          "height": 2085,
+          "bytes": 78352
+        }
+      ]
+    },
+    {
+      "id": "chapter-79",
+      "number": 79,
+      "displayNumber": "79",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 79",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 78,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-001.webp",
+          "width": 720,
+          "height": 3213,
+          "bytes": 182840
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-002.webp",
+          "width": 720,
+          "height": 3889,
+          "bytes": 221034
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-003.webp",
+          "width": 720,
+          "height": 3859,
+          "bytes": 264388
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-004.webp",
+          "width": 720,
+          "height": 4255,
+          "bytes": 336604
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-005.webp",
+          "width": 720,
+          "height": 3090,
+          "bytes": 193404
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-006.webp",
+          "width": 720,
+          "height": 3266,
+          "bytes": 168242
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-007.webp",
+          "width": 720,
+          "height": 5215,
+          "bytes": 403558
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-008.webp",
+          "width": 720,
+          "height": 4111,
+          "bytes": 213614
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-009.webp",
+          "width": 720,
+          "height": 3665,
+          "bytes": 135950
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-010.webp",
+          "width": 720,
+          "height": 3326,
+          "bytes": 171784
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-011.webp",
+          "width": 720,
+          "height": 3056,
+          "bytes": 166174
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-012.webp",
+          "width": 720,
+          "height": 3973,
+          "bytes": 175002
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-013.webp",
+          "width": 720,
+          "height": 3476,
+          "bytes": 120346
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-014.webp",
+          "width": 720,
+          "height": 3001,
+          "bytes": 107876
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-015.webp",
+          "width": 720,
+          "height": 3438,
+          "bytes": 118996
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-016.webp",
+          "width": 720,
+          "height": 3162,
+          "bytes": 115986
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-017.webp",
+          "width": 720,
+          "height": 4298,
+          "bytes": 163872
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-018.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-018.webp",
+          "width": 720,
+          "height": 4221,
+          "bytes": 162960
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-019.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-019.webp",
+          "width": 720,
+          "height": 3862,
+          "bytes": 102924
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-020.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-020.webp",
+          "width": 720,
+          "height": 4156,
+          "bytes": 235178
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-021.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-021.webp",
+          "width": 720,
+          "height": 3091,
+          "bytes": 148044
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-022.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-022.webp",
+          "width": 720,
+          "height": 4285,
+          "bytes": 180086
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-023.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-023.webp",
+          "width": 720,
+          "height": 3890,
+          "bytes": 170148
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-024.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-024.webp",
+          "width": 720,
+          "height": 4105,
+          "bytes": 333468
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-025.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-025.webp",
+          "width": 720,
+          "height": 3363,
+          "bytes": 140598
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0079/page-026.webp",
+          "key": "solo-leveling/vol-001/chapter-0079/page-026.webp",
+          "width": 720,
+          "height": 3572,
+          "bytes": 94542
+        }
+      ]
+    },
+    {
+      "id": "chapter-80",
+      "number": 80,
+      "displayNumber": "80",
+      "volume": 1,
+      "title": "Solo Leveling · Capitolo 80",
+      "publishedAt": "2026-06-16",
+      "sourceVolume": 1,
+      "sourceChapter": 79,
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-001.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-001.webp",
+          "width": 720,
+          "height": 3220,
+          "bytes": 95170
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-002.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-002.webp",
+          "width": 720,
+          "height": 2889,
+          "bytes": 68042
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-003.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-003.webp",
+          "width": 720,
+          "height": 3239,
+          "bytes": 141768
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-004.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-004.webp",
+          "width": 720,
+          "height": 2979,
+          "bytes": 150042
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-005.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-005.webp",
+          "width": 720,
+          "height": 3150,
+          "bytes": 157110
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-006.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-006.webp",
+          "width": 720,
+          "height": 3168,
+          "bytes": 144418
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-007.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-007.webp",
+          "width": 720,
+          "height": 3477,
+          "bytes": 131884
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-008.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-008.webp",
+          "width": 720,
+          "height": 4573,
+          "bytes": 383026
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-009.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-009.webp",
+          "width": 720,
+          "height": 2577,
+          "bytes": 82144
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-010.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-010.webp",
+          "width": 720,
+          "height": 3483,
+          "bytes": 167656
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-011.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-011.webp",
+          "width": 720,
+          "height": 3077,
+          "bytes": 123678
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-012.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-012.webp",
+          "width": 720,
+          "height": 3202,
+          "bytes": 73704
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-013.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-013.webp",
+          "width": 720,
+          "height": 3458,
+          "bytes": 184106
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-014.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-014.webp",
+          "width": 720,
+          "height": 3919,
+          "bytes": 146682
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-015.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-015.webp",
+          "width": 720,
+          "height": 2972,
+          "bytes": 200268
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-016.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-016.webp",
+          "width": 720,
+          "height": 2558,
+          "bytes": 121270
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-017.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-017.webp",
+          "width": 720,
+          "height": 3830,
+          "bytes": 169396
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-018.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-018.webp",
+          "width": 720,
+          "height": 4227,
+          "bytes": 206638
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-019.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-019.webp",
+          "width": 720,
+          "height": 3369,
+          "bytes": 206048
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-020.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-020.webp",
+          "width": 720,
+          "height": 3972,
+          "bytes": 193996
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-021.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-021.webp",
+          "width": 720,
+          "height": 3465,
+          "bytes": 179264
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-022.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-022.webp",
+          "width": 720,
+          "height": 2543,
+          "bytes": 128460
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-023.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-023.webp",
+          "width": 720,
+          "height": 2697,
+          "bytes": 78504
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-024.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-024.webp",
+          "width": 720,
+          "height": 3435,
+          "bytes": 145646
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-025.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-025.webp",
+          "width": 720,
+          "height": 2574,
+          "bytes": 92246
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-026.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-026.webp",
+          "width": 720,
+          "height": 3187,
+          "bytes": 126618
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-027.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-027.webp",
+          "width": 720,
+          "height": 2939,
+          "bytes": 84716
+        },
+        {
+          "src": "https://static.lucahome.uk/solo-leveling/vol-001/chapter-0080/page-028.webp",
+          "key": "solo-leveling/vol-001/chapter-0080/page-028.webp",
+          "width": 720,
+          "height": 3612,
+          "bytes": 191912
         }
       ]
     }

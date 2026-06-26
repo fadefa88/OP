@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-11T14:38:51.636599+00:00",
+  "generatedAt": "2026-06-26T09:07:03.742227+00:00",
   "seriesId": "op",
   "volume": 116,
   "fromChapter": 1176,
@@ -1103,6 +1103,129 @@
           "bytes": 1444903
         }
       ]
+    },
+    {
+      "id": "chapter-1186",
+      "number": 1186,
+      "volume": 116,
+      "title": "Volume 116 · Capitolo 1186",
+      "publishedAt": "2026-06-26",
+      "pages": [
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-001.jpg",
+          "key": "op/vol-116/chapter-1186/page-001.jpg",
+          "width": 1600,
+          "height": 2303,
+          "bytes": 453682
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-002.jpg",
+          "key": "op/vol-116/chapter-1186/page-002.jpg",
+          "width": 1600,
+          "height": 2317,
+          "bytes": 774262
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-003.jpg",
+          "key": "op/vol-116/chapter-1186/page-003.jpg",
+          "width": 1600,
+          "height": 2345,
+          "bytes": 603039
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-004.jpg",
+          "key": "op/vol-116/chapter-1186/page-004.jpg",
+          "width": 1600,
+          "height": 2341,
+          "bytes": 530681
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-005.jpg",
+          "key": "op/vol-116/chapter-1186/page-005.jpg",
+          "width": 1600,
+          "height": 2312,
+          "bytes": 457945
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-006.jpg",
+          "key": "op/vol-116/chapter-1186/page-006.jpg",
+          "width": 1600,
+          "height": 2346,
+          "bytes": 557305
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-007.jpg",
+          "key": "op/vol-116/chapter-1186/page-007.jpg",
+          "width": 1600,
+          "height": 2303,
+          "bytes": 507219
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-008.jpg",
+          "key": "op/vol-116/chapter-1186/page-008.jpg",
+          "width": 1600,
+          "height": 2338,
+          "bytes": 632238
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-009.jpg",
+          "key": "op/vol-116/chapter-1186/page-009.jpg",
+          "width": 1600,
+          "height": 2324,
+          "bytes": 489862
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-010.jpg",
+          "key": "op/vol-116/chapter-1186/page-010.jpg",
+          "width": 1600,
+          "height": 2326,
+          "bytes": 584448
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-011.jpg",
+          "key": "op/vol-116/chapter-1186/page-011.jpg",
+          "width": 1600,
+          "height": 2327,
+          "bytes": 683623
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-012.jpg",
+          "key": "op/vol-116/chapter-1186/page-012.jpg",
+          "width": 1600,
+          "height": 2314,
+          "bytes": 564550
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-013.jpg",
+          "key": "op/vol-116/chapter-1186/page-013.jpg",
+          "width": 1600,
+          "height": 2309,
+          "bytes": 688644
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-014.jpg",
+          "key": "op/vol-116/chapter-1186/page-014.jpg",
+          "width": 1600,
+          "height": 2299,
+          "bytes": 664339
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-015.jpg",
+          "key": "op/vol-116/chapter-1186/page-015.jpg",
+          "width": 1600,
+          "height": 2298,
+          "bytes": 667294
+        },
+        {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1186/page-016.jpg",
+          "key": "op/vol-116/chapter-1186/page-016.jpg",
+          "width": 3200,
+          "height": 2321,
+          "bytes": 1374469
+        }
+      ],
+      "sourceVolume": 116,
+      "sourceChapter": 1186
     }
   ]
 }

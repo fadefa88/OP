@@ -21,6 +21,7 @@ from op_importer_common import (
     DEFAULT_SERIES_TITLE,
     build_r2_client,
     find_volume_for_chapter,
+    get_manifest_chapter,
     import_single_chapter_to_r2,
     latest_chapter_from_index,
     make_session,
@@ -67,6 +68,38 @@ def write_report(path: str, payload: dict) -> None:
     report_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def append_unique(values: list[int], candidate: object) -> None:
+    try:
+        value = int(candidate)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return
+    if value > 0 and value not in values:
+        values.append(value)
+
+
+def volume_candidates_for_chapter(content_dir: Path, series_id: str, latest: int, chapter: int) -> list[int]:
+    """Return source volumes to probe for a new chapter.
+
+    OnePiecePower sometimes keeps a newly released chapter in the previous source
+    volume before the formal volume mapping catches up. Example: chapter 1186 is
+    currently under volume116, even though the provisional mapping would put it in
+    volume117. To avoid missing those releases, the scanner first tries to extend
+    the latest imported/source volume, then falls back to the mapped volume and
+    its immediate neighbours.
+    """
+    mapped_volume = find_volume_for_chapter(chapter, series_id)
+    candidates: list[int] = []
+
+    latest_entry = get_manifest_chapter(content_dir, series_id, latest) if latest > 0 else None
+    if latest_entry:
+        append_unique(candidates, latest_entry.get("sourceVolume") or latest_entry.get("volume"))
+
+    append_unique(candidates, mapped_volume)
+    append_unique(candidates, mapped_volume - 1)
+    append_unique(candidates, mapped_volume + 1)
+    return candidates
+
+
 def main(argv: list[str]) -> int:
     args = parse_args(argv)
     content_dir = Path(args.content_dir)
@@ -100,45 +133,52 @@ def main(argv: list[str]) -> int:
 
         attempts = []
         for chapter in chapters_to_try:
-            volume = find_volume_for_chapter(chapter, args.series_id)
-            print(f"\n=== Probing Volume {volume} / Chapter {chapter} ===")
-            result = import_single_chapter_to_r2(
-                session=session,
-                r2_client=r2_client,
-                bucket=bucket,
-                public_base_url=public_base_url,
-                source_base_url=args.source_base_url,
-                source_template=source_template,
-                source_extensions=extensions,
-                content_dir=content_dir,
-                series_id=args.series_id,
-                series_title=args.series_title,
-                series_description=args.series_description,
-                chapter=chapter,
-                volume_override=None,
-                max_pages=args.max_pages,
-                min_pages=args.min_pages,
-                stop_after_missing=args.stop_after_missing,
-                timeout=args.timeout,
-                delay=args.delay,
-                webp_quality=args.webp_quality,
-                image_strategy=args.image_strategy,
-                overwrite=args.overwrite,
-                dry_run=False,
-            )
-            attempts.append({
-                "chapter": result.chapter,
-                "volume": result.volume,
-                "imported": result.imported,
-                "skipped": result.skipped,
-                "pages": len(result.pages),
-                "reason": result.reason,
-            })
-            if result.imported:
-                write_report(args.report, {"imported": True, "chapter": result.chapter, "volume": result.volume, "pages": len(result.pages), "attempts": attempts})
-                print(f"Imported chapter {result.chapter}. Manifest JSON changed.")
-                return 0
-            print(f"No accepted chapter: imported={result.imported}, skipped={result.skipped}, pages={len(result.pages)}, reason={result.reason or '-'}")
+            volume_candidates = volume_candidates_for_chapter(content_dir, args.series_id, latest, chapter)
+            print(f"\n=== Chapter {chapter}: source volumes to probe: {volume_candidates} ===")
+
+            for volume in volume_candidates:
+                print(f"\n--- Probing Volume {volume} / Chapter {chapter} ---")
+                result = import_single_chapter_to_r2(
+                    session=session,
+                    r2_client=r2_client,
+                    bucket=bucket,
+                    public_base_url=public_base_url,
+                    source_base_url=args.source_base_url,
+                    source_template=source_template,
+                    source_extensions=extensions,
+                    content_dir=content_dir,
+                    series_id=args.series_id,
+                    series_title=args.series_title,
+                    series_description=args.series_description,
+                    chapter=chapter,
+                    volume_override=volume,
+                    max_pages=args.max_pages,
+                    min_pages=args.min_pages,
+                    stop_after_missing=args.stop_after_missing,
+                    timeout=args.timeout,
+                    delay=args.delay,
+                    webp_quality=args.webp_quality,
+                    image_strategy=args.image_strategy,
+                    overwrite=args.overwrite,
+                    dry_run=False,
+                )
+                attempts.append({
+                    "chapter": result.chapter,
+                    "volume": result.volume,
+                    "imported": result.imported,
+                    "skipped": result.skipped,
+                    "pages": len(result.pages),
+                    "reason": result.reason,
+                })
+                if result.imported:
+                    write_report(args.report, {"imported": True, "chapter": result.chapter, "volume": result.volume, "pages": len(result.pages), "attempts": attempts})
+                    print(f"Imported chapter {result.chapter} from volume {result.volume}. Manifest JSON changed.")
+                    return 0
+                if result.skipped:
+                    print(f"Chapter {result.chapter} already present. Stopping scan.")
+                    write_report(args.report, {"imported": False, "chapter": result.chapter, "volume": result.volume, "skipped": True, "attempts": attempts})
+                    return 0
+                print(f"No accepted chapter in volume {volume}: pages={len(result.pages)}, reason={result.reason or '-'}")
 
         write_report(args.report, {"imported": False, "attempts": attempts})
         print("No new chapter found. No manifest change should be committed.")

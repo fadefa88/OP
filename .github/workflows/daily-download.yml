@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       chapter:
-        description: "Optional chapter number to force-check. Empty = latest manifest chapter + 1."
+        description: "Optional chapter number. Existing chapter = refresh; future chapter = import. Empty = refresh latest, then scan latest+1."
         required: false
         type: string
       scan_ahead:
@@ -101,20 +101,28 @@ jobs:
           fi
           echo "skip=false" >> "$GITHUB_OUTPUT"
 
-      - name: Refresh latest chapter if source scans changed
+      - name: Refresh existing chapter if source scans changed
         if: steps.config.outputs.skip != 'true'
         continue-on-error: true
         shell: bash
         run: |
           set -euo pipefail
+
+          CHAPTER_INPUT="${{ github.event.inputs.chapter || '' }}"
+          REFRESH_ARGS=()
+          if [ -n "$CHAPTER_INPUT" ]; then
+            REFRESH_ARGS+=(--chapter "$CHAPTER_INPUT")
+          fi
+
           python scripts/refresh_latest_chapter_if_changed.py \
             --max-pages "${{ github.event.inputs.max_pages || '45' }}" \
             --min-pages "${{ github.event.inputs.min_pages || '3' }}" \
             --webp-quality "$WEBP_QUALITY" \
             --image-strategy "$IMAGE_STRATEGY" \
-            --i-confirm-rights
+            --i-confirm-rights \
+            "${REFRESH_ARGS[@]}"
 
-      - name: Detect refreshed latest chapter
+      - name: Detect refreshed chapter
         id: refreshed
         if: steps.config.outputs.skip != 'true'
         shell: bash
@@ -139,7 +147,7 @@ jobs:
           print(f"changed_pages={','.join(str(page) for page in changed_pages)}")
           PY
 
-      - name: Import next chapter to R2
+      - name: Import only a genuinely new chapter to R2
         if: steps.config.outputs.skip != 'true'
         shell: bash
         run: |
@@ -150,11 +158,51 @@ jobs:
           MAX_PAGES_INPUT="${{ github.event.inputs.max_pages || '45' }}"
           MIN_PAGES_INPUT="${{ github.event.inputs.min_pages || '3' }}"
 
-          EXTRA_ARGS=()
+          LATEST_CHAPTER=$(python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("public/content/index.json").read_text(encoding="utf-8"))
+          series = next((item for item in data.get("series", []) if item.get("id") == "op"), {})
+          print(int(series.get("latestChapter") or 0))
+          PY
+          )
+
           if [ -n "$CHAPTER_INPUT" ]; then
-            EXTRA_ARGS+=(--chapter "$CHAPTER_INPUT")
+            if ! [[ "$CHAPTER_INPUT" =~ ^[0-9]+$ ]]; then
+              echo "Invalid chapter input: $CHAPTER_INPUT" >&2
+              exit 2
+            fi
+
+            if [ "$CHAPTER_INPUT" -le "$LATEST_CHAPTER" ]; then
+              echo "Chapter $CHAPTER_INPUT already exists (latest: $LATEST_CHAPTER). Refresh step handled it; skipping new-chapter importer."
+              python - "$CHAPTER_INPUT" "$LATEST_CHAPTER" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          chapter = int(sys.argv[1])
+          latest = int(sys.argv[2])
+          path = Path("reports/new-chapter-result.json")
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(
+              json.dumps(
+                  {
+                      "imported": False,
+                      "chapter": chapter,
+                      "reason": f"chapter already exists; handled as refresh (latest={latest})",
+                  },
+                  indent=2,
+              ) + "\n",
+              encoding="utf-8",
+          )
+          PY
+              exit 0
+            fi
+
+            EXTRA_ARGS=(--chapter "$CHAPTER_INPUT")
           else
-            EXTRA_ARGS+=(--scan-ahead "$SCAN_AHEAD_INPUT")
+            EXTRA_ARGS=(--scan-ahead "$SCAN_AHEAD_INPUT")
           fi
 
           python scripts/import_new_chapter_to_r2.py \
@@ -220,10 +268,15 @@ jobs:
 
           CHAPTER="${{ steps.imported.outputs.chapter }}"
           REFRESHED_CHAPTER="${{ steps.refreshed.outputs.chapter }}"
-          if [ -n "$CHAPTER" ] && [ "${{ steps.imported.outputs.imported }}" = "true" ]; then
-            git commit -m "Import manga chapter ${CHAPTER} manifest"
-          elif [ -n "$REFRESHED_CHAPTER" ] && [ "${{ steps.refreshed.outputs.updated }}" = "true" ]; then
+          IMPORTED="${{ steps.imported.outputs.imported }}"
+          REFRESHED="${{ steps.refreshed.outputs.updated }}"
+
+          if [ "$REFRESHED" = "true" ] && [ "$IMPORTED" = "true" ]; then
+            git commit -m "Refresh manga chapter ${REFRESHED_CHAPTER} scans and import chapter ${CHAPTER}"
+          elif [ "$REFRESHED" = "true" ] && [ -n "$REFRESHED_CHAPTER" ]; then
             git commit -m "Refresh manga chapter ${REFRESHED_CHAPTER} scans"
+          elif [ "$IMPORTED" = "true" ] && [ -n "$CHAPTER" ]; then
+            git commit -m "Import manga chapter ${CHAPTER} manifest"
           else
             git commit -m "Update manga chapter manifest"
           fi
@@ -282,7 +335,7 @@ jobs:
           URL="${BASE_URL}/reader.html?series=op&chapter=chapter-${CHAPTER}&page=1"
 
           if [ -n "$CHANGED_PAGES" ]; then
-            MESSAGE="Capitolo ${CHAPTER} aggiornato. Pagine sostituite: ${CHANGED_PAGES}. Tocca per rileggere la versione aggiornata."
+            MESSAGE="Capitolo ${CHAPTER} aggiornato. Pagine aggiornate: ${CHANGED_PAGES}. Tocca per rileggere la versione aggiornata."
           else
             MESSAGE="Capitolo ${CHAPTER} aggiornato con nuove immagini. Tocca per rileggere la versione aggiornata."
           fi

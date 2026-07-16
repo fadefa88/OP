@@ -34,7 +34,6 @@ from op_importer_common import (
     build_source_url,
     encode_page_asset,
     fetch_image_bytes,
-    get_manifest_chapter,
     latest_chapter_from_index,
     make_session,
     now_iso,
@@ -47,6 +46,7 @@ from op_importer_common import (
     upload_asset_to_r2,
     validate_confirmation,
     volume_manifest_path,
+    volume_manifests_glob,
     write_json_if_changed,
     write_legacy_combined_manifest,
 )
@@ -97,6 +97,24 @@ def page_number(page: dict, fallback: int) -> int:
     return int(match.group(1)) if match else fallback
 
 
+def find_chapter_in_actual_manifest(content_dir: Path, series_id: str, chapter: int) -> tuple[dict | None, Path | None]:
+    """Find a chapter in the manifest where it is actually stored.
+
+    Recent One Piece chapters may remain under the previous source volume even
+    when the provisional chapter-to-volume mapping points to the next volume.
+    Searching all volume manifests avoids treating those chapters as missing.
+    """
+    for manifest_path in volume_manifests_glob(content_dir, series_id):
+        manifest = read_json(manifest_path, {})
+        found = next(
+            (item for item in manifest.get("chapters", []) if int(item.get("number", -1)) == chapter),
+            None,
+        )
+        if found:
+            return found, manifest_path
+    return None, None
+
+
 def r2_object_digest(client, bucket: str, key: str) -> tuple[int | None, str | None]:
     try:
         head = client.head_object(Bucket=bucket, Key=key)
@@ -135,10 +153,10 @@ def main(argv: list[str]) -> int:
         if chapter < 1:
             raise RuntimeError("No latest chapter found in manifest")
 
-        existing = get_manifest_chapter(content_dir, args.series_id, chapter)
+        existing, actual_manifest_path = find_chapter_in_actual_manifest(content_dir, args.series_id, chapter)
         if not existing:
-            write_report(args.report, {"updated": False, "chapter": chapter, "reason": "chapter not found in manifest"})
-            print(f"Chapter {chapter} is not present in the manifest. Nothing to refresh.")
+            write_report(args.report, {"updated": False, "chapter": chapter, "reason": "chapter not found in any volume manifest"})
+            print(f"Chapter {chapter} is not present in any volume manifest. Nothing to refresh.")
             return 0
 
         source_volume = int(existing.get("sourceVolume") or existing.get("volume") or 0)
@@ -149,7 +167,8 @@ def main(argv: list[str]) -> int:
 
         print(
             f"Refreshing chapter {chapter}: source volume {source_volume}, "
-            f"source chapter {source_chapter}, manifest volume {manifest_volume}"
+            f"source chapter {source_chapter}, manifest volume {manifest_volume}, "
+            f"manifest file {actual_manifest_path}"
         )
 
         session = make_session()
@@ -296,7 +315,7 @@ def main(argv: list[str]) -> int:
             print("Chapter images are unchanged.")
             return 0
 
-        manifest_path = volume_manifest_path(content_dir, args.series_id, manifest_volume)
+        manifest_path = actual_manifest_path or volume_manifest_path(content_dir, args.series_id, manifest_volume)
         manifest = read_json(manifest_path, {})
         chapters = manifest.setdefault("chapters", [])
         chapter_index = next((index for index, item in enumerate(chapters) if int(item.get("number", -1)) == chapter), None)

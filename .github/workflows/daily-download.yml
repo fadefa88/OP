@@ -2,7 +2,7 @@ name: Scan New Chapter to R2 Hourly
 
 on:
   schedule:
-    # Every hour. This job uploads images to R2 and commits only JSON manifests if a new chapter is found.
+    # Every hour: refresh the latest published scans, then look for a new chapter.
     - cron: "0 * * * *"
   workflow_dispatch:
     inputs:
@@ -35,7 +35,7 @@ concurrency:
 
 jobs:
   scan:
-    name: Check next chapter, upload to R2, commit JSON only
+    name: Refresh latest scans, check next chapter, upload to R2
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
@@ -100,6 +100,44 @@ jobs:
             exit 0
           fi
           echo "skip=false" >> "$GITHUB_OUTPUT"
+
+      - name: Refresh latest chapter if source scans changed
+        if: steps.config.outputs.skip != 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/refresh_latest_chapter_if_changed.py \
+            --max-pages "${{ github.event.inputs.max_pages || '45' }}" \
+            --min-pages "${{ github.event.inputs.min_pages || '3' }}" \
+            --webp-quality "$WEBP_QUALITY" \
+            --image-strategy "$IMAGE_STRATEGY" \
+            --i-confirm-rights
+
+      - name: Detect refreshed latest chapter
+        id: refreshed
+        if: steps.config.outputs.skip != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -f reports/latest-chapter-refresh-result.json ]; then
+            echo "updated=false" >> "$GITHUB_OUTPUT"
+            echo "chapter=" >> "$GITHUB_OUTPUT"
+            echo "changed_pages=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("reports/latest-chapter-refresh-result.json").read_text(encoding="utf-8"))
+          updated = bool(report.get("updated"))
+          changed_pages = report.get("changedPages") or []
+          print(f"updated={'true' if updated else 'false'}")
+          print(f"chapter={report.get('chapter') or ''}")
+          print(f"changed_pages={','.join(str(page) for page in changed_pages)}")
+          PY
 
       - name: Import next chapter to R2
         if: steps.config.outputs.skip != 'true'
@@ -181,10 +219,13 @@ jobs:
           fi
 
           CHAPTER="${{ steps.imported.outputs.chapter }}"
-          if [ -n "$CHAPTER" ]; then
+          REFRESHED_CHAPTER="${{ steps.refreshed.outputs.chapter }}"
+          if [ -n "$CHAPTER" ] && [ "${{ steps.imported.outputs.imported }}" = "true" ]; then
             git commit -m "Import manga chapter ${CHAPTER} manifest"
+          elif [ -n "$REFRESHED_CHAPTER" ] && [ "${{ steps.refreshed.outputs.updated }}" = "true" ]; then
+            git commit -m "Refresh manga chapter ${REFRESHED_CHAPTER} scans"
           else
-            git commit -m "Import new manga chapter manifest"
+            git commit -m "Update manga chapter manifest"
           fi
 
           for attempt in 1 2 3; do
@@ -201,7 +242,7 @@ jobs:
           echo "pushed=false" >> "$GITHUB_OUTPUT"
           exit 1
 
-      - name: Deploy Cloudflare Worker after import
+      - name: Deploy Cloudflare Worker after import or refresh
         if: steps.config.outputs.skip != 'true' && steps.commit_json.outputs.pushed == 'true'
         run: npx wrangler deploy
 

@@ -246,7 +246,7 @@ jobs:
         if: steps.config.outputs.skip != 'true' && steps.commit_json.outputs.pushed == 'true'
         run: npx wrangler deploy
 
-      - name: Notify ntfy
+      - name: Notify ntfy for new chapter
         if: steps.config.outputs.skip != 'true' && steps.imported.outputs.imported == 'true' && steps.commit_json.outputs.pushed == 'true'
         shell: bash
         run: |
@@ -268,4 +268,31 @@ jobs:
             -d "${MESSAGE}" \
             "https://ntfy.sh/${NTFY_TOPIC}"
 
-          echo "ntfy notification sent for chapter ${CHAPTER}."
+          echo "ntfy notification sent for new chapter ${CHAPTER}."
+
+      - name: Notify ntfy for updated chapter
+        if: steps.config.outputs.skip != 'true' && steps.refreshed.outputs.updated == 'true' && steps.commit_json.outputs.pushed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          CHAPTER="${{ steps.refreshed.outputs.chapter }}"
+          CHANGED_PAGES="${{ steps.refreshed.outputs.changed_pages }}"
+          BASE_URL="${READER_BASE_URL%/}"
+          URL="${BASE_URL}/reader.html?series=op&chapter=chapter-${CHAPTER}&page=1"
+
+          if [ -n "$CHANGED_PAGES" ]; then
+            MESSAGE="Capitolo ${CHAPTER} aggiornato. Pagine sostituite: ${CHANGED_PAGES}. Tocca per rileggere la versione aggiornata."
+          else
+            MESSAGE="Capitolo ${CHAPTER} aggiornato con nuove immagini. Tocca per rileggere la versione aggiornata."
+          fi
+
+          curl -sS \
+            -H "Title: Capitolo aggiornato" \
+            -H "Priority: high" \
+            -H "Tags: arrows_counterclockwise,book" \
+            -H "Click: ${URL}" \
+            -d "${MESSAGE}" \
+            "https://ntfy.sh/${NTFY_TOPIC}"
+
+          echo "ntfy notification sent for updated chapter ${CHAPTER}."

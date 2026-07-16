@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-Refresh the latest One Piece chapter when the source images are replaced.
+Refresh an existing One Piece chapter when the source images are replaced.
 
 The source sometimes publishes provisional scans and later replaces them with
 better files at the same URLs. This script re-encodes the current source pages
 using the same production settings, compares the resulting R2 objects by size
-and SHA-256, uploads only changed pages, and updates the JSON manifest with a
-cache-busting version query string.
+and SHA-256, uploads only changed pages, removes superseded R2 objects, and
+updates the JSON manifest with cache-busting version query strings.
 
-If the source is incomplete or unchanged, it exits successfully without
-modifying public/content.
+If the source has fewer than the configured minimum pages or is unchanged, it
+exits successfully without modifying public/content.
 """
 
 from __future__ import annotations
@@ -53,7 +53,7 @@ from op_importer_common import (
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Refresh latest chapter images when the source changes.")
+    parser = argparse.ArgumentParser(description="Refresh existing chapter images when the source changes.")
     parser.add_argument("--source-base-url", default=os.environ.get("AUTHORIZED_MANGA_BASE_URL", ""))
     parser.add_argument("--source-template", default=os.environ.get("AUTHORIZED_MANGA_SOURCE_TEMPLATE", ""))
     parser.add_argument("--extensions", default=os.environ.get("IMAGE_EXTENSIONS", "jpg,jpeg"))
@@ -105,6 +105,15 @@ def r2_object_digest(client, bucket: str, key: str) -> tuple[int | None, str | N
         return size, hashlib.sha256(body).hexdigest()
     except Exception:
         return None, None
+
+
+def delete_r2_object(client, bucket: str, key: str) -> bool:
+    try:
+        client.delete_object(Bucket=bucket, Key=key)
+        return True
+    except Exception as exc:
+        print(f"  unable to delete superseded R2 object {key}: {exc}", file=sys.stderr)
+        return False
 
 
 def main(argv: list[str]) -> int:
@@ -229,17 +238,10 @@ def main(argv: list[str]) -> int:
             print(f"Skipping refresh: {reason}.")
             return 0
 
-        if len(encoded_pages) < len(existing_pages):
-            reason = (
-                f"source currently exposes fewer pages ({len(encoded_pages)}) "
-                f"than the published chapter ({len(existing_pages)})"
-            )
-            write_report(args.report, {"updated": False, "chapter": chapter, "reason": reason})
-            print(f"Skipping refresh to avoid replacing the chapter with an incomplete version: {reason}.")
-            return 0
-
         existing_by_page = {page_number(item, index): item for index, item in enumerate(existing_pages, start=1)}
+        desired_keys = {str(item["key"]) for item in encoded_pages}
         changed_pages: list[int] = []
+        removed_pages: list[int] = []
         manifest_changed = len(encoded_pages) != len(existing_pages)
 
         for item in encoded_pages:
@@ -269,7 +271,18 @@ def main(argv: list[str]) -> int:
             if current != desired_manifest_page:
                 manifest_changed = True
 
-        if not manifest_changed and not changed_pages:
+        for index, old_page in enumerate(existing_pages, start=1):
+            old_key = str(old_page.get("key") or "")
+            if not old_key or old_key in desired_keys:
+                continue
+            old_page_number = page_number(old_page, index)
+            if delete_r2_object(r2_client, bucket, old_key):
+                removed_pages.append(old_page_number)
+                print(f"  page {old_page_number:03d}: removed superseded R2 object {old_key}")
+
+        affected_pages = sorted(set(changed_pages + removed_pages))
+
+        if not manifest_changed and not affected_pages:
             write_report(
                 args.report,
                 {
@@ -280,7 +293,7 @@ def main(argv: list[str]) -> int:
                     "reason": "source and R2 images are unchanged",
                 },
             )
-            print("Latest chapter images are unchanged.")
+            print("Chapter images are unchanged.")
             return 0
 
         manifest_path = volume_manifest_path(content_dir, args.series_id, manifest_volume)
@@ -320,13 +333,14 @@ def main(argv: list[str]) -> int:
                 "chapter": chapter,
                 "volume": manifest_volume,
                 "pages": len(encoded_pages),
-                "changedPages": changed_pages,
-                "metadataBackfilled": manifest_changed and not changed_pages,
+                "changedPages": affected_pages,
+                "removedPages": sorted(set(removed_pages)),
+                "metadataBackfilled": manifest_changed and not affected_pages,
             },
         )
         print(
-            f"Chapter {chapter} refreshed. Changed R2 pages: "
-            f"{changed_pages if changed_pages else 'none; manifest metadata/cache version updated'}"
+            f"Chapter {chapter} refreshed. Affected pages: "
+            f"{affected_pages if affected_pages else 'none; manifest metadata/cache version updated'}"
         )
         return 0
 

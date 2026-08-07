@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-07T07:17:14.245548+00:00",
+  "generatedAt": "2026-08-07T09:00:12.895907+00:00",
   "series": [
     {
       "id": "op",
@@ -145047,40 +145047,40 @@
               "sha256": "e3d5cd03fc7d628508771ad2c1a1a8404b50a9fc9c8d3f26dd2ded82d5c36698"
             },
             {
-              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-003.jpg?v=f9d1709bb0405e89",
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-003.jpg?v=82c472ee33aae651",
               "key": "op/vol-116/chapter-1190/page-003.jpg",
-              "width": 2079,
-              "height": 3000,
-              "bytes": 1076035,
-              "sourceBytes": 1076035,
-              "sha256": "f9d1709bb0405e89507e534c395aab10826b6034849d808b850f267fb7b0e4f4"
+              "width": 1600,
+              "height": 2336,
+              "bytes": 552736,
+              "sourceBytes": 552736,
+              "sha256": "82c472ee33aae651141ccdb4c3c949b174d5168924bd4c1a1444f7e5c2025b47"
             },
             {
-              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-004.jpg?v=76baef4a252d1422",
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-004.jpg?v=795e98933285099f",
               "key": "op/vol-116/chapter-1190/page-004.jpg",
               "width": 1600,
-              "height": 2309,
-              "bytes": 711470,
-              "sourceBytes": 711470,
-              "sha256": "76baef4a252d1422988530a9d32c0c6dcc1821dd8d588a5d51c13b7862a82aba"
+              "height": 2336,
+              "bytes": 550598,
+              "sourceBytes": 550598,
+              "sha256": "795e98933285099f2b1372c3af328cc02fcf371a8c9c07b5e8b0b9de5a1d5efa"
             },
             {
-              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-005.jpg?v=05d70086657354dc",
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-005.jpg?v=b088d2a33d74f57e",
               "key": "op/vol-116/chapter-1190/page-005.jpg",
               "width": 1600,
-              "height": 2301,
-              "bytes": 540854,
-              "sourceBytes": 540854,
-              "sha256": "05d70086657354dc58b626608e22acb3db2ccba6b5c2d582253710bb741c103b"
+              "height": 2336,
+              "bytes": 481865,
+              "sourceBytes": 481865,
+              "sha256": "b088d2a33d74f57e765ac36352d572da88723faa26bccc29a2f83a06f9eabd13"
             },
             {
-              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-006.jpg?v=57541b2c3b8fed19",
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-006.jpg?v=59eead1d5f4cc1b1",
               "key": "op/vol-116/chapter-1190/page-006.jpg",
               "width": 1600,
-              "height": 2307,
-              "bytes": 574008,
-              "sourceBytes": 574008,
-              "sha256": "57541b2c3b8fed19b4a33b7c9ed42e7c097cb22f733eff922697274676b62e77"
+              "height": 2336,
+              "bytes": 518377,
+              "sourceBytes": 518377,
+              "sha256": "59eead1d5f4cc1b12f284ac422a5b67dd86a1bc3918112e680970f801e492ea4"
             },
             {
               "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-007.jpg?v=79aab6bb7019b3e2",
@@ -145092,31 +145092,31 @@
               "sha256": "79aab6bb7019b3e2494580a0c3ce5ae105b955396745f6ba4915253f542c9be7"
             },
             {
-              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-008.jpg?v=3c8b90c2b505c438",
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-008.jpg?v=3e345705bce08df6",
               "key": "op/vol-116/chapter-1190/page-008.jpg",
               "width": 1600,
-              "height": 2320,
-              "bytes": 680639,
-              "sourceBytes": 680639,
-              "sha256": "3c8b90c2b505c438276aa32695edf667e099be633b90a145799e0c1a7531e962"
+              "height": 2336,
+              "bytes": 573718,
+              "sourceBytes": 573718,
+              "sha256": "3e345705bce08df6ade97c4c09d9ad632dac2adc0c06c022b92ac6e8f354bb8f"
             },
             {
-              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-009.jpg?v=6108d30dd7eeca0b",
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-009.jpg?v=4c1c0e4706b8ceb4",
               "key": "op/vol-116/chapter-1190/page-009.jpg",
               "width": 1600,
-              "height": 2300,
-              "bytes": 586556,
-              "sourceBytes": 586556,
-              "sha256": "6108d30dd7eeca0b79f04b23a6eac7c714ec9ee8e30df75689c8f983d49ac178"
+              "height": 2336,
+              "bytes": 509002,
+              "sourceBytes": 509002,
+              "sha256": "4c1c0e4706b8ceb4c9114f27e647a1fe2f01e5e69ca3ffe81ef545b92e63651a"
             },
             {
-              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-010.jpg?v=8e3600e4b5e6ac97",
+              "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-010.jpg?v=da5e630a9a766f50",
               "key": "op/vol-116/chapter-1190/page-010.jpg",
               "width": 1600,
-              "height": 2317,
-              "bytes": 795634,
-              "sourceBytes": 795634,
-              "sha256": "8e3600e4b5e6ac97a940ed3131bace961bc5d5921c8a8b0be9a26cb209ef93e3"
+              "height": 2336,
+              "bytes": 610598,
+              "sourceBytes": 610598,
+              "sha256": "da5e630a9a766f50e01551ace17ae85c4c1d2efa9f6d6eb18a58df80dcca2acd"
             },
             {
               "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-011.jpg?v=81b81ac4b90dada6",
@@ -145166,7 +145166,7 @@
           ],
           "sourceVolume": 116,
           "sourceChapter": 1190,
-          "updatedAt": "2026-08-07T07:17:14.193363+00:00"
+          "updatedAt": "2026-08-07T09:00:12.835440+00:00"
         }
       ]
     },

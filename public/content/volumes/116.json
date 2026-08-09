@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-09T19:34:43.393256+00:00",
+  "generatedAt": "2026-08-09T20:33:25.789223+00:00",
   "seriesId": "op",
   "volume": 116,
   "fromChapter": 1176,
@@ -1711,6 +1711,15 @@
           "sha256": "3e345705bce08df6ade97c4c09d9ad632dac2adc0c06c022b92ac6e8f354bb8f"
         },
         {
+          "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-009.jpg?v=4c1c0e4706b8ceb4",
+          "key": "op/vol-116/chapter-1190/page-009.jpg",
+          "width": 1600,
+          "height": 2336,
+          "bytes": 509002,
+          "sourceBytes": 509002,
+          "sha256": "4c1c0e4706b8ceb4c9114f27e647a1fe2f01e5e69ca3ffe81ef545b92e63651a"
+        },
+        {
           "src": "https://static.lucahome.uk/op/vol-116/chapter-1190/page-010.jpg?v=da5e630a9a766f50",
           "key": "op/vol-116/chapter-1190/page-010.jpg",
           "width": 1600,
@@ -1767,7 +1776,7 @@
       ],
       "sourceVolume": 116,
       "sourceChapter": 1190,
-      "updatedAt": "2026-08-09T19:34:43.393239+00:00"
+      "updatedAt": "2026-08-09T20:33:25.789208+00:00"
     }
   ]
 }

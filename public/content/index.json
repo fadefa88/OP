@@ -1,14 +1,14 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-20T11:32:59.180654+00:00",
+  "generatedAt": "2026-08-21T06:48:04.591839+00:00",
   "series": [
     {
       "id": "op",
       "title": "OP Reader",
       "description": "Archivio ordinato per volume, capitolo e pagina.",
       "cover": "https://static.lucahome.uk/op/vol-001/chapter-0001/page-001.webp",
-      "latestChapter": 1190,
-      "chaptersCount": 1171,
+      "latestChapter": 1191,
+      "chaptersCount": 1172,
       "volumes": [
         {
           "volume": 1,
@@ -814,6 +814,13 @@
           "toChapter": 1185,
           "chaptersCount": 15,
           "manifest": "/content/volumes/116.json"
+        },
+        {
+          "volume": 117,
+          "fromChapter": 1186,
+          "toChapter": 1195,
+          "chaptersCount": 1,
+          "manifest": "/content/volumes/117.json"
         }
       ],
       "lastUpdatedAt": "2026-06-09T10:07:37.291334+00:00"

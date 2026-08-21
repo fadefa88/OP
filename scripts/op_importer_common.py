@@ -354,6 +354,59 @@ def build_source_url(
     return urljoin(base, f"volumi/volume{pad_volume(volume)}/{pad_source_chapter(effective_chapter)}/{pad_page(page)}.{extension.lstrip('.')}")
 
 
+def build_source_url_candidates(
+    base_url: str,
+    volume: int,
+    chapter: int,
+    page: int,
+    extension: str,
+    template: str | None = None,
+    source_chapter: int | None = None,
+    series_id: str = DEFAULT_SERIES_ID,
+) -> list[str]:
+    """Return source URL candidates without removing the configured/legacy pattern.
+
+    OnePiecePower has used both of these One Piece layouts:
+      /volumi/volume117/1191/01.jpg
+      /volumi/volume117/capitolo1191/01.jpg
+
+    Keep the configured/default URL first for backwards compatibility, then add
+    the newer ``capitolo<chapter>`` form and the explicit legacy form as
+    de-duplicated fallbacks. Other series keep their existing single pattern.
+    """
+    primary = build_source_url(
+        base_url,
+        volume,
+        chapter,
+        page,
+        extension,
+        template,
+        source_chapter=source_chapter,
+    )
+    candidates = [primary]
+
+    if slugify(series_id) != DEFAULT_SERIES_ID:
+        return candidates
+
+    base = base_url.rstrip("/") + "/"
+    effective_chapter = source_chapter if source_chapter is not None else chapter
+    clean_extension = extension.lstrip(".")
+    fallbacks = [
+        urljoin(
+            base,
+            f"volumi/volume{pad_volume(volume)}/capitolo{effective_chapter}/{pad_page(page)}.{clean_extension}",
+        ),
+        urljoin(
+            base,
+            f"volumi/volume{pad_volume(volume)}/{pad_source_chapter(effective_chapter)}/{pad_page(page)}.{clean_extension}",
+        ),
+    ]
+    for candidate in fallbacks:
+        if candidate not in candidates:
+            candidates.append(candidate)
+    return candidates
+
+
 def r2_key_for_page(series_id: str, volume: int, chapter: int, page: int, extension: str = "webp") -> str:
     clean_extension = extension.lower().lstrip(".") or "webp"
     if clean_extension == "jpeg":
@@ -824,14 +877,26 @@ def import_single_chapter_to_r2(
         used_extension = ""
 
         for extension in source_extensions:
-            candidate_url = build_source_url(source_base_url, volume, chapter, page, extension, source_template, source_chapter=source_chapter)
-            data, content_type, http_status, status = fetch_image_bytes(session, candidate_url, timeout)
-            page_statuses.append(f"{extension}:{status}:{http_status or '-'}")
-            if status == "ok" and data:
-                image_bytes = data
-                used_url = candidate_url
-                used_content_type = content_type
-                used_extension = extension
+            candidate_urls = build_source_url_candidates(
+                source_base_url,
+                volume,
+                chapter,
+                page,
+                extension,
+                source_template,
+                source_chapter=source_chapter,
+                series_id=series_id,
+            )
+            for candidate_index, candidate_url in enumerate(candidate_urls, start=1):
+                data, content_type, http_status, status = fetch_image_bytes(session, candidate_url, timeout)
+                page_statuses.append(f"{extension}[{candidate_index}]:{status}:{http_status or '-'}")
+                if status == "ok" and data:
+                    image_bytes = data
+                    used_url = candidate_url
+                    used_content_type = content_type
+                    used_extension = extension
+                    break
+            if image_bytes:
                 break
 
         if not image_bytes:

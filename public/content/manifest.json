@@ -1,14 +1,14 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-19T15:16:36.462648+00:00",
+  "generatedAt": "2026-11-26T23:32:25.239691+00:00",
   "series": [
     {
       "id": "op",
       "title": "OP Reader",
       "description": "Archivio ordinato per volume, capitolo e pagina.",
       "cover": "https://static.lucahome.uk/op/vol-001/chapter-0001/page-001.webp",
-      "latestChapter": 1199,
-      "chaptersCount": 1180,
+      "latestChapter": 1200,
+      "chaptersCount": 1181,
       "volumes": [
         {
           "volume": 1,
@@ -819,7 +819,7 @@
           "volume": 117,
           "fromChapter": 1186,
           "toChapter": 1195,
-          "chaptersCount": 9,
+          "chaptersCount": 10,
           "manifest": "/content/volumes/117.json"
         }
       ],
@@ -146162,6 +146162,129 @@
           ],
           "sourceVolume": 117,
           "sourceChapter": 1199
+        },
+        {
+          "id": "chapter-1200",
+          "number": 1200,
+          "volume": 117,
+          "title": "Volume 117 · Capitolo 1200",
+          "publishedAt": "2026-11-26",
+          "pages": [
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-001.jpg",
+              "key": "op/vol-117/chapter-1200/page-001.jpg",
+              "width": 1600,
+              "height": 2333,
+              "bytes": 560497
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-002.jpg",
+              "key": "op/vol-117/chapter-1200/page-002.jpg",
+              "width": 1640,
+              "height": 2400,
+              "bytes": 803137
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-003.jpg",
+              "key": "op/vol-117/chapter-1200/page-003.jpg",
+              "width": 1600,
+              "height": 2322,
+              "bytes": 806388
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-004.jpg",
+              "key": "op/vol-117/chapter-1200/page-004.jpg",
+              "width": 3200,
+              "height": 2343,
+              "bytes": 960758
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-005.jpg",
+              "key": "op/vol-117/chapter-1200/page-005.jpg",
+              "width": 1600,
+              "height": 2341,
+              "bytes": 610360
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-006.jpg",
+              "key": "op/vol-117/chapter-1200/page-006.jpg",
+              "width": 1600,
+              "height": 2322,
+              "bytes": 591546
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-007.jpg",
+              "key": "op/vol-117/chapter-1200/page-007.jpg",
+              "width": 1600,
+              "height": 2327,
+              "bytes": 583131
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-008.jpg",
+              "key": "op/vol-117/chapter-1200/page-008.jpg",
+              "width": 1600,
+              "height": 2323,
+              "bytes": 617125
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-009.jpg",
+              "key": "op/vol-117/chapter-1200/page-009.jpg",
+              "width": 1600,
+              "height": 2341,
+              "bytes": 628386
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-010.jpg",
+              "key": "op/vol-117/chapter-1200/page-010.jpg",
+              "width": 1600,
+              "height": 2326,
+              "bytes": 771185
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-011.jpg",
+              "key": "op/vol-117/chapter-1200/page-011.jpg",
+              "width": 1600,
+              "height": 2352,
+              "bytes": 875780
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-012.jpg",
+              "key": "op/vol-117/chapter-1200/page-012.jpg",
+              "width": 1600,
+              "height": 2322,
+              "bytes": 562088
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-013.jpg",
+              "key": "op/vol-117/chapter-1200/page-013.jpg",
+              "width": 1600,
+              "height": 2337,
+              "bytes": 616644
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-014.jpg",
+              "key": "op/vol-117/chapter-1200/page-014.jpg",
+              "width": 1600,
+              "height": 2323,
+              "bytes": 652104
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-015.jpg",
+              "key": "op/vol-117/chapter-1200/page-015.jpg",
+              "width": 1600,
+              "height": 2323,
+              "bytes": 620337
+            },
+            {
+              "src": "https://static.lucahome.uk/op/vol-117/chapter-1200/page-016.jpg",
+              "key": "op/vol-117/chapter-1200/page-016.jpg",
+              "width": 1600,
+              "height": 2327,
+              "bytes": 656260
+            }
+          ],
+          "sourceVolume": 117,
+          "sourceChapter": 1200
         }
       ]
     },
